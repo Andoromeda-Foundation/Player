@@ -463,6 +463,7 @@ void Game_Event::UpdateNextMovementAction() {
 		MoveTypeAwayFromPlayer();
 		break;
 	case lcf::rpg::EventPage::MoveType_custom:
+		Output::Debug("My Position: {} {} {}", GetId(), GetX(), GetY());
 		UpdateMoveRoute(data()->original_move_route_index, page->move_route, false);
 		break;
 	}
