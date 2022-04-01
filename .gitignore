@@ -54,7 +54,7 @@ install_manifest.txt
 *.user
 *.vsp*
 *.lib
-*.exe
+## *.exe
 *.exp
 *.ilk
 *.pdb
