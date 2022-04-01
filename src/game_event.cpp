@@ -34,6 +34,7 @@
 #include "output.h"
 #include <cmath>
 #include <cassert>
+#include "cards/cards.h"
 
 Game_Event::Game_Event(int map_id, const lcf::rpg::Event* event) :
 	Game_EventBase(Event),
@@ -336,6 +337,10 @@ lcf::rpg::EventPage::Trigger Game_Event::GetTrigger() const {
 bool Game_Event::ScheduleForegroundExecution(bool by_decision_key, bool face_player) {
 	// RPG_RT always resets this everytime this function is called, whether successful or not
 	data()->triggered_by_decision_key = by_decision_key;
+
+	Cards::instance().current_map_event_id = GetId();
+
+	// Output::Debug("ScheduleForegroundExecution: {}", );
 
 	auto& list = GetList();
 	if (!IsActive() || IsWaitingForegroundExecution() || list.empty()) {

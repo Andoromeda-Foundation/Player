@@ -26,7 +26,7 @@
 #include "audio.h"
 #include "transition.h"
 #include "game_actors.h"
-#include "game_interpreter.h"
+// #include "game_interpreter.h"
 #include "game_system.h"
 #include "main_data.h"
 

@@ -60,6 +60,7 @@
 #include "baseui.h"
 #include "algo.h"
 #include "rand.h"
+#include "cards/cards.h"
 
 enum BranchSubcommand {
 	eOptionBranchElse = 1
@@ -601,6 +602,8 @@ bool Game_Interpreter::ExecuteCommand() {
 	auto& frame = GetFrame();
 	const auto& com = frame.commands[frame.current_command];
 
+	Output::Debug("command code: {}", com.code);
+
 	switch (static_cast<Cmd>(com.code)) {
 		case Cmd::ShowMessage:
 			return CommandShowMessage(com);
@@ -883,6 +886,24 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 
 	if (!Game_Message::CanShowMessage(main_flag)) {
 		return false;
+	}
+
+
+	std::string cmd = ToString(com.string);
+
+	if (cmd == ".showSpiritsStatus") {
+		//Cards::p1.push_back();
+		Cards::show();
+		return true;
+	}
+
+	if (cmd == ".summon 1") {
+		Game_Map::newMapEvent("MonsterTemplate");
+		return true;
+	}
+	if (cmd == ".summon 2") {
+		Game_Map::newMapEvent("MonsterTemplate");
+		return true;
 	}
 
 	auto pm = PendingMessage();
@@ -2727,6 +2748,9 @@ namespace PicPointerPatch {
 }
 
 bool Game_Interpreter::CommandShowPicture(lcf::rpg::EventCommand const& com) { // code 11110
+
+	Output::Debug("show picture");
+
 	// Older versions of RPG_RT block pictures when message active.
 	if (!Player::IsEnglish() && Game_Message::IsMessageActive()) {
 		return false;

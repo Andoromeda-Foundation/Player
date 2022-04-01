@@ -52,6 +52,7 @@
 #include <lcf/rpg/save.h>
 #include "scene_gameover.h"
 #include "feature.h"
+#include "cards/cards.h"
 
 namespace {
 	lcf::rpg::SaveMapInfo map_info;
@@ -334,7 +335,7 @@ void Game_Map::SetupCommon() {
 	Output::Debug("Tree: {}", ss.str());
 
 	// Create the map events
-	events.reserve(map->events.size());
+	events.reserve(map->events.size() + 100);
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
 	}
@@ -1415,6 +1416,70 @@ int Game_Map::GetHighestEventId() {
 		id = std::max(id, ev.GetId());
 	}
 	return id;
+}
+
+void Game_Map::newMapEvent(std::string title) {
+
+	/*int id = 0;
+	for (auto& ev: events) {
+		if (ev.GetName() == title) {
+			//Game_Event evv = ev;
+			//int id = GetHighestEventId();
+			// evv.data.ID = id;
+			//evv.SetX(5); evv.SetY(5);
+			// events.emplace_back(id, &evv);
+			break;
+		}
+	}*/
+
+
+	//events.reserve(events.size() + 1);
+
+	for (const auto& ev : map->events) {
+		events.emplace_back(GetMapId(), &ev);
+		if (events.back().GetName() != title) {
+			events.pop_back();
+		} else {
+			auto& t = events.back();
+			t.SetX(12); t.SetY(12);
+
+			std::string name; int offset;
+			auto& cards = Cards::instance();
+			auto c = Cards::monster();
+			c.id = events.size();
+
+			int tt = rand() % 3;
+			// tt += 2;
+			if (tt == 0) {
+				c.name = "史莱姆";
+				name = "Monster1";
+				offset = 0;
+			} else if (tt == 1) {
+				c.name = "勾勒姆";
+				name = "Monster2";
+				offset = 4;
+			} else if (tt == 2) {
+				c.name = "史莱姆（巨大的）";
+				name = "char_m_sl_g";
+				offset = 2;
+			} else if (tt == 3) {
+				name = "char_m01";
+			} else if (tt == 4) {
+				name = "char_m02";
+			}
+
+
+			t.SetSpriteGraphic(name, offset);
+			t.data()->ID = c.id;
+			cards.p1.push_back(c);
+
+			// Main_Data::game_screen->ShowBattleAnimation(70, t.GetId(), 0);
+			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
+			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());
+			break;
+		}
+	}
+
 }
 
 Game_Event* Game_Map::GetEvent(int event_id) {

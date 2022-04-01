@@ -76,6 +76,9 @@ class MapUpdateAsyncContext {
  * Game_Map namespace
  */
 namespace Game_Map {
+
+	void newMapEvent(std::string title);
+
 	/**
 	 * Initialize Game_Map.
 	 */
@@ -106,7 +109,7 @@ namespace Game_Map {
 
 	/**
 	 * Setups a map from a savegame.
-	 * 
+	 *
 	 * @param map - The map data
 	 * @param save_map - The map state
 	 * @param save_boat - The boat state

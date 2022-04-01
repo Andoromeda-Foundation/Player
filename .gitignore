@@ -127,3 +127,10 @@ easyrpg_libretro.*
 eboot.bin
 *.vpk
 *.velf
+*.obj
+*.recipe
+*.lastbuildstate
+*.tlog
+*.tlog
+*.res
+*.sln

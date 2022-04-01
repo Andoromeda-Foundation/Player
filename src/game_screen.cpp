@@ -357,6 +357,9 @@ void Game_Screen::Update() {
 }
 
 int Game_Screen::ShowBattleAnimation(int animation_id, int target_id, bool global, int start_frame) {
+
+	Output::Debug("CommandShowBattleAnimation: {} {} {} {}", animation_id, target_id, global, start_frame);
+
 	const lcf::rpg::Animation* anim = lcf::ReaderUtil::GetElement(lcf::Data::animations, animation_id);
 	if (!anim) {
 		Output::Warning("ShowBattleAnimation: Invalid battle animation ID {}", animation_id);

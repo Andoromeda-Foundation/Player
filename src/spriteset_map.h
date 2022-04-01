@@ -80,6 +80,7 @@ public:
 	 * @return true if we should clear the screen before drawing the map
 	 */
 	bool RequireClear(DrawableList& drawable_list);
+	void CreateSprite(Game_Character* character, bool create_x_clone, bool create_y_clone);
 
 protected:
 	std::unique_ptr<Tilemap> tilemap;
@@ -92,7 +93,7 @@ protected:
 	std::unique_ptr<Screen> screen;
 	std::unique_ptr<Frame> frame;
 
-	void CreateSprite(Game_Character* character, bool create_x_clone, bool create_y_clone);
+
 	void CreateAirshipShadowSprite(bool create_x_clone, bool create_y_clone);
 
 	void OnTilemapSpriteReady(FileRequestResult*);

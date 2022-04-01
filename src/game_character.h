@@ -26,6 +26,7 @@
 #include <lcf/rpg/eventpage.h>
 #include <lcf/rpg/savemapeventbase.h>
 #include "utils.h"
+#include "output.h"
 
 /**
  * Game_Character class.
@@ -1107,6 +1108,7 @@ inline Game_Character::AnimType Game_Character::GetAnimationType() const {
 }
 
 inline void Game_Character::SetAnimationType(Game_Character::AnimType anim_type) {
+	Output::Debug("Set Animation");
 	data()->animation_type = int(anim_type);
 	SetFacingLocked(IsDirectionFixedAnimationType(anim_type));
 }
