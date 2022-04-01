@@ -431,6 +431,8 @@ add_library(${PROJECT_NAME} STATIC
 	src/window_varlist.cpp
 	src/window_varlist.h
 	src/external/rang.hpp
+src/cards/cards.h
+src/cards/cards.cpp
 )
 
 # These are actually unused when building in CMake
