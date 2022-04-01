@@ -94,7 +94,7 @@ __MACOSX
 # Xcode
 /*.xcodeproj
 /*.xcworkspace
-/Debug/
+## /Debug/
 /Release/
 /MinSizeRel/
 /RelWithDebInfo/
