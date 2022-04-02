@@ -180,10 +180,12 @@ namespace Cards {
 		std::vector<int> party_items;
 		Main_Data::game_party->GetItems(party_items);
 
-		Output::Debug("Deck: {}", party_items.size());
-
 		for (size_t i = 0; i < party_items.size(); ++i) {
-			Output::Debug("Deck: {}", party_items[i]);
+			int cnt = Main_Data::game_party->GetItemCount(party_items[i]);
+			for (int j=0;j<cnt;++j) {
+				Output::Debug("Deck: {}", party_items[i]);
+			}
+			// actor->GetItemCount(item_id)
 		}
 	}
 
