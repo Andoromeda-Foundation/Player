@@ -40,6 +40,32 @@ namespace Cards {
 				}
 			},
 			{
+				"gaint_slime", {
+					{"name", "巨型史莱姆"},
+					{"cost", 5},
+					{"description", "在魔法事故中诞生的巨型史莱姆。"},
+					{"hp", 10},{"HP", 10},
+					{"mp", 2},{"MP", 20},
+					{"AP", 3},
+					{"DP", 0},
+					{"charset", "char_m_sl_g"},
+					{"offset", 2}
+				}
+			},
+			{
+				"rock_man", {
+					{"name", "石头人"},
+					{"cost", 3},
+					{"description", "炼金术所产生的副产品。"},
+					{"hp", 7},{"HP", 7},
+					{"mp", 0},{"MP", 0},
+					{"AP", 4},
+					{"DP", 0},
+					{"charset", "Monster2"},
+					{"offset", 4}
+				}
+			},
+			{
 				"skull", {
 					{"name", "骷髅"},
 					{"cost", 1},
@@ -57,7 +83,7 @@ namespace Cards {
 					{"name", "幽灵"},
 					{"cost", 1},
 					{"description", "Ghost Reporting."},
-					{"hp", 7},{"HP", 7},
+					{"hp", 5},{"HP", 5},
 					{"mp", 0},{"MP", 0},
 					{"AP", 4},
 					{"DP", 0},

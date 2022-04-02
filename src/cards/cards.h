@@ -53,29 +53,6 @@ namespace Cards {
 				 "AP " + std::to_string(AP) + " "
 				 "DP " + std::to_string(DP) + " ";
 
-			/*
-			if (name == "史莱姆") {
-				z += std::string("") +
-					"史莱姆 1费 " +
-					"HP 2/2 MP 0/5 " +
-					"AP 1 " +
-					"再生 " +
-					"分裂";
-			} if (name == "勾勒姆") {
-				z += std::string("") +
-					"勾勒姆 4费 " +
-					"HP 8/8 MP 0/5 " +
-					"AP 3 " +
-					"硬化 ";
-			} if (name == "史莱姆（巨大的）") {
-				z += std::string("") +
-					"史莱姆（巨大的）5费 " +
-					"HP 10/10 MP 0/5 " +
-					"AP 2 " +
-					"再生 " +
-					"分裂";
-			} */
-
 			return z;
 		}
 	};
