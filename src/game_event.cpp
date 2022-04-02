@@ -451,6 +451,12 @@ void Game_Event::UpdateNextMovementAction() {
 		MoveTypeRandom();
 		break;
 	case lcf::rpg::EventPage::MoveType_vertical:
+
+		if (Cards::inBattleField(GetId())) {
+			MyMoveTypeForward();
+			break;
+		}
+
 		MoveTypeCycleUpDown();
 		break;
 	case lcf::rpg::EventPage::MoveType_horizontal:
@@ -463,7 +469,6 @@ void Game_Event::UpdateNextMovementAction() {
 		MoveTypeAwayFromPlayer();
 		break;
 	case lcf::rpg::EventPage::MoveType_custom:
-		Output::Debug("My Position: {} {} {}", GetId(), GetX(), GetY());
 		UpdateMoveRoute(data()->original_move_route_index, page->move_route, false);
 		break;
 	}
@@ -509,6 +514,37 @@ void Game_Event::MoveTypeRandom() {
 	SetMaxStopCountForRandom();
 }
 
+void Game_Event::MyMoveTypeForward() {
+	if (GetStopCount() < GetMaxStopCount()) return;
+
+
+	Cards::instance().current_map_event_id = GetId();
+	Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
+
+	/*const auto prev_dir = 0GetDirection();
+
+	const auto reverse_dir = ReverseDir(default_dir);
+	int move_dir = GetDirection();
+	if (move_dir != reverse_dir) {
+		move_dir = default_dir;
+	}*/
+
+	int move_dir = 0;
+
+	if (Cards::owner(GetId()) == 2) {
+		move_dir = 2;
+	}
+
+	Move(move_dir);
+
+	if (IsStopping() && GetStopCount() >= GetMaxStopCount() + 20) {
+		//Move(ReverseDir(move_dir));
+		Cards::atk();
+		SetStopCount(0);
+	}
+	SetMaxStopCountForStep();
+}
+
 void Game_Event::MoveTypeCycle(int default_dir) {
 	if (GetStopCount() < GetMaxStopCount()) return;
 
@@ -518,6 +554,13 @@ void Game_Event::MoveTypeCycle(int default_dir) {
 	int move_dir = GetDirection();
 	if (move_dir != reverse_dir) {
 		move_dir = default_dir;
+	}
+
+
+	if (GetId() != 2) {
+		Cards::instance().current_map_event_id = GetId();
+		Output::Debug("My Position: {} {} {} {}", GetId(), GetX(), GetY(), move_dir);
+		Cards::atk();
 	}
 
 	Move(move_dir);

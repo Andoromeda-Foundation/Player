@@ -66,7 +66,10 @@ namespace Cards {
 	};
 
 	Instance& instance();
+	bool inBattleField(int id);
+	int owner(int id);
 	void show();
+	void atk();
 
 } // namespace Cards
 

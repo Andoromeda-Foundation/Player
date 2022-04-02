@@ -898,11 +898,11 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 	}
 
 	if (cmd == ".summon 1") {
-		Game_Map::newMapEvent("MonsterTemplate");
+		Game_Map::newMapEvent("MonsterTemplate", 1);
 		return true;
 	}
 	if (cmd == ".summon 2") {
-		Game_Map::newMapEvent("MonsterTemplate");
+		Game_Map::newMapEvent("MonsterTemplate", 2);
 		return true;
 	}
 

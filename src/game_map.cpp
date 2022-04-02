@@ -1418,7 +1418,9 @@ int Game_Map::GetHighestEventId() {
 	return id;
 }
 
-void Game_Map::newMapEvent(std::string title) {
+#include "configor/json.hpp"
+
+void Game_Map::newMapEvent(std::string title, int p_id) {
 
 	/*int id = 0;
 	for (auto& ev: events) {
@@ -1432,7 +1434,6 @@ void Game_Map::newMapEvent(std::string title) {
 		}
 	}*/
 
-
 	//events.reserve(events.size() + 1);
 
 	for (const auto& ev : map->events) {
@@ -1441,14 +1442,49 @@ void Game_Map::newMapEvent(std::string title) {
 			events.pop_back();
 		} else {
 			auto& t = events.back();
-			t.SetX(12); t.SetY(12);
+
 
 			std::string name; int offset;
 			auto& cards = Cards::instance();
 			auto c = Cards::monster();
 			c.id = events.size();
 
-			int tt = rand() % 3;
+			configor::json json = {
+				{
+					"slime", {
+						{"name", "史莱姆"},
+						{"description", "滑溜溜的魔法生物，可以从地上弹起，黏住敌人，分泌酸液。虽然初始威胁不大，但任由她增殖的话也会带来意想不到的麻烦。"},
+						{"mana_cost", 1},
+						{"hp", 2},{"HP", 2},
+						{"mp", 0},{"MP", 5},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "Monster1"},
+						{"offset", 0}
+					}
+				},
+				{
+					"manticore", {
+						{"name", "蝎狮"},
+						{"description", "红色毛皮、蝙蝠翅膀和一条长满如豪猪尖刺的尾巴，另有一说则是拥有蝎子的尾针，并拥有带着三列像鲨鱼一样的尖锐牙齿的人脸狮子形态的怪物。有着无限的食欲，据说可以吃掉一个国家的军队。"},
+						{"mana_cost", 6},
+						{"hp", 13},{"HP", 13},
+						{"mp", 0},{"MP", 10},
+						{"AP", 7},
+						{"DP", 0},
+						{"charset", "16549"},
+						{"offset", 0}
+					}
+				}
+			};
+
+			std::string id = "manticore";
+			c.name = std::string(json[id]["name"]);
+			// c.offset = json[id]["offset"];
+
+			/**/
+
+			/*int tt = rand() % 3;
 			// tt += 2;
 			if (tt == 0) {
 				c.name = "史莱姆";
@@ -1466,14 +1502,20 @@ void Game_Map::newMapEvent(std::string title) {
 				name = "char_m01";
 			} else if (tt == 4) {
 				name = "char_m02";
+			}*/
+
+
+			t.SetSpriteGraphic(json[id]["charset"], json[id]["offset"]);
+			t.data()->ID = c.id;
+			if (p_id == 1) {
+				t.SetX(12); t.SetY(12);
+				cards.p1.push_back(c);
+			} else {
+				t.SetX(12); t.SetY(8);
+				cards.p2.push_back(c);
 			}
 
-
-			t.SetSpriteGraphic(name, offset);
-			t.data()->ID = c.id;
-			cards.p1.push_back(c);
-
-			// Main_Data::game_screen->ShowBattleAnimation(70, t.GetId(), 0);
+			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
 			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
 			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());
 			break;

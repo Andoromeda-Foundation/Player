@@ -116,7 +116,7 @@ public:
 	 */
 	bool ScheduleForegroundExecution(bool triggered_by_decision_key, bool face_player);
 
-	/** 
+	/**
 	 * Update this for the current frame
 	 *
 	 * @param resume_async If we're resuming from an async operation.
@@ -171,6 +171,9 @@ private:
 	 * Moves on a random route.
 	 */
 	void MoveTypeRandom();
+
+
+	void MyMoveTypeForward();
 
 	/**
 	 * Cycles between moving in default_dir and its opposite.

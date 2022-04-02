@@ -22,6 +22,19 @@ option(BUILD_SHARED_LIBS "Build shared easyrpg_libretro core" ON)
 
 # Source Files
 add_library(${PROJECT_NAME} STATIC
+	src/configor/configor.hpp
+	src/configor/configor_basic.hpp
+	src/configor/configor_conversion.hpp
+	src/configor/configor_declare.hpp
+	src/configor/configor_encoding.hpp
+	src/configor/configor_exception.hpp
+	src/configor/configor_iterator.hpp
+	src/configor/configor_parser.hpp
+	src/configor/configor_serializer.hpp
+	src/configor/configor_stream.hpp
+	src/configor/configor_token.hpp
+	src/configor/configor_value.hpp
+	src/configor/json.hpp
 	src/lcf_data.cpp
 	src/lcf/data.h
 	src/async_handler.cpp
