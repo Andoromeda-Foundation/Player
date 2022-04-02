@@ -156,7 +156,21 @@ namespace Cards {
 						{"charset", "18550"},
 						{"offset", 0}
 					}
+				},
+				{
+					"crusader", {
+						{"name", "十字军"},
+						{"cost", 4},
+						{"description", "攻击两次。"},
+						{"hp", 6},{"HP", 6},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "23178"},
+						{"offset", 1}
+					}
 				}
+
 			};
 		};
 
