@@ -1,4 +1,5 @@
 
+#include <lcf/reader_util.h>
 #include "cards.h"
 #include "../output.h"
 #include "../game_interpreter.h"
@@ -6,6 +7,8 @@
 #include "../game_screen.h"
 #include "../game_party.h"
 #include "../main_data.h"
+
+#define DO(n) for ( int ____n = n; ____n-->0; )
 
 namespace Cards {
 
@@ -181,12 +184,15 @@ namespace Cards {
 		Main_Data::game_party->GetItems(party_items);
 
 		for (size_t i = 0; i < party_items.size(); ++i) {
+			auto item = *lcf::ReaderUtil::GetElement(lcf::Data::items, party_items[i]);
+			std::string s = std::string(item.name);
+			if (s.substr(0, 5) != ".card") continue;
+			s = s.substr(6);
 			int cnt = Main_Data::game_party->GetItemCount(party_items[i]);
-			for (int j=0;j<cnt;++j) {
-				Output::Debug("Deck: {}", party_items[i]);
-			}
-			// actor->GetItemCount(item_id)
+			DO(cnt) _.deck.push_back(monster(_.json[s]));
 		}
+
+		DO(7) draw();
 	}
 
 	void show() {
@@ -249,7 +255,11 @@ namespace Cards {
 	}
 
 	void draw() {
-
+		if (_.deck.empty()) return;
+		int t = rand() % _.deck.size();
+		Output::Debug("Draw id: {}", _.deck[t].name);
+		_.hand.push_back(_.deck[t]);
+		_.deck.erase(_.deck.begin() + t);
 	}
 
 	Instance& instance() {
@@ -257,3 +267,5 @@ namespace Cards {
 	}
 
 } // namespace Cards
+
+#undef DO
