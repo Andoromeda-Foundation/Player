@@ -21,18 +21,39 @@
 #include <string>
 #include <vector>
 
+#include "../configor/json.hpp"
+
 namespace Cards {
 
 	struct monster {
 		int master;
 		int id;
-		std::string name;
+		std::string name; int cost;
 		int hp, HP, mp, MP;
-		int ap, dp;
-		int x, y;
+		int AP, DP;
+
+		monster() {
+		}
+
+		monster(configor::json json) {
+			name = std::string(json["name"]);
+			cost = json["cost"];
+			hp = json["hp"]; HP = json["HP"];
+			mp = json["mp"]; MP = json["MP"];
+			AP = json["AP"]; DP = json["DP"];
+		}
+
 		std::string info() {
 			std::string z;
 
+			z += name + " " +
+				 std::to_string(cost) + "费 " +
+				 "HP " + std::to_string(hp) + "/" + std::to_string(HP) + " "
+				 "MP " + std::to_string(mp) + "/" + std::to_string(MP) + " "
+				 "AP " + std::to_string(AP) + " "
+				 "DP " + std::to_string(DP) + " ";
+
+			/*
 			if (name == "史莱姆") {
 				z += std::string("") +
 					"史莱姆 1费 " +
@@ -53,7 +74,7 @@ namespace Cards {
 					"AP 2 " +
 					"再生 " +
 					"分裂";
-			}
+			} */
 
 			return z;
 		}
@@ -63,6 +84,7 @@ namespace Cards {
 		int current_map_event_id;
 		std::vector<monster> p1;
 		std::vector<monster> p2;
+		configor::json json;
 	};
 
 	Instance& instance();
@@ -70,6 +92,7 @@ namespace Cards {
 	int owner(int id);
 	void show();
 	void atk();
+	void init();
 
 } // namespace Cards
 

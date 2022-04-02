@@ -86,6 +86,7 @@
 #include <lcf/scope_guard.h>
 #include "baseui.h"
 #include "game_clock.h"
+#include "cards/cards.h"
 #if defined(HAVE_FLUIDSYNTH) || defined(HAVE_FLUIDLITE)
 #include "decoder_fluidsynth.h"
 #endif
@@ -1192,6 +1193,7 @@ void Player::SetupNewGame() {
 }
 
 void Player::SetupPlayerSpawn() {
+	Cards::init();
 	int map_id = Player::start_map_id == -1 ?
 		lcf::Data::treemap.start.party_map_id : Player::start_map_id;
 

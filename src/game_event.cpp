@@ -453,6 +453,7 @@ void Game_Event::UpdateNextMovementAction() {
 	case lcf::rpg::EventPage::MoveType_vertical:
 
 		if (Cards::inBattleField(GetId())) {
+
 			MyMoveTypeForward();
 			break;
 		}
@@ -554,13 +555,6 @@ void Game_Event::MoveTypeCycle(int default_dir) {
 	int move_dir = GetDirection();
 	if (move_dir != reverse_dir) {
 		move_dir = default_dir;
-	}
-
-
-	if (GetId() != 2) {
-		Cards::instance().current_map_event_id = GetId();
-		Output::Debug("My Position: {} {} {} {}", GetId(), GetX(), GetY(), move_dir);
-		Cards::atk();
 	}
 
 	Move(move_dir);

@@ -1443,47 +1443,16 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 		} else {
 			auto& t = events.back();
 
-
 			std::string name; int offset;
 			auto& cards = Cards::instance();
-			auto c = Cards::monster();
+			int this_id = cards.current_map_event_id;
+			configor::json json = cards.json;
+
+			std::string id = "diamond_men";
+			auto c = Cards::monster(json[id]);
 			c.id = events.size();
 
-			configor::json json = {
-				{
-					"slime", {
-						{"name", "史莱姆"},
-						{"description", "滑溜溜的魔法生物，可以从地上弹起，黏住敌人，分泌酸液。虽然初始威胁不大，但任由她增殖的话也会带来意想不到的麻烦。"},
-						{"mana_cost", 1},
-						{"hp", 2},{"HP", 2},
-						{"mp", 0},{"MP", 5},
-						{"AP", 1},
-						{"DP", 0},
-						{"charset", "Monster1"},
-						{"offset", 0}
-					}
-				},
-				{
-					"manticore", {
-						{"name", "蝎狮"},
-						{"description", "红色毛皮、蝙蝠翅膀和一条长满如豪猪尖刺的尾巴，另有一说则是拥有蝎子的尾针，并拥有带着三列像鲨鱼一样的尖锐牙齿的人脸狮子形态的怪物。有着无限的食欲，据说可以吃掉一个国家的军队。"},
-						{"mana_cost", 6},
-						{"hp", 13},{"HP", 13},
-						{"mp", 0},{"MP", 10},
-						{"AP", 7},
-						{"DP", 0},
-						{"charset", "16549"},
-						{"offset", 0}
-					}
-				}
-			};
-
-			std::string id = "manticore";
-			c.name = std::string(json[id]["name"]);
-			// c.offset = json[id]["offset"];
-
 			/**/
-
 			/*int tt = rand() % 3;
 			// tt += 2;
 			if (tt == 0) {
@@ -1507,11 +1476,15 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 
 			t.SetSpriteGraphic(json[id]["charset"], json[id]["offset"]);
 			t.data()->ID = c.id;
+
+			Game_Event *this_event = Game_Map::GetEvent(this_id);
+			int x = this_event->GetX();
+
 			if (p_id == 1) {
-				t.SetX(12); t.SetY(12);
+				t.SetX(x); t.SetY(12);
 				cards.p1.push_back(c);
 			} else {
-				t.SetX(12); t.SetY(8);
+				t.SetX(x); t.SetY(8);
 				cards.p2.push_back(c);
 			}
 
