@@ -15,24 +15,25 @@
  * along with EasyRPG Player. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EP_WINDOW_ITEM_H
-#define EP_WINDOW_ITEM_H
+#ifndef EP_WINDOW_HANDCARDS_H
+#define EP_WINDOW_HANDCARDS_H
 
 // Headers
 #include <vector>
-#include "window_help.h"
-#include "window_selectable.h"
+#include "../window_help.h"
+#include "../window_selectable.h"
+#include "cards.h"
 
 /**
  * Window_Item class.
  */
-class Window_Item : public Window_Selectable {
+class Window_Handcards : public Window_Selectable {
 
 public:
 	/**
 	 * Constructor.
 	 */
-	Window_Item(int ix, int iy, int iwidth, int iheight);
+	Window_Handcards(int ix, int iy, int iwidth, int iheight);
 
 	/**
 	 * Gets item.
@@ -53,7 +54,7 @@ public:
 	 *
 	 * @param item_id item to check.
 	 */
-	virtual bool CheckEnable(int item_id);
+	//virtual bool CheckEnable(int item_id);
 
 	/**
 	 * Refreshes the item list.
@@ -79,7 +80,7 @@ public:
 	void SetActor(Game_Actor* actor);
 
 private:
-	std::vector<int> data;
+	std::vector<Cards::monster> data = nullptr;
 
 	Game_Actor* actor = nullptr;
 };

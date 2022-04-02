@@ -19,9 +19,9 @@
 #define EP_SCENE_ITEM_H
 
 // Headers
-#include "scene.h"
-#include "window_help.h"
-#include "window_item.h"
+#include "../scene.h"
+#include "../window_help.h"
+#include "../window_item.h"
 
 /**
  * Scene_Item class.

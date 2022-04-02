@@ -16,20 +16,20 @@
  */
 
 // Headers
-#include "scene_item.h"
-#include "game_map.h"
-#include "game_party.h"
-#include "game_player.h"
-#include "game_switches.h"
-#include "game_system.h"
-#include "game_targets.h"
-#include "input.h"
+#include "scene_cards.h"
+#include "../game_map.h"
+#include "../game_party.h"
+#include "../game_player.h"
+#include "../game_switches.h"
+#include "../game_system.h"
+#include "../game_targets.h"
+#include "../input.h"
 #include <lcf/reader_util.h>
-#include "scene_actortarget.h"
-#include "scene_map.h"
-#include "scene_teleport.h"
-#include "output.h"
-#include "transition.h"
+#include "../scene_actortarget.h"
+#include "../scene_map.h"
+#include "../scene_teleport.h"
+#include "../output.h"
+#include "../transition.h"
 
 Scene_Item::Scene_Item(int item_index) :
 	item_index(item_index) {
