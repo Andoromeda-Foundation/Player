@@ -452,8 +452,7 @@ void Game_Event::UpdateNextMovementAction() {
 		break;
 	case lcf::rpg::EventPage::MoveType_vertical:
 
-		if (Cards::inBattleField(GetId())) {
-
+		if (~Cards::getBattleFieldId(GetId())) {
 			MyMoveTypeForward();
 			break;
 		}
@@ -519,7 +518,8 @@ void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
 
 
-	Cards::instance().current_map_event_id = GetId();
+	auto cards = Cards::instance();
+	cards.current_map_event_id = GetId();
 	Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
 
 	/*const auto prev_dir = 0GetDirection();
@@ -532,7 +532,7 @@ void Game_Event::MyMoveTypeForward() {
 
 	int move_dir = 0;
 
-	if (Cards::owner(GetId()) == 2) {
+	if (Cards::getBattleFieldId(GetId()) == 2) {
 		move_dir = 2;
 	}
 

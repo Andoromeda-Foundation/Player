@@ -891,6 +891,11 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 
 	std::string cmd = ToString(com.string);
 
+	if (cmd == ".dualInit") {
+		Cards::init();
+		return true;
+	}
+
 	if (cmd == ".showSpiritsStatus") {
 		//Cards::p1.push_back();
 		Cards::show();

@@ -59,16 +59,15 @@ namespace Cards {
 
 	struct Instance {
 		int current_map_event_id;
-		std::vector<monster> p1;
-		std::vector<monster> p2;
+		std::vector<monster> deck, hand, battlefield;
 		configor::json json;
 	};
 
 	Instance& instance();
-	bool inBattleField(int id);
-	int owner(int id);
+	int getBattleFieldId(int id);
 	void show();
 	void atk();
+	void draw();
 	void init();
 
 } // namespace Cards

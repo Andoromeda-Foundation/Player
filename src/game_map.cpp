@@ -1451,41 +1451,18 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 			std::string id = "diamond_men";
 			auto c = Cards::monster(json[id]);
 			c.id = events.size();
-
-			/**/
-			/*int tt = rand() % 3;
-			// tt += 2;
-			if (tt == 0) {
-				c.name = "史莱姆";
-				name = "Monster1";
-				offset = 0;
-			} else if (tt == 1) {
-				c.name = "勾勒姆";
-				name = "Monster2";
-				offset = 4;
-			} else if (tt == 2) {
-				c.name = "史莱姆（巨大的）";
-				name = "char_m_sl_g";
-				offset = 2;
-			} else if (tt == 3) {
-				name = "char_m01";
-			} else if (tt == 4) {
-				name = "char_m02";
-			}*/
-
+			c.master = p_id;
 
 			t.SetSpriteGraphic(json[id]["charset"], json[id]["offset"]);
 			t.data()->ID = c.id;
 
 			Game_Event *this_event = Game_Map::GetEvent(this_id);
 			int x = this_event->GetX();
-
+			cards.battlefield.push_back(c);
 			if (p_id == 1) {
 				t.SetX(x); t.SetY(12);
-				cards.p1.push_back(c);
 			} else {
 				t.SetX(x); t.SetY(8);
-				cards.p2.push_back(c);
 			}
 
 			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
