@@ -304,7 +304,7 @@ namespace Cards {
 
 	void atk() {
 
-		/*
+
 		int this_id = _.current_map_event_id, that_id = -1;
 
 		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
@@ -316,9 +316,8 @@ namespace Cards {
 
 		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
 		auto& this_card = _.battlefield[this_id];
-		*/
 
-/*
+
 		int i = 0;
 		for (i=0;i<_.battlefield.size();++i) {
 			if (_.battlefield[i].master != this_card.master) {
@@ -328,7 +327,7 @@ namespace Cards {
 					break;
 				}
 			}
-		}*/
+		}
 
 		/*
 
