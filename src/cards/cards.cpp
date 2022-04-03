@@ -138,6 +138,19 @@ namespace Cards {
 					}
 				},
 				{
+					"bone_dragon", {
+						{"name", "骨龙"},
+						{"cost", 7},
+						{"description", "可从墓地除外至多 3 张卡片进行召唤，每除外 1 张费用减 1。"},
+						{"hp", 12},{"HP", 12},
+						{"mp", 0},{"MP", 0},
+						{"AP", 4},
+						{"DP", 0},
+						{"charset", "18277"},
+						{"offset", 3}
+					}
+				},
+				{
 					"mummy", {
 						{"name", "木乃伊"},
 						{"cost", 3},
@@ -148,6 +161,19 @@ namespace Cards {
 						{"DP", 0},
 						{"charset", "monster-g08"},
 						{"offset", 1}
+					}
+				},
+				{
+					"grim_reaper", {
+						{"name", "死神"},
+						{"cost", 7},
+						{"description", "随机消灭对手战场上的一个使魔，如果战场上没有地方卡牌，则随机丢弃对手一张手牌。"},
+						{"hp", 15},{"HP", 15},
+						{"mp", 0},{"MP", 10},
+						{"AP", 4},
+						{"DP", 0},
+						{"charset", "18277"},
+						{"offset", 2}
 					}
 				},
 				{

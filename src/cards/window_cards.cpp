@@ -43,7 +43,9 @@ bool Window_Cards::CheckInclude(int item_id) {
 }
 
 bool Window_Cards::CheckEnable(int item_id) {
-	return true;
+	Cards::Instance& _ = Cards::instance();
+	return (*data)[item_id].cost <= _.mp;
+
 	/*auto* item = lcf::ReaderUtil::GetElement(lcf::Data::items, item_id);
 	if (!item) {
 		return false;
@@ -56,12 +58,12 @@ bool Window_Cards::CheckEnable(int item_id) {
 }
 
 void Window_Cards::Refresh() {
-	Cards::Instance& _ = Cards::instance();
 	/*for (size_t i = 0; i < _.hand.size(); ++i) {
 		if (this->CheckInclude(_.hand[i].id)) {
 			data.push_back(_.hand[i]);
 		}
 	}*/
+	Cards::Instance& _ = Cards::instance();
 	if (cards_position == 0) {
 		data = &_.deck;
 	} else if (cards_position == 1) {

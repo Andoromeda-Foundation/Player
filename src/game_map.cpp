@@ -1428,6 +1428,14 @@ void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 		return;
 	}
 
+	auto c = cards.hand[cards.selected_id];
+	if (c.cost > cards.mp) {
+		Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
+		return;
+	}
+
+	cards.mp -= c.cost;
+
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
 		if (events.back().GetName() != title) {
@@ -1438,7 +1446,6 @@ void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 			std::string name;
 
 			// auto c = Cards::monster(json, id);
-			auto c = cards.hand[cards.selected_id];
 			configor::json json = cards.json[c.key];
 
 			c.id = t.data()->ID = events.size();

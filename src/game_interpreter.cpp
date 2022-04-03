@@ -912,7 +912,6 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
     msg = ".summon";
     if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
 		std::istringstream iss(cmd); std::string _; int p_id, x, y; iss >> _ >> p_id >> x >> y;
-		Output::Debug("?: {} {} {}", p_id, x, y);
       	Game_Map::newMapEvent("MonsterTemplate", p_id, x, y);
       	return true;
     }
