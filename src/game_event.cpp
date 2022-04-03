@@ -532,7 +532,9 @@ void Game_Event::MyMoveTypeForward() {
 
 	int move_dir = 0;
 
-	if (Cards::getBattleFieldId(GetId()) == 2) {
+	int id = Cards::getBattleFieldId(GetId());
+
+	if (cards.battlefield[id].master == 2) {
 		move_dir = 2;
 	}
 

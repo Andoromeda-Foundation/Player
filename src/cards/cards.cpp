@@ -189,7 +189,7 @@ namespace Cards {
 			if (s.substr(0, 5) != ".card") continue;
 			s = s.substr(6);
 			int cnt = Main_Data::game_party->GetItemCount(party_items[i]);
-			DO(cnt) _.deck.push_back(monster(_.json[s]));
+			DO(cnt) _.deck.push_back(monster(_.json[s], s));
 		}
 
 		DO(7) draw();

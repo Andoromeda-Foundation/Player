@@ -27,20 +27,20 @@
 /**
  * Window_Item class.
  */
-class Window_Handcards : public Window_Selectable {
+class Window_Cards : public Window_Selectable {
 
 public:
 	/**
 	 * Constructor.
 	 */
-	Window_Handcards(int ix, int iy, int iwidth, int iheight);
+	Window_Cards(int ix, int iy, int iwidth, int iheight);
 
 	/**
 	 * Gets item.
 	 *
 	 * @return current selected item.
 	 */
-	const lcf::rpg::Item* GetItem() const;
+	// const lcf::rpg::Item* GetItem() const;
 
 	/**
 	 * Checks if the item should be in the list.
@@ -54,7 +54,7 @@ public:
 	 *
 	 * @param item_id item to check.
 	 */
-	//virtual bool CheckEnable(int item_id);
+	virtual bool CheckEnable(int item_id);
 
 	/**
 	 * Refreshes the item list.
@@ -67,6 +67,7 @@ public:
 	 * @param index index of item to draw.
 	 */
 	void DrawItem(int index);
+	void DrawCardName(std::string name, int cx, int cy, bool enabled) const;
 
 	/**
 	 * Updates the help window.
@@ -80,7 +81,7 @@ public:
 	void SetActor(Game_Actor* actor);
 
 private:
-	std::vector<Cards::monster> data = nullptr;
+	std::vector<Cards::monster>* data = nullptr;
 
 	Game_Actor* actor = nullptr;
 };

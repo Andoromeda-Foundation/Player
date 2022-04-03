@@ -22,11 +22,12 @@
 #include "../scene.h"
 #include "../window_help.h"
 #include "../window_item.h"
+#include "window_cards.h"
 
 /**
- * Scene_Item class.
+ * Scene_Cards class.
  */
-class Scene_Item : public Scene {
+class Scene_Cards : public Scene {
 
 public:
 	/**
@@ -34,7 +35,7 @@ public:
 	 *
 	 * @param item_index index to select.
 	 */
-	Scene_Item(int item_index = 0);
+	Scene_Cards(int item_index = 0);
 
 	void Start() override;
 	void Continue(SceneType prev_scene) override;
@@ -45,7 +46,7 @@ private:
 	/** Displays description about the selected item. */
 	std::unique_ptr<Window_Help> help_window;
 	/** Displays available items. */
-	std::unique_ptr<Window_Item> item_window;
+	std::unique_ptr<Window_Cards> item_window;
 	/** Index of item selected on startup. */
 	int item_index;
 };

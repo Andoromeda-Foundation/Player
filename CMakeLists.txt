@@ -446,6 +446,10 @@ add_library(${PROJECT_NAME} STATIC
 	src/external/rang.hpp
 src/cards/cards.h
 src/cards/cards.cpp
+src/cards/scene_cards.h
+src/cards/scene_cards.cpp
+src/cards/window_cards.h
+src/cards/window_cards.cpp
 )
 
 # These are actually unused when building in CMake

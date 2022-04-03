@@ -1434,7 +1434,11 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 		}
 	}*/
 
-	//events.reserve(events.size() + 1);
+	auto& cards = Cards::instance();
+	if (cards.selected_id == -1 || cards.selected_id >= cards.hand.size()) {
+		Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
+		return;
+	}
 
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
@@ -1443,22 +1447,26 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 		} else {
 			auto& t = events.back();
 
-			std::string name; int offset;
-			auto& cards = Cards::instance();
+			std::string name;
+
 			int this_id = cards.current_map_event_id;
-			configor::json json = cards.json;
 
 			std::string id = "diamond_men";
-			auto c = Cards::monster(json[id]);
-			c.id = events.size();
+			configor::json json = cards.json[id];
+
+			auto c = Cards::monster(json, id);
+			//auto c = cards.hand[cards.selected_id];
+			cards.selected_id = -1;
+
+			c.id = t.data()->ID = events.size();
 			c.master = p_id;
 
-			t.SetSpriteGraphic(json[id]["charset"], json[id]["offset"]);
-			t.data()->ID = c.id;
+			t.SetSpriteGraphic(json["charset"], json["offset"]);
 
 			Game_Event *this_event = Game_Map::GetEvent(this_id);
 			int x = this_event->GetX();
 			cards.battlefield.push_back(c);
+
 			if (p_id == 1) {
 				t.SetX(x); t.SetY(12);
 			} else {

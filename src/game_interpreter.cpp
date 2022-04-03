@@ -61,6 +61,7 @@
 #include "algo.h"
 #include "rand.h"
 #include "cards/cards.h"
+#include "cards/scene_cards.h"
 
 enum BranchSubcommand {
 	eOptionBranchElse = 1
@@ -888,8 +889,15 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 		return false;
 	}
 
-
 	std::string cmd = ToString(com.string);
+	if (cmd == ".summon 1") {
+		Game_Map::newMapEvent("MonsterTemplate", 1);
+		return true;
+	}
+	if (cmd == ".summon 2") {
+		Game_Map::newMapEvent("MonsterTemplate", 2);
+		return true;
+	}
 
 	if (cmd == ".dualInit") {
 		Cards::init();
@@ -902,14 +910,24 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 		return true;
 	}
 
-	if (cmd == ".summon 1") {
-		Game_Map::newMapEvent("MonsterTemplate", 1);
-		return true;
-	}
-	if (cmd == ".summon 2") {
-		Game_Map::newMapEvent("MonsterTemplate", 2);
-		return true;
-	}
+	std::string msg;
+    msg = ".showHand";
+	if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+    	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
+      	return true;
+    }
+
+    msg = ".showGrave";
+    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
+      	return true;
+    }
+
+    msg = ".showDeck";
+    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
+      	return true;
+    }
 
 	auto pm = PendingMessage();
 	pm.SetIsEventMessage(true);

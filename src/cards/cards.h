@@ -25,21 +25,20 @@
 
 namespace Cards {
 
+	struct Instance;
+	Instance& instance();
+
 	struct monster {
-		int master;
-		int id;
-		std::string name; int cost;
+		std::string name; int cost; int master, id;
 		int hp, HP, mp, MP;
 		int AP, DP;
 
 		monster() {
 		}
 
-		monster(configor::json json) {
-			name = std::string(json["name"]);
+		monster(configor::json json, std::string name): name(name)  {
 			cost = json["cost"];
-			hp = json["hp"]; HP = json["HP"];
-			mp = json["mp"]; MP = json["MP"];
+			hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
 			AP = json["AP"]; DP = json["DP"];
 		}
 
@@ -58,12 +57,11 @@ namespace Cards {
 	};
 
 	struct Instance {
-		int current_map_event_id;
+		int current_map_event_id, selected_id;
 		std::vector<monster> deck, hand, battlefield;
 		configor::json json;
 	};
 
-	Instance& instance();
 	int getBattleFieldId(int id);
 	void show();
 	void atk();
