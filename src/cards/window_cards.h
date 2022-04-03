@@ -33,7 +33,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	Window_Cards(int ix, int iy, int iwidth, int iheight);
+	Window_Cards(int cards_position, int ix, int iy, int iwidth, int iheight);
 
 	/**
 	 * Gets item.
@@ -82,7 +82,7 @@ public:
 
 private:
 	std::vector<Cards::monster>* data = nullptr;
-
+	int cards_position;
 	Game_Actor* actor = nullptr;
 };
 

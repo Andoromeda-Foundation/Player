@@ -31,15 +31,15 @@
 #include "../output.h"
 #include "../transition.h"
 
-Scene_Cards::Scene_Cards(int item_index) :
-	item_index(item_index) {
+Scene_Cards::Scene_Cards(int cards_position, int item_index) :
+	cards_position(cards_position), item_index(item_index) {
 	Scene::type = Scene::Item;
 }
 
 void Scene_Cards::Start() {
 	// Create the windows
 	help_window.reset(new Window_Help(0, 0, SCREEN_TARGET_WIDTH, 32));
-	item_window.reset(new Window_Cards(0, 32, SCREEN_TARGET_WIDTH, SCREEN_TARGET_HEIGHT - 32));
+	item_window.reset(new Window_Cards(cards_position, 0, 32, SCREEN_TARGET_WIDTH, SCREEN_TARGET_HEIGHT - 32));
 	item_window->SetHelpWindow(help_window.get());
 	item_window->Refresh();
 	item_window->SetIndex(item_index);

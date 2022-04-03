@@ -911,21 +911,24 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 	}
 
 	std::string msg;
-    msg = ".showHand";
-	if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
-    	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
-      	return true;
-    }
-
-    msg = ".showGrave";
-    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
-      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
-      	return true;
-    }
-
     msg = ".showDeck";
     if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
-      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>());
+      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>(0));
+      	return true;
+    }
+    msg = ".showHand";
+	if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+    	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>(1));
+      	return true;
+    }
+	msg = ".showBattlefield";
+    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>(2));
+      	return true;
+    }
+    msg = ".showGrave";
+    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+      	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>(3));
       	return true;
     }
 

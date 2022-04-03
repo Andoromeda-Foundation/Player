@@ -28,7 +28,8 @@
 #include "cards.h"
 #include "window_cards.h"
 
-Window_Cards::Window_Cards(int ix, int iy, int iwidth, int iheight) :
+Window_Cards::Window_Cards(int cards_position, int ix, int iy, int iwidth, int iheight) :
+	cards_position(cards_position),
 	Window_Selectable(ix, iy, iwidth, iheight) {
 	column_max = 2;
 }
@@ -63,7 +64,15 @@ void Window_Cards::Refresh() {
 			data.push_back(_.hand[i]);
 		}
 	}*/
-	data = &Cards::instance().deck;
+	if (cards_position == 0) {
+		data = &_.deck;
+	} else if (cards_position == 1) {
+		data = &_.hand;
+	} else if (cards_position == 2) {
+		data = &_.grave;
+	} else {
+		data = &_.battlefield;
+	}
 
 	item_max = data->size();
 

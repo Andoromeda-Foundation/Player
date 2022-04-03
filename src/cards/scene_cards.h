@@ -35,7 +35,7 @@ public:
 	 *
 	 * @param item_index index to select.
 	 */
-	Scene_Cards(int item_index = 0);
+	Scene_Cards(int cards_position = 0, int item_index = 0);
 
 	void Start() override;
 	void Continue(SceneType prev_scene) override;
@@ -48,7 +48,7 @@ private:
 	/** Displays available items. */
 	std::unique_ptr<Window_Cards> item_window;
 	/** Index of item selected on startup. */
-	int item_index;
+	int cards_position, item_index;
 };
 
 #endif
