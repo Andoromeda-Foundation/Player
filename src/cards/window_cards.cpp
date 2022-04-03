@@ -57,8 +57,7 @@ bool Window_Cards::CheckEnable(int item_id) {
 
 void Window_Cards::Refresh() {
 	Cards::Instance& _ = Cards::instance();
-
-
+	Output::Debug("52323232");
 	/*for (size_t i = 0; i < _.hand.size(); ++i) {
 		if (this->CheckInclude(_.hand[i].id)) {
 			data.push_back(_.hand[i]);
@@ -73,7 +72,7 @@ void Window_Cards::Refresh() {
 	} else {
 		data = &_.battlefield;
 	}
-
+	data = &_.deck;
 	item_max = data->size();
 
 	CreateContents();
@@ -88,38 +87,23 @@ void Window_Cards::Refresh() {
 }
 
 void Window_Cards::DrawCardName(std::string name, int cx, int cy, bool enabled) const {
-	int color = enabled ? Font::ColorDefault : Font::ColorDisabled;
-	contents->TextDraw(cx, cy, color, name);
+	//int color = enabled ? Font::ColorDefault : Font::ColorDisabled;
+	//contents->TextDraw(cx, cy, color, name);
 }
 
 void Window_Cards::DrawItem(int index) {
-	Rect rect = GetItemRect(index);
+	/*Rect rect = GetItemRect(index);
 	contents->ClearRect(rect);
 
-	//int item_id = data[index];
-
-	/*if (item_id > 0) {
-		int number = Main_Data::game_party->GetItemCount(item_id);
-
-		// Items are guaranteed to be valid
-		const lcf::rpg::Item* item = lcf::ReaderUtil::GetElement(lcf::Data::items, item_id);
-		if (actor) {
-			if (item->use_skill) {
-				number += actor->GetItemCount(item_id);
-			}
-		}
-
-		bool enabled = CheckEnable(item_id);
-		DrawCardName(*item, rect.x, rect.y, enabled);
-
-		Font::SystemColor color = enabled ? Font::ColorDefault : Font::ColorDisabled;
-		contents->TextDraw(rect.x + rect.width - 24, rect.y, color, fmt::format("{}{:3d}", lcf::rpg::Terms::TermOrDefault(lcf::Data::terms.easyrpg_item_number_separator, ":"), number));
-	}*/
-	DrawCardName((*data)[index].name, rect.x, rect.y, 1);
+	Output::Debug("1232123");
+	auto json = Cards::instance().json[(*data)[index].name];
+	// DrawCardName(json["name"], rect.x, rect.y, 1);
+	DrawCardName("123", rect.x, rect.y, 1);
+	*/
 }
 
 void Window_Cards::UpdateHelp() {
-	// help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
+	// help_window->SetText((*data)[index].info());
 }
 
 void Window_Cards::SetActor(Game_Actor * actor) {
