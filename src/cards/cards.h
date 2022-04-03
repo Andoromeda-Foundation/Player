@@ -28,20 +28,27 @@ namespace Cards {
 	struct Instance;
 	Instance& instance();
 
+	struct magic {
+		virtual void process()=0;
+		virtual ~magic() {}
+	};
+
+	struct draw_specific : magic {
+		std::string key;
+		draw_specific(std::string key):key(key){};
+		void process();
+	};
+
 	struct monster {
 		std::string key; std::string name; int cost; int master, id;
 		int hp, HP, mp, MP;
 		int AP, DP;
 
-		monster() {
-		}
+		std::vector<magic*> battlecry, deathrattle;
 
-		monster(configor::json json, std::string key): key(key) {
-			cost = json["cost"]; name = std::string(json["name"]);
-			hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
-			AP = json["AP"]; DP = json["DP"];
-		}
-
+		monster(){};
+		monster(configor::json json, std::string key);
+		void dead();
 		std::string info();
 	};
 

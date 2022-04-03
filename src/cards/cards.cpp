@@ -16,6 +16,36 @@ namespace Cards {
 
 	Instance _;
 
+
+	void draw_specific::process() {
+		Output::Debug("draw skull");
+		for (int i=0;i<_.deck.size();++i) {
+			if (_.deck[i].key == key) {
+				_.hand.push_back(_.deck[i]);
+				_.deck.erase(_.deck.begin() + i);
+				return;
+			}
+		}
+	}
+
+	monster::monster(configor::json json, std::string key): key(key) {
+		cost = json["cost"]; name = std::string(json["name"]);
+		hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
+		AP = json["AP"]; DP = json["DP"];
+		if (key == "skull") {
+			deathrattle.push_back(new draw_specific("skull"));
+		}
+	}
+
+	void monster::dead() {
+		auto map_event = Game_Map::GetEvent(id); map_event->SetActive(false);
+		Output::Debug("deathrattle size: {}", deathrattle.size());
+		for (int i=0;i<deathrattle.size();++i) {
+			deathrattle[i]->process();
+		}
+		deathrattle.clear();
+	}
+
 	std::string monster::info() {
 		std::string z;
 		z += name + " " +
@@ -341,7 +371,8 @@ namespace Cards {
 			_.battlefield[i].hp -= this_card.AP;
 			if (_.battlefield[i].hp <= 0) {
 				Main_Data::game_screen->ShowBattleAnimation(143, _.battlefield[i].id, 0);
-				that_event->SetActive(false);
+				// that_event->SetActive(false);
+				_.battlefield[i].dead();
 				_.battlefield.erase(_.battlefield.begin() + i);
 			} else {
 				Main_Data::game_screen->ShowBattleAnimation(142, _.battlefield[i].id, 0);
