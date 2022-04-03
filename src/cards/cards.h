@@ -29,31 +29,20 @@ namespace Cards {
 	Instance& instance();
 
 	struct monster {
-		std::string name; int cost; int master, id;
+		std::string key; std::string name; int cost; int master, id;
 		int hp, HP, mp, MP;
 		int AP, DP;
 
 		monster() {
 		}
 
-		monster(configor::json json, std::string name): name(name)  {
-			cost = json["cost"];
+		monster(configor::json json, std::string key): key(key) {
+			cost = json["cost"]; name = std::string(json["name"]);
 			hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
 			AP = json["AP"]; DP = json["DP"];
 		}
 
-		std::string info() {
-			std::string z;
-
-			z += name + " " +
-				 std::to_string(cost) + "费 " +
-				 "HP " + std::to_string(hp) + "/" + std::to_string(HP) + " "
-				 "MP " + std::to_string(mp) + "/" + std::to_string(MP) + " "
-				 "AP " + std::to_string(AP) + " "
-				 "DP " + std::to_string(DP) + " ";
-
-			return z;
-		}
+		std::string info();
 	};
 
 	struct Instance {

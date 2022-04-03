@@ -32,6 +32,7 @@ Window_Cards::Window_Cards(int cards_position, int ix, int iy, int iwidth, int i
 	cards_position(cards_position),
 	Window_Selectable(ix, iy, iwidth, iheight) {
 	column_max = 2;
+	index = 0;
 }
 
 bool Window_Cards::CheckInclude(int item_id) {
@@ -57,7 +58,6 @@ bool Window_Cards::CheckEnable(int item_id) {
 
 void Window_Cards::Refresh() {
 	Cards::Instance& _ = Cards::instance();
-	Output::Debug("52323232");
 	/*for (size_t i = 0; i < _.hand.size(); ++i) {
 		if (this->CheckInclude(_.hand[i].id)) {
 			data.push_back(_.hand[i]);
@@ -72,7 +72,6 @@ void Window_Cards::Refresh() {
 	} else {
 		data = &_.battlefield;
 	}
-	data = &_.deck;
 	item_max = data->size();
 
 	CreateContents();
@@ -87,23 +86,29 @@ void Window_Cards::Refresh() {
 }
 
 void Window_Cards::DrawCardName(std::string name, int cx, int cy, bool enabled) const {
-	//int color = enabled ? Font::ColorDefault : Font::ColorDisabled;
-	//contents->TextDraw(cx, cy, color, name);
+	int color = enabled ? Font::ColorDefault : Font::ColorDisabled;
+	contents->TextDraw(cx, cy, color, name);
 }
 
 void Window_Cards::DrawItem(int index) {
-	/*Rect rect = GetItemRect(index);
+	Rect rect = GetItemRect(index);
 	contents->ClearRect(rect);
-
-	Output::Debug("1232123");
-	auto json = Cards::instance().json[(*data)[index].name];
-	// DrawCardName(json["name"], rect.x, rect.y, 1);
-	DrawCardName("123", rect.x, rect.y, 1);
-	*/
+	DrawCardName((*data)[index].name, rect.x, rect.y, 1);
 }
 
 void Window_Cards::UpdateHelp() {
-	// help_window->SetText((*data)[index].info());
+	Cards::Instance& _ = Cards::instance();
+	if (cards_position == 0) {
+		data = &_.deck;
+	} else if (cards_position == 1) {
+		data = &_.hand;
+	} else if (cards_position == 2) {
+		data = &_.grave;
+	} else {
+		data = &_.battlefield;
+	}
+	Output::Debug("window cards index: {}", index);
+	help_window->SetText((*data)[index].info());
 }
 
 void Window_Cards::SetActor(Game_Actor * actor) {

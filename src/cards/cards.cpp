@@ -14,6 +14,16 @@ namespace Cards {
 
 	Instance _;
 
+	std::string monster::info() {
+		std::string z;
+		z += name + " " +
+			std::to_string(cost) + "费 " +
+			"HP " + std::to_string(hp) + "/" + std::to_string(HP) + " "
+			"MP " + std::to_string(mp) + "/" + std::to_string(MP) + " "
+			"AP " + std::to_string(AP);
+		return z;
+	}
+
 	void init() {
 		if (_.json.empty()) {
 			_.json = {

@@ -1456,7 +1456,7 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 
 			// auto c = Cards::monster(json, id);
 			auto c = cards.hand[cards.selected_id];
-			configor::json json = cards.json[c.name];
+			configor::json json = cards.json[c.key];
 
 			c.id = t.data()->ID = events.size();
 			c.master = p_id;

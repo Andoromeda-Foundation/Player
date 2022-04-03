@@ -36,13 +36,6 @@ public:
 	Window_Cards(int cards_position, int ix, int iy, int iwidth, int iheight);
 
 	/**
-	 * Gets item.
-	 *
-	 * @return current selected item.
-	 */
-	// const lcf::rpg::Item* GetItem() const;
-
-	/**
 	 * Checks if the item should be in the list.
 	 *
 	 * @param item_id item to check.
