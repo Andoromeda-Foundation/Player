@@ -898,6 +898,10 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 		Game_Map::newMapEvent("MonsterTemplate", 2);
 		return true;
 	}
+	if (cmd == ".mainLoop") {
+		Cards::mainLoop();
+		return true;
+	}
 	if (cmd == ".dualInit") {
 		Cards::init();
 		return true;
@@ -2214,8 +2218,6 @@ bool Game_Interpreter::CommandChangeSpriteAssociation(lcf::rpg::EventCommand con
 	auto file = ToString(com.string);
 	int idx = com.parameters[1];
 	bool transparent = com.parameters[2] != 0;
-
-	Output::Debug("file idx: {} {}", file, idx);
 
 	actor->SetSprite(file, idx, transparent);
 	Main_Data::game_player->ResetGraphic();

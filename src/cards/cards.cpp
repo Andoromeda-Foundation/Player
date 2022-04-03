@@ -97,13 +97,39 @@ namespace Cards {
 				{
 					"ghost", {
 						{"name", "幽灵"},
-						{"cost", 1},
+						{"cost", 3},
 						{"description", "Ghost Reporting."},
 						{"hp", 5},{"HP", 5},
 						{"mp", 0},{"MP", 0},
 						{"AP", 4},
 						{"DP", 0},
 						{"charset", "Monster1"},
+						{"offset", 3}
+					}
+				},
+				{
+					"mummy", {
+						{"name", "木乃伊"},
+						{"cost", 3},
+						{"description", "."},
+						{"hp", 5},{"HP", 5},
+						{"mp", 0},{"MP", 0},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "monster-g08"},
+						{"offset", 1}
+					}
+				},
+				{
+					"naga", {
+						{"name", "娜迦"},
+						{"cost", 6},
+						{"description", "."},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 0},
+						{"AP", 6},
+						{"DP", 0},
+						{"charset", "monster-g08"},
 						{"offset", 3}
 					}
 				},
@@ -227,9 +253,11 @@ namespace Cards {
 			};
 		};
 
-		_.hand.clear();
 		_.deck.clear();
+		_.hand.clear();
+		_.battlefield.clear();
 
+		// Init Player Deck
 		std::vector<int> party_items;
 		Main_Data::game_party->GetItems(party_items);
 
@@ -241,6 +269,9 @@ namespace Cards {
 			int cnt = Main_Data::game_party->GetItemCount(party_items[i]);
 			DO(cnt) _.deck.push_back(monster(_.json[s], s));
 		}
+
+		// Init Enemy Deck
+		// .. to do
 
 		DO(7) draw();
 	}
@@ -272,7 +303,7 @@ namespace Cards {
 	}
 
 	void atk() {
-		/*
+
 		int this_id = _.current_map_event_id, that_id = -1;
 		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
 		int x = this_event->GetX(), y = this_event->GetY();
@@ -281,17 +312,27 @@ namespace Cards {
 
 		this_id = getBattleFieldId(this_id);
 
+		/*
 		for (i=0;i<_.battlefield.size();++i) {
 			if (_.battlefield[i].master != _.battlefield[this_id].master) {
 				that_event = Game_Map::GetEvent(_.battlefield[i].id);
 				int xx = that_event->GetX(), yy = that_event->GetY();
-				if (xx == x && yy == y - 1) {
+
+				if (xx == x && yy == y || xx == x && yy == y-1 && _.battlefield[this_id].master == 1 || xx == x && yy == y+1 && _.battlefield[this_id].master == 2) {
 					break;
 				}
 			}
 		}
+
 		if (i == _.battlefield.size()) {
-			Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+			if (_.battlefield[this_id].master == 1) {
+				_.ai_hp -= _.battlefield[this_id].AP;
+				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+			} else {
+				_.hp -= _.battlefield[this_id].AP;
+				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+			}
+
 		} else {
 			_.battlefield[i].hp -= _.battlefield[this_id].AP;
 			if (_.battlefield[i].hp <= 0) {
@@ -307,23 +348,21 @@ namespace Cards {
 	void draw() {
 		if (_.deck.empty()) return;
 		int t = rand() % _.deck.size();
-		Output::Debug("Draw id: {}", _.deck[t].name);
 		_.hand.push_back(_.deck[t]);
 		_.deck.erase(_.deck.begin() + t);
 	}
 
+	void mainLoop() {
+		draw();
+		_.turn += 1;
+		_.mp += _.turn;
+		Output::Debug("main loop: {} {}", _.turn, _.mp);
+	}
+
 	void changeAvatar() {
 		Game_Actor* actor = Main_Data::game_actors->GetActor(1);
-
-		if (!actor) {
-			Output::Warning("ChangeSpriteAssociation: Invalid actor ID {}", 1);
-			return;
-		}
-
 		auto file = ToString(Main_Data::game_actors->GetActor(14)->GetName());
 		int idx = int(Main_Data::game_variables->Get(1));
-
-		Output::Debug("change avatar: {} {}", file, idx);
 		actor->SetSprite(file, idx, 0);
 		Main_Data::game_player->ResetGraphic();
 	}

@@ -32,7 +32,6 @@ Window_Cards::Window_Cards(int cards_position, int ix, int iy, int iwidth, int i
 	cards_position(cards_position),
 	Window_Selectable(ix, iy, iwidth, iheight) {
 	column_max = 2;
-	index = 0;
 }
 
 bool Window_Cards::CheckInclude(int item_id) {
@@ -107,8 +106,7 @@ void Window_Cards::UpdateHelp() {
 	} else {
 		data = &_.battlefield;
 	}
-	Output::Debug("window cards index: {}", index);
-	help_window->SetText((*data)[index].info());
+	if (~index) help_window->SetText((*data)[index].info());
 }
 
 void Window_Cards::SetActor(Game_Actor * actor) {

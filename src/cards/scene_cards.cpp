@@ -44,7 +44,6 @@ void Scene_Cards::Start() {
 	item_window->SetHelpWindow(help_window.get());
 	item_window->Refresh();
 	item_window->SetIndex(item_index);
-	Output::Debug("Scene start: {} ", item_index);
 }
 
 void Scene_Cards::Continue(SceneType /* prev_scene */) {

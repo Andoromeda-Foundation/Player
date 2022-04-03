@@ -48,6 +48,11 @@ namespace Cards {
 	struct Instance {
 		int current_map_event_id, selected_id;
 		std::vector<monster> deck, hand, battlefield, grave;
+		int hp, mp, turn;
+
+		std::vector<monster> ai_deck, ai_hand;
+		int ai_hp, ai_mp;
+
 		configor::json json;
 	};
 
@@ -55,6 +60,7 @@ namespace Cards {
 	void show();
 	void atk();
 	void draw();
+	void mainLoop();
 	void init();
 	void changeAvatar();
 
