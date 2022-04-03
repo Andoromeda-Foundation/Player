@@ -450,6 +450,8 @@ src/cards/scene_cards.h
 src/cards/scene_cards.cpp
 src/cards/window_cards.h
 src/cards/window_cards.cpp
+src/cards/cardsinfo_overlay.h
+src/cards/cardsinfo_overlay.cpp
 )
 
 # These are actually unused when building in CMake

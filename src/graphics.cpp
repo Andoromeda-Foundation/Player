@@ -31,6 +31,8 @@
 #include "baseui.h"
 #include "game_clock.h"
 
+#include "./cards/cardsinfo_overlay.h"
+
 using namespace std::chrono_literals;
 
 namespace Graphics {
@@ -40,6 +42,7 @@ namespace Graphics {
 
 	std::unique_ptr<MessageOverlay> message_overlay;
 	std::unique_ptr<FpsOverlay> fps_overlay;
+	std::unique_ptr<CardsInfoOverlay> cardsinfo_overlay;
 
 	std::string window_title_key;
 }
@@ -50,11 +53,13 @@ void Graphics::Init() {
 
 	message_overlay = std::make_unique<MessageOverlay>();
 	fps_overlay = std::make_unique<FpsOverlay>();
+	cardsinfo_overlay = std::make_unique<CardsInfoOverlay>();
 }
 
 void Graphics::Quit() {
 	fps_overlay.reset();
 	message_overlay.reset();
+	cardsinfo_overlay.reset();
 
 	Cache::ClearAll();
 
@@ -64,11 +69,13 @@ void Graphics::Quit() {
 
 void Graphics::Update() {
 	fps_overlay->SetDrawFps(DisplayUi->RenderFps());
+	cardsinfo_overlay->SetDrawFps(true);
 
 	//Update Graphics:
 	if (fps_overlay->Update()) {
 		UpdateTitle();
 	}
+	cardsinfo_overlay->Update();
 	message_overlay->Update();
 }
 
