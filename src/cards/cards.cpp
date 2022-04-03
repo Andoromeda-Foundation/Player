@@ -304,25 +304,33 @@ namespace Cards {
 
 	void atk() {
 
+		/*
 		int this_id = _.current_map_event_id, that_id = -1;
+
+		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
+
 		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
 		int x = this_event->GetX(), y = this_event->GetY();
 
-		int i = 0;
-
 		this_id = getBattleFieldId(this_id);
 
-		/*
+		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
+		auto& this_card = _.battlefield[this_id];
+		*/
+
+/*
+		int i = 0;
 		for (i=0;i<_.battlefield.size();++i) {
-			if (_.battlefield[i].master != _.battlefield[this_id].master) {
+			if (_.battlefield[i].master != this_card.master) {
 				that_event = Game_Map::GetEvent(_.battlefield[i].id);
 				int xx = that_event->GetX(), yy = that_event->GetY();
-
-				if (xx == x && yy == y || xx == x && yy == y-1 && _.battlefield[this_id].master == 1 || xx == x && yy == y+1 && _.battlefield[this_id].master == 2) {
+				if (xx == x && yy == y || xx == x && yy == y-1 && this_card.master == 1 || xx == x && yy == y+1 && this_card.master == 2) {
 					break;
 				}
 			}
-		}
+		}*/
+
+		/*
 
 		if (i == _.battlefield.size()) {
 			if (_.battlefield[this_id].master == 1) {

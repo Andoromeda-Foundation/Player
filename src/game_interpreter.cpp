@@ -62,6 +62,7 @@
 #include "rand.h"
 #include "cards/cards.h"
 #include "cards/scene_cards.h"
+#include <sstream>
 
 enum BranchSubcommand {
 	eOptionBranchElse = 1
@@ -890,14 +891,6 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 	}
 
 	std::string cmd = ToString(com.string);
-	if (cmd == ".summon 1") {
-		Game_Map::newMapEvent("MonsterTemplate", 1);
-		return true;
-	}
-	if (cmd == ".summon 2") {
-		Game_Map::newMapEvent("MonsterTemplate", 2);
-		return true;
-	}
 	if (cmd == ".mainLoop") {
 		Cards::mainLoop();
 		return true;
@@ -916,6 +909,14 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 	}
 
 	std::string msg;
+    msg = ".summon";
+    if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
+		std::istringstream iss(cmd); std::string _; int p_id, x, y; iss >> _ >> p_id >> x >> y;
+		Output::Debug("?: {} {} {}", p_id, x, y);
+      	Game_Map::newMapEvent("MonsterTemplate", p_id, x, y);
+      	return true;
+    }
+
     msg = ".showDeck";
     if (std::equal(msg.begin(), msg.end(), cmd.begin())) {
       	Scene::instance->SetRequestedScene(std::make_shared<Scene_Cards>(0));

@@ -338,8 +338,6 @@ bool Game_Event::ScheduleForegroundExecution(bool by_decision_key, bool face_pla
 	// RPG_RT always resets this everytime this function is called, whether successful or not
 	data()->triggered_by_decision_key = by_decision_key;
 
-	Cards::instance().current_map_event_id = GetId();
-
 	// Output::Debug("ScheduleForegroundExecution: {}", );
 
 	auto& list = GetList();
@@ -516,7 +514,6 @@ void Game_Event::MoveTypeRandom() {
 
 void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
-
 
 	auto cards = Cards::instance();
 	cards.current_map_event_id = GetId();

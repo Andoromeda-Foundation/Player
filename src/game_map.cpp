@@ -1420,19 +1420,7 @@ int Game_Map::GetHighestEventId() {
 
 #include "configor/json.hpp"
 
-void Game_Map::newMapEvent(std::string title, int p_id) {
-
-	/*int id = 0;
-	for (auto& ev: events) {
-		if (ev.GetName() == title) {
-			//Game_Event evv = ev;
-			//int id = GetHighestEventId();
-			// evv.data.ID = id;
-			//evv.SetX(5); evv.SetY(5);
-			// events.emplace_back(id, &evv);
-			break;
-		}
-	}*/
+void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 
 	auto& cards = Cards::instance();
 	if (cards.selected_id == -1 || cards.selected_id >= cards.hand.size()) {
@@ -1449,11 +1437,6 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 
 			std::string name;
 
-			int this_id = cards.current_map_event_id;
-
-
-
-
 			// auto c = Cards::monster(json, id);
 			auto c = cards.hand[cards.selected_id];
 			configor::json json = cards.json[c.key];
@@ -1462,18 +1445,12 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 			c.master = p_id;
 
 			t.SetSpriteGraphic(json["charset"], json["offset"]);
-			Game_Event *this_event = Game_Map::GetEvent(this_id);
-			int x = this_event->GetX();
+
 			cards.battlefield.push_back(c);
 			cards.hand.erase(cards.hand.begin() + cards.selected_id);
 			cards.selected_id = 0;
 
-			if (p_id == 1) {
-				t.SetX(x); t.SetY(12);
-			} else {
-				t.SetX(x); t.SetY(8);
-			}
-
+			t.SetX(x); t.SetY(y);
 			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
 			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
 			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());

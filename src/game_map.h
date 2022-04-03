@@ -77,7 +77,7 @@ class MapUpdateAsyncContext {
  */
 namespace Game_Map {
 
-	void newMapEvent(std::string title, int p_id);
+	void newMapEvent(std::string title, int p_id, int x, int y);
 
 	/**
 	 * Initialize Game_Map.
