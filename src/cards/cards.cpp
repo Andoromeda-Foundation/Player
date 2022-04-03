@@ -6,6 +6,8 @@
 #include "../game_map.h"
 #include "../game_screen.h"
 #include "../game_party.h"
+#include "../game_actors.h"
+#include "../game_variables.h"
 #include "../main_data.h"
 
 #define DO(n) for ( int ____n = n; ____n-->0; )
@@ -308,6 +310,22 @@ namespace Cards {
 		Output::Debug("Draw id: {}", _.deck[t].name);
 		_.hand.push_back(_.deck[t]);
 		_.deck.erase(_.deck.begin() + t);
+	}
+
+	void changeAvatar() {
+		Game_Actor* actor = Main_Data::game_actors->GetActor(1);
+
+		if (!actor) {
+			Output::Warning("ChangeSpriteAssociation: Invalid actor ID {}", 1);
+			return;
+		}
+
+		auto file = ToString(Main_Data::game_actors->GetActor(14)->GetName());
+		int idx = int(Main_Data::game_variables->Get(1));
+
+		Output::Debug("change avatar: {} {}", file, idx);
+		actor->SetSprite(file, idx, 0);
+		Main_Data::game_player->ResetGraphic();
 	}
 
 	Instance& instance() {

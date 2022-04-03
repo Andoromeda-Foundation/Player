@@ -56,6 +56,7 @@ namespace Cards {
 	void atk();
 	void draw();
 	void init();
+	void changeAvatar();
 
 } // namespace Cards
 

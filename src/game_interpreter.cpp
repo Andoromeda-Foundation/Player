@@ -898,14 +898,15 @@ bool Game_Interpreter::CommandShowMessage(lcf::rpg::EventCommand const& com) { /
 		Game_Map::newMapEvent("MonsterTemplate", 2);
 		return true;
 	}
-
 	if (cmd == ".dualInit") {
 		Cards::init();
 		return true;
 	}
-
+	if (cmd == ".changeAvatar") {
+		Cards::changeAvatar();
+		return true;
+	}
 	if (cmd == ".showSpiritsStatus") {
-		//Cards::p1.push_back();
 		Cards::show();
 		return true;
 	}
@@ -2213,6 +2214,9 @@ bool Game_Interpreter::CommandChangeSpriteAssociation(lcf::rpg::EventCommand con
 	auto file = ToString(com.string);
 	int idx = com.parameters[1];
 	bool transparent = com.parameters[2] != 0;
+
+	Output::Debug("file idx: {} {}", file, idx);
+
 	actor->SetSprite(file, idx, transparent);
 	Main_Data::game_player->ResetGraphic();
 	return true;
