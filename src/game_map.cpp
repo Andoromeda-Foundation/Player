@@ -1451,21 +1451,22 @@ void Game_Map::newMapEvent(std::string title, int p_id) {
 
 			int this_id = cards.current_map_event_id;
 
-			std::string id = "diamond_men";
-			configor::json json = cards.json[id];
 
-			auto c = Cards::monster(json, id);
-			//auto c = cards.hand[cards.selected_id];
-			cards.selected_id = -1;
+
+
+			// auto c = Cards::monster(json, id);
+			auto c = cards.hand[cards.selected_id];
+			configor::json json = cards.json[c.name];
 
 			c.id = t.data()->ID = events.size();
 			c.master = p_id;
 
 			t.SetSpriteGraphic(json["charset"], json["offset"]);
-
 			Game_Event *this_event = Game_Map::GetEvent(this_id);
 			int x = this_event->GetX();
 			cards.battlefield.push_back(c);
+			cards.hand.erase(cards.hand.begin() + cards.selected_id);
+			cards.selected_id = 0;
 
 			if (p_id == 1) {
 				t.SetX(x); t.SetY(12);
