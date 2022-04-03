@@ -171,6 +171,19 @@ namespace Cards {
 					}
 				},
 				{
+					"pikeman", {
+						{"name", "枪兵"},
+						{"cost", 1},
+						{"description", "骑兵的冲锋无效。"},
+						{"hp", 3},{"HP", 3},
+						{"mp", 0},{"MP", 0},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "heisic2"},
+						{"offset", 1}
+					}
+				},
+				{
 					"crusader", {
 						{"name", "十字军"},
 						{"cost", 4},
@@ -182,8 +195,33 @@ namespace Cards {
 						{"charset", "23178"},
 						{"offset", 1}
 					}
+				},
+				{
+					"cavalier", {
+						{"name", "骑兵"},
+						{"cost", 6},
+						{"description", "杀伤力随移动距离增大。"},
+						{"hp", 13},{"HP", 13},
+						{"mp", 0},{"MP", 0},
+						{"AP", 8},
+						{"DP", 0},
+						{"charset", "heisic5"},
+						{"offset", 0}
+					}
+				},
+				{
+					"bat", {
+						{"name", "蝙蝠"},
+						{"cost", 2},
+						{"description", ""},
+						{"hp", 3},{"HP", 3},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "17708"},
+						{"offset", 1}
+					}
 				}
-
 			};
 		};
 
