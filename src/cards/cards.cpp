@@ -85,10 +85,10 @@ namespace Cards {
 					"skull", {
 						{"name", "骷髅"},
 						{"cost", 1},
-						{"description", "被法术操纵的人形骨骼。"},
-						{"hp", 3},{"HP", 3},
+						{"description", "被法术操纵的人形骨骼，亡语：从卡组中检索另一张同名卡牌加入手牌。"},
+						{"hp", 2},{"HP", 2},
 						{"mp", 0},{"MP", 0},
-						{"AP", 2},
+						{"AP", 1},
 						{"DP", 0},
 						{"charset", "Monster1"},
 						{"offset", 4}
@@ -307,14 +307,14 @@ namespace Cards {
 
 		int this_id = _.current_map_event_id, that_id = -1;
 
-		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
+		// Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
 
 		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
 		int x = this_event->GetX(), y = this_event->GetY();
 
 		this_id = getBattleFieldId(this_id);
 
-		Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
+		// Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
 		auto& this_card = _.battlefield[this_id];
 
 
@@ -329,19 +329,16 @@ namespace Cards {
 			}
 		}
 
-		/*
-
 		if (i == _.battlefield.size()) {
-			if (_.battlefield[this_id].master == 1) {
+			if (this_card.master == 1) {
 				_.ai_hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
 			} else {
 				_.hp -= _.battlefield[this_id].AP;
-				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
 			}
-
 		} else {
-			_.battlefield[i].hp -= _.battlefield[this_id].AP;
+			_.battlefield[i].hp -= this_card.AP;
 			if (_.battlefield[i].hp <= 0) {
 				Main_Data::game_screen->ShowBattleAnimation(143, _.battlefield[i].id, 0);
 				that_event->SetActive(false);
@@ -349,7 +346,7 @@ namespace Cards {
 			} else {
 				Main_Data::game_screen->ShowBattleAnimation(142, _.battlefield[i].id, 0);
 			}
-		}*/
+		}
 	}
 
 	void draw() {

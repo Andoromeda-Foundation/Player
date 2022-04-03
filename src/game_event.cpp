@@ -517,15 +517,7 @@ void Game_Event::MyMoveTypeForward() {
 
 	auto& cards = Cards::instance();
 	cards.current_map_event_id = GetId();
-	Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
-
-	/*const auto prev_dir = 0GetDirection();
-
-	const auto reverse_dir = ReverseDir(default_dir);
-	int move_dir = GetDirection();
-	if (move_dir != reverse_dir) {
-		move_dir = default_dir;
-	}*/
+	// Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
 
 	int move_dir = 0;
 
