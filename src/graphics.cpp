@@ -47,6 +47,10 @@ namespace Graphics {
 	std::string window_title_key;
 }
 
+void Graphics::setCardsInfo(bool value) {
+	cardsinfo_overlay->SetDrawFps(value);
+}
+
 void Graphics::Init() {
 	Scene::Push(std::make_shared<Scene>());
 	UpdateSceneCallback();
@@ -69,7 +73,7 @@ void Graphics::Quit() {
 
 void Graphics::Update() {
 	fps_overlay->SetDrawFps(DisplayUi->RenderFps());
-	cardsinfo_overlay->SetDrawFps(true);
+	// cardsinfo_overlay->SetDrawFps(true);
 
 	//Update Graphics:
 	if (fps_overlay->Update()) {

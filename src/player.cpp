@@ -1193,7 +1193,7 @@ void Player::SetupNewGame() {
 }
 
 void Player::SetupPlayerSpawn() {
-	Cards::init();
+	Cards::initJson();
 	int map_id = Player::start_map_id == -1 ?
 		lcf::Data::treemap.start.party_map_id : Player::start_map_id;
 

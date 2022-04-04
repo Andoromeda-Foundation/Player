@@ -36,6 +36,7 @@
 #include <lcf/rpg/savevehiclelocation.h>
 #include <lcf/rpg/savecommonevent.h>
 #include "async_op.h"
+#include "cards/cards.h"
 
 class FileRequestAsync;
 struct BattleArgs;
@@ -77,6 +78,7 @@ class MapUpdateAsyncContext {
  */
 namespace Game_Map {
 
+	void summon(Cards::monster c, int p_id, int x, int y);
 	void newMapEvent(std::string title, int p_id, int x, int y);
 
 	/**

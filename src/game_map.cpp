@@ -52,7 +52,6 @@
 #include <lcf/rpg/save.h>
 #include "scene_gameover.h"
 #include "feature.h"
-#include "cards/cards.h"
 
 namespace {
 	lcf::rpg::SaveMapInfo map_info;
@@ -1420,6 +1419,32 @@ int Game_Map::GetHighestEventId() {
 
 #include "configor/json.hpp"
 
+void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
+	auto& cards = Cards::instance();
+	for (const auto& ev : map->events) {
+		events.emplace_back(GetMapId(), &ev);
+		if (events.back().GetName() != "MonsterTemplate") {
+			events.pop_back();
+		} else {
+			auto& t = events.back();
+
+			std::string name;
+
+			// auto c = Cards::monster(json, id);
+			configor::json json = cards.json[c.key];
+			c.id = t.data()->ID = events.size();
+			c.master = p_id;
+			t.SetSpriteGraphic(json["charset"], json["offset"]);
+			cards.battlefield.push_back(c);
+			t.SetX(x); t.SetY(y);
+			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
+			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
+			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());
+			return;
+		}
+	}
+}
+
 void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 
 	auto& cards = Cards::instance();
@@ -1435,36 +1460,10 @@ void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 	}
 
 	cards.mp -= c.cost;
+	cards.hand.erase(cards.hand.begin() + cards.selected_id);
+	cards.selected_id = 0;
 
-	for (const auto& ev : map->events) {
-		events.emplace_back(GetMapId(), &ev);
-		if (events.back().GetName() != title) {
-			events.pop_back();
-		} else {
-			auto& t = events.back();
-
-			std::string name;
-
-			// auto c = Cards::monster(json, id);
-			configor::json json = cards.json[c.key];
-
-			c.id = t.data()->ID = events.size();
-			c.master = p_id;
-
-			t.SetSpriteGraphic(json["charset"], json["offset"]);
-
-			cards.battlefield.push_back(c);
-			cards.hand.erase(cards.hand.begin() + cards.selected_id);
-			cards.selected_id = 0;
-
-			t.SetX(x); t.SetY(y);
-			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
-			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
-			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());
-			break;
-		}
-	}
-
+	summon(c, p_id, x, y);
 }
 
 Game_Event* Game_Map::GetEvent(int event_id) {

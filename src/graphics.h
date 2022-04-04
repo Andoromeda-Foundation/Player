@@ -54,6 +54,8 @@ namespace Graphics {
 
 	std::shared_ptr<Scene> UpdateSceneCallback();
 
+	void setCardsInfo(bool value);
+
 	/**
 	 * Returns a handle to the message overlay.
 	 * Only used by Output to put messages.

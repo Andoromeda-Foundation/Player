@@ -68,11 +68,12 @@ private:
 	Rect speedup_rect;
 
 	std::string text;
+	std::string text2;
 
 	int last_speed_mod = 1;
 	bool speedup_dirty = true;
 	bool fps_dirty = true;
-	bool draw_fps = true;
+	bool draw_fps = false;
 };
 
 inline std::string CardsInfoOverlay::GetFpsString() const {

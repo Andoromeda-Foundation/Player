@@ -25,6 +25,7 @@
 #include "../font.h"
 #include "../drawable_mgr.h"
 #include "../output.h"
+#include "cards.h"
 
 using namespace std::chrono_literals;
 
@@ -39,34 +40,30 @@ CardsInfoOverlay::CardsInfoOverlay() :
 }
 
 void CardsInfoOverlay::UpdateText() {
-	auto fps = Utils::RoundTo<int>(Game_Clock::GetFPS());
-	text = "FPS: " + std::to_string(fps);
+	// auto fps = Utils::RoundTo<int>(Game_Clock::GetFPS());
+
+	Cards::Instance& _ = Cards::instance();
+	text = "HP: " + std::to_string(_.hp)  + " " +
+		   "MP: " + std::to_string(_.mp) + "/" + std::to_string(_.MP) + " " +
+		   "手牌: " + std::to_string(_.hand.size()) + " " +
+		   "卡组: " + std::to_string(_.deck.size());
+
+	text2  = "HP: " + std::to_string(_.ai_hp)  + " " +
+		   "MP: " + std::to_string(_.ai_mp) + "/" + std::to_string(_.ai_MP) + " " +
+		   "手牌: " + std::to_string(_.ai_hand.size()) + " " +
+		   "卡组: " + std::to_string(_.ai_deck.size());
+
 	fps_dirty = true;
 }
 
 bool CardsInfoOverlay::Update() {
-	int mod = static_cast<int>(Game_Clock::GetGameSpeedFactor());
-	if (mod != last_speed_mod) {
-		speedup_dirty = true;
-		last_speed_mod = mod;
-	}
-
-	auto now = Game_Clock::GetFrameTime();
-	auto dt = now - last_refresh_time;
-	if (dt < refresh_frequency) {
-		return false;
-	}
-	last_refresh_time = now;
-
 	UpdateText();
-
 	return true;
 }
 
 void CardsInfoOverlay::Draw(Bitmap& dst) {
 	if (draw_fps) {
-		if (fps_dirty) {
-			std::string text = GetFpsString();
+		if (true || fps_dirty) {
 			Rect rect = Font::Default()->GetSize(text);
 
 			if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
@@ -79,33 +76,24 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
 
 			fps_dirty = false;
+			dst.Blit(20, 220, *fps_bitmap, fps_rect, 255);
 		}
 
-		dst.Blit(55, 56, *fps_bitmap, fps_rect, 255);
-	}
+		if (true || fps_dirty) {
+			Rect rect = Font::Default()->GetSize(text2);
 
-	// Always drawn when speedup is on independent of FPS
-	if (last_speed_mod > 1) {
-		if (speedup_dirty) {
-			std::string text = "> x" + std::to_string(last_speed_mod);
-
-			Rect rect = Font::Default()->GetSize(text);
-
-			if (!speedup_bitmap || speedup_bitmap->GetWidth() < rect.width + 1) {
+			if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
 				// Height never changes
-				speedup_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
+				fps_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
 			}
-			speedup_bitmap->Clear();
-			speedup_bitmap->Fill(Color(0, 0, 0, 128));
-			speedup_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text);
+			fps_bitmap->Clear();
+			fps_bitmap->Fill(Color(0, 0, 0, 128));
+			fps_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text2);
+			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
 
-			speedup_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
-
-			speedup_dirty = false;
+			fps_dirty = false;
+			dst.Blit(300 - rect.width, 10, *fps_bitmap, fps_rect, 255);
 		}
-
-		int dwidth = dst.GetWidth();
-		dst.Blit(dwidth - speedup_rect.width - 1, 2, *speedup_bitmap, speedup_rect, 255);
 	}
 }
 

@@ -9,6 +9,7 @@
 #include "../game_actors.h"
 #include "../game_variables.h"
 #include "../main_data.h"
+#include "../graphics.h"
 
 #define DO(n) for ( int ____n = n; ____n-->0; )
 
@@ -56,7 +57,7 @@ namespace Cards {
 		return z;
 	}
 
-	void init() {
+	void initJson() {
 		if (_.json.empty()) {
 			_.json = {
 				{
@@ -177,6 +178,19 @@ namespace Cards {
 					}
 				},
 				{
+					"succubus", {
+						{"name", "魅魔"},
+						{"cost", 5},
+						{"description", "魅惑一个非亡灵单位。"},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 10},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "9890"},
+						{"offset", 0}
+					}
+				},
+				{
 					"naga", {
 						{"name", "娜迦"},
 						{"cost", 6},
@@ -237,8 +251,21 @@ namespace Cards {
 						{"mp", 0},{"MP", 0},
 						{"AP", 1},
 						{"DP", 0},
-						{"charset", "viptmp1139"},
+						{"charset", "monster-g04"},
 						{"offset", 0}
+					}
+				},
+				{
+					"witch", {
+						{"name", "魔女"},
+						{"cost", 4},
+						{"description", "应该会各种法术"},
+						{"hp", 6},{"HP", 6},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "monster-g04"},
+						{"offset", 5}
 					}
 				},
 				{
@@ -308,6 +335,9 @@ namespace Cards {
 				}
 			};
 		};
+	}
+
+	void init() {
 
 		_.deck.clear();
 		_.hand.clear();
@@ -327,9 +357,18 @@ namespace Cards {
 		}
 
 		// Init Enemy Deck
-		// .. to do
+		DO(20) {
+			int i = 100 + rand() % 21;
+			auto item = *lcf::ReaderUtil::GetElement(lcf::Data::items, i);
+			std::string s = std::string(item.name);
+			if (s.substr(0, 5) != ".card") continue;
+			s = s.substr(6);
+			_.ai_deck.push_back(monster(_.json[s], s));
+		}
 
-		DO(7) draw();
+		DO(7) draw(); DO(7) ai_draw();
+		_.hp = _.ai_hp = 20;
+		Graphics::setCardsInfo(true);
 	}
 
 	void show() {
@@ -406,6 +445,13 @@ namespace Cards {
 		}
 	}
 
+	void ai_draw() {
+		if (_.ai_deck.empty()) return;
+		int t = rand() % _.ai_deck.size();
+		_.ai_hand.push_back(_.ai_deck[t]);
+		_.ai_deck.erase(_.ai_deck.begin() + t);
+	}
+
 	void draw() {
 		if (_.deck.empty()) return;
 		int t = rand() % _.deck.size();
@@ -413,11 +459,24 @@ namespace Cards {
 		_.deck.erase(_.deck.begin() + t);
 	}
 
+	void ai_turn() {
+		std::random_shuffle(_.ai_hand.begin(), _.ai_hand.end());
+		for (int i=0;i<_.ai_hand.size();++i) {
+			if (_.ai_hand[i].cost <= _.ai_mp) {
+				_.ai_mp -= _.ai_hand[i].cost;
+				Game_Map::summon(_.ai_hand[i], 2, 8 + rand() % 5, 8);
+				_.ai_hand.erase(_.ai_hand.begin() + i);
+			}
+		}
+	}
+
 	void mainLoop() {
-		draw();
+		draw(); ai_draw();
 		_.turn += 1;
-		_.mp += _.turn;
-		Output::Debug("main loop: {} {}", _.turn, _.mp);
+		_.mp = _.MP = _.turn;
+		_.ai_mp = _.ai_MP = _.turn;
+		ai_turn();
+		// Output::Debug("main loop: {} {}", _.turn, _.mp);
 	}
 
 	void changeAvatar() {
