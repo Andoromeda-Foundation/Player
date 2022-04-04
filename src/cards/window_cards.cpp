@@ -43,8 +43,9 @@ bool Window_Cards::CheckInclude(int item_id) {
 }
 
 bool Window_Cards::CheckEnable(int item_id) {
-	Cards::Instance& _ = Cards::instance();
-	return (*data)[item_id].cost <= _.mp;
+	return true;
+	// Cards::Instance& _ = Cards::instance();
+	// return (*data)[item_id].cost <= _.mp;
 
 	/*auto* item = lcf::ReaderUtil::GetElement(lcf::Data::items, item_id);
 	if (!item) {

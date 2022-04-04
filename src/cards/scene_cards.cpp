@@ -34,7 +34,6 @@
 Scene_Cards::Scene_Cards(int cards_position, int item_index) :
 	cards_position(cards_position), item_index(item_index) {
 	Scene::type = Scene::Item;
-	Output::Debug("Scene: {} ", cards_position);
 }
 
 void Scene_Cards::Start() {
@@ -81,5 +80,6 @@ void Scene_Cards::TransitionOut(Scene::SceneType next_scene) {
 	} else {
 		Scene::TransitionOut(next_scene);
 	}*/
-	Transition::instance().InitErase(Transition::TransitionFadeOut, this);
+	Scene::TransitionOut(next_scene);
+	// Transition::instance().InitErase(Transition::TransitionFadeOut, this);
 }
