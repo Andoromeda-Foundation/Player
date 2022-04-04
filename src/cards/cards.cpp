@@ -306,6 +306,32 @@ namespace Cards {
 					}
 				},
 				{
+					"snail", {
+						{"name", "大蜗牛"},
+						{"cost", 1},
+						{"description", "护甲 1。"},
+						{"hp", 2},{"HP", 2},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 1},
+						{"charset", "かたつむり魔物"},
+						{"offset", 0}
+					}
+				},
+				{
+					"magma_snail", {
+						{"name", "熔岩蜗牛"},
+						{"cost", 2},
+						{"description", "护甲 1。"},
+						{"hp", 4},{"HP", 4},
+						{"mp", 0},{"MP", 0},
+						{"AP", 2},
+						{"DP", 1},
+						{"charset", "かたつむり魔物"},
+						{"offset", 2}
+					}
+				},
+				{
 					"crusader", {
 						{"name", "十字军"},
 						{"cost", 4},

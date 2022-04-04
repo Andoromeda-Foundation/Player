@@ -523,27 +523,27 @@ void Game_Event::MyMoveTypeForward() {
 	int move_dir = 0;
 
 	int id = Cards::getBattleFieldId(GetId());
-
+	auto& a = _.battlefield[id];
 	// 是否有阵营不同的单位处在同一格子中
 	bool blocked = false;
 
 	for (int i=0;i<_.battlefield.size();++i) if (i != id) {
 		Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
 		int x = the_event->GetX(), y = the_event->GetY();
-		if (GetX() == x && GetY() == y && _.battlefield[id].master != _.battlefield[i].master) {
+		if (GetX() == x && GetY() == y && a.master != _.battlefield[i].master) {
 			blocked = true;
 			break;
 		}
 	}
 
 	// 是否是魔女并且满蓝
-	if (_.battlefield[id].key == "witch" && _.battlefield[id].mp == _.battlefield[id].MP) {
+	if (a.key == "witch" && a.mp == a.MP) {
 		Output::Debug("witch full power");
 		int d = 3214567, target = -1;
 		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
 			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
 			int x = the_event->GetX(), y = the_event->GetY();
-			if (_.battlefield[id].master != _.battlefield[i].master) {
+			if (a.master != _.battlefield[i].master) {
 				int dd = std::abs(x - GetX()) + std::abs(y - GetY());
 				if (dd < d) {
 					d = dd;
@@ -552,14 +552,14 @@ void Game_Event::MyMoveTypeForward() {
 			}
 		}
 		if (target != -1) {
-			_.battlefield[id].mp = 0;
+			a.mp = 0;
 			_.battlefield[target].damaged(1 + rand() % 6, 77, target);
 			SetStopCount(0);
 			return;
 		}
 	}
 
-	if (_.battlefield[id].master == 2) {
+	if (a.master == 2) {
 		move_dir = 2;
 	}
 
@@ -571,6 +571,9 @@ void Game_Event::MyMoveTypeForward() {
 		SetStopCount(0);
 	}
 	SetMaxStopCountForStep();
+	if (GetStopCount() == 0) {
+		if (a.mp < a.MP) a.mp += 1;
+	}
 }
 
 void Game_Event::MoveTypeCycle(int default_dir) {
