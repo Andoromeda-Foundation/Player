@@ -50,6 +50,7 @@ namespace Cards {
 		monster(configor::json json, std::string key);
 		void dead(int i);
 		void damaged(int d, int aid, int i);
+		void physicalDamaged(int d, int aid, int i);
 		std::string info();
 	};
 

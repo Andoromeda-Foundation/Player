@@ -58,6 +58,10 @@ namespace Cards {
 		}
 	}
 
+	void monster::physicalDamaged(int d, int aid, int i) {
+		d -= DP; if (d > 0) damaged(d, aid, i);
+	}
+
 	std::string monster::info() {
 		std::string z;
 		z += name + " " +
@@ -471,7 +475,7 @@ namespace Cards {
 			}
 		} else {
 			// todo(minakokojima): add damage function.
-			_.battlefield[i].damaged(this_card.AP, 142, i);
+			_.battlefield[i].physicalDamaged(this_card.AP, 142, i);
 		}
 	}
 
