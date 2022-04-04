@@ -38,13 +38,24 @@ namespace Cards {
 		}
 	}
 
-	void monster::dead() {
+	void monster::dead(int i) {
 		auto map_event = Game_Map::GetEvent(id); map_event->SetActive(false);
-		Output::Debug("deathrattle size: {}", deathrattle.size());
 		for (int i=0;i<deathrattle.size();++i) {
 			deathrattle[i]->process();
 		}
 		deathrattle.clear();
+		_.battlefield.erase(_.battlefield.begin() + i);
+	}
+
+	void monster::damaged(int d, int aid, int i) {
+		hp -= d;
+		if (hp <= 0) {
+			if (aid == 142) aid += 1;
+			Main_Data::game_screen->ShowBattleAnimation(aid, id, 0);
+			dead(i);
+		} else {
+			Main_Data::game_screen->ShowBattleAnimation(aid, id, 0);
+		}
 	}
 
 	std::string monster::info() {
@@ -258,10 +269,10 @@ namespace Cards {
 				{
 					"witch", {
 						{"name", "魔女"},
-						{"cost", 4},
-						{"description", "应该会各种法术"},
+						{"cost", 1},
+						{"description", "对最近距离的敌方单位使用火球术，造成 1d6 点伤害。"},
 						{"hp", 6},{"HP", 6},
-						{"mp", 0},{"MP", 0},
+						{"mp", 10},{"MP", 10},
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "monster-g04"},
@@ -298,11 +309,11 @@ namespace Cards {
 					"crusader", {
 						{"name", "十字军"},
 						{"cost", 4},
-						{"description", "攻击两次。"},
+						{"description", "护甲 1。"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 0},{"MP", 0},
 						{"AP", 3},
-						{"DP", 0},
+						{"DP", 1},
 						{"charset", "23178"},
 						{"offset", 1}
 					}
@@ -433,15 +444,8 @@ namespace Cards {
 				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
 			}
 		} else {
-			_.battlefield[i].hp -= this_card.AP;
-			if (_.battlefield[i].hp <= 0) {
-				Main_Data::game_screen->ShowBattleAnimation(143, _.battlefield[i].id, 0);
-				// that_event->SetActive(false);
-				_.battlefield[i].dead();
-				_.battlefield.erase(_.battlefield.begin() + i);
-			} else {
-				Main_Data::game_screen->ShowBattleAnimation(142, _.battlefield[i].id, 0);
-			}
+			// todo(minakokojima): add damage function.
+			_.battlefield[i].damaged(this_card.AP, 142, i);
 		}
 	}
 
@@ -475,6 +479,11 @@ namespace Cards {
 		_.turn += 1;
 		_.mp = _.MP = _.turn;
 		_.ai_mp = _.ai_MP = _.turn;
+
+		for (auto &m: _.battlefield) {
+			if (m.mp < m.MP) m.mp += 1;
+		}
+
 		ai_turn();
 		// Output::Debug("main loop: {} {}", _.turn, _.mp);
 	}

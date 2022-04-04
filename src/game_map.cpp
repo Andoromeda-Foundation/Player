@@ -1421,6 +1421,7 @@ int Game_Map::GetHighestEventId() {
 
 void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 	auto& cards = Cards::instance();
+
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
 		if (events.back().GetName() != "MonsterTemplate") {
@@ -1458,6 +1459,15 @@ void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 		Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
 		return;
 	}
+
+	for (auto &m: cards.battlefield) {
+		auto ev = Game_Map::GetEvent(m.id);
+		if (x == ev->GetX() && y == ev->GetY()) {
+			Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
+			return;
+		}
+	}
+
 
 	cards.mp -= c.cost;
 	cards.hand.erase(cards.hand.begin() + cards.selected_id);

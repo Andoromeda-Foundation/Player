@@ -26,6 +26,7 @@
 #include "game_switches.h"
 #include "game_variables.h"
 #include "game_system.h"
+#include "game_screen.h"
 #include "game_interpreter_map.h"
 #include "main_data.h"
 #include "player.h"
@@ -515,19 +516,54 @@ void Game_Event::MoveTypeRandom() {
 void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
 
-	auto& cards = Cards::instance();
-	cards.current_map_event_id = GetId();
+	auto& _ = Cards::instance();
+	_.current_map_event_id = GetId();
 	// Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
 
 	int move_dir = 0;
 
 	int id = Cards::getBattleFieldId(GetId());
 
-	if (cards.battlefield[id].master == 2) {
+	// 是否有阵营不同的单位处在同一格子中
+	bool blocked = false;
+
+	for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+		Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+		int x = the_event->GetX(), y = the_event->GetY();
+		if (GetX() == x && GetY() == y && _.battlefield[id].master != _.battlefield[i].master) {
+			blocked = true;
+			break;
+		}
+	}
+
+	// 是否是魔女并且满蓝
+	if (_.battlefield[id].key == "witch" && _.battlefield[id].mp == _.battlefield[id].MP) {
+		Output::Debug("witch full power");
+		int d = 3214567, target = -1;
+		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+			int x = the_event->GetX(), y = the_event->GetY();
+			if (_.battlefield[id].master != _.battlefield[i].master) {
+				int dd = std::abs(x - GetX()) + std::abs(y - GetY());
+				if (dd < d) {
+					d = dd;
+					target = i;
+				}
+			}
+		}
+		if (target != -1) {
+			_.battlefield[id].mp = 0;
+			_.battlefield[target].damaged(1 + rand() % 6, 77, target);
+			SetStopCount(0);
+			return;
+		}
+	}
+
+	if (_.battlefield[id].master == 2) {
 		move_dir = 2;
 	}
 
-	Move(move_dir);
+	if (!blocked) Move(move_dir);
 
 	if (IsStopping() && GetStopCount() >= GetMaxStopCount() + 20) {
 		//Move(ReverseDir(move_dir));

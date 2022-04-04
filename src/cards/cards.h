@@ -48,7 +48,8 @@ namespace Cards {
 
 		monster(){};
 		monster(configor::json json, std::string key);
-		void dead();
+		void dead(int i);
+		void damaged(int d, int aid, int i);
 		std::string info();
 	};
 
