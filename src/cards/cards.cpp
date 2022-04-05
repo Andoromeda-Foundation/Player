@@ -11,7 +11,10 @@
 #include "../game_variables.h"
 #include "../main_data.h"
 #include "../graphics.h"
+#include "../spriteset_map.h"
 #include "../font.h"
+#include "../scene_map.h"
+#include "../sprite_character.h"
 
 
 #define DO(n) for ( int ____n = n; ____n-->0; )
@@ -52,7 +55,10 @@ namespace Cards {
 
 	void monster::damaged(int d, int aid, int i) {
 
-		Graphics::GetCardsinfoOverlay().DrawFloatText(50, 50, Font::ColorDefault, std::to_string(std::abs(hp)));
+		Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
+		auto s = scene->spriteset->FindCharacter(Game_Map::GetEvent(id));
+
+		Graphics::GetCardsinfoOverlay().DrawFloatText(s->GetX(), s->GetY()-10, Font::ColorDefault, std::to_string(d));
 
 		hp -= d;
 		if (hp <= 0) {
@@ -279,7 +285,7 @@ namespace Cards {
 				{
 					"witch", {
 						{"name", "魔女"},
-						{"cost", 1},
+						{"cost", 4},
 						{"description", "对最近距离的敌方单位使用火球术，造成 1d6 点伤害。"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
