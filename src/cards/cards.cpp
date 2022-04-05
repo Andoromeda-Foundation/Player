@@ -270,6 +270,71 @@ namespace Cards {
 					}
 				},
 				{
+					"red_dragon", {
+						{"name", "红龙"},
+						{"cost", 7},
+						{"description", "断罪之炎：全场不分敌我造成 3 点火焰魔法伤害。"},
+						{"hp", 14},{"HP", 14},
+						{"mp", 20},{"MP", 20},
+						{"AP", 6},
+						{"DP", 1},
+						{"charset", "135"},
+						{"offset", 0}
+					}
+				},
+				{
+					"black_dragon", {
+						{"name", "黑龙"},
+						{"cost", 7},
+						{"description", "吞噬：立刻吞噬一个 4 费及以下怪物，并获得其攻击力与生命值。"},
+						{"hp", 10},{"HP", 10},
+						{"mp", 20},{"MP", 20},
+						{"AP", 5},
+						{"DP", 1},
+						{"charset", "viptmp3278"},
+						{"offset", 0}
+					}
+				},
+				{
+					"paladin", {
+						{"name", "圣骑士"},
+						{"cost", 5},
+						{"description", "驱魔 2"},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 1},
+						{"AP", 3},
+						{"DP", 1},
+						{"charset", "pc白虎将"},
+						{"offset", 0}
+					}
+				},
+				{
+					"silver_knight", {
+						{"name", "银之骑士"},
+						{"cost", 6},
+						{"description", ""},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 1},
+						{"AP", 3},
+						{"DP", 2},
+						{"charset", "viptmp2278"},
+						{"offset", 4}
+					}
+				},
+				{
+					"death_knight", {
+						{"name", "死亡骑士"},
+						{"cost", 6},
+						{"description", ""},
+						{"hp", 13},{"HP", 13},
+						{"mp", 0},{"MP", 2},
+						{"AP", 7},
+						{"DP", 0},
+						{"charset", "viptmp2278"},
+						{"offset", 1}
+					}
+				},
+				{
 					"centaur", {
 						{"name", "半人马"},
 						{"cost", 1},
