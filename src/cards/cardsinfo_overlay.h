@@ -73,8 +73,6 @@ private:
 	void UpdateText();
 
 	BitmapRef fps_bitmap;
-	BitmapRef speedup_bitmap;
-	Game_Clock::time_point last_refresh_time;
 
 	/** Rect to draw on screen */
 	Rect fps_rect;

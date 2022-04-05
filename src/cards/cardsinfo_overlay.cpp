@@ -25,7 +25,10 @@
 #include "../font.h"
 #include "../drawable_mgr.h"
 #include "../output.h"
+#include "../scene_map.h"
+#include "../sprite_character.h"
 #include "cards.h"
+
 
 using namespace std::chrono_literals;
 
@@ -103,6 +106,34 @@ bool CardsInfoOverlay::Update() {
 }
 
 void CardsInfoOverlay::Draw(Bitmap& dst) {
+
+	Cards::Instance& _ = Cards::instance();
+	Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
+
+	for (auto &m: _.battlefield) {
+		std::string t; Rect rect;
+		t = std::to_string(m.AP);
+		rect = Font::Default()->GetSize(t);
+		// rect.width /= 2; rect.height /= 2;
+
+		auto s = scene->spriteset->FindCharacter(Game_Map::GetEvent(m.id));
+
+		auto bitmap = new Bitmap(rect.width, rect.height, 1);
+		bitmap->Clear();
+		bitmap->Fill(Color(0, 0, 0, 128));
+		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
+		dst.Blit(s->GetX()-6, s->GetY() - 26, *bitmap, rect, 255);
+
+		t = std::to_string(m.hp);
+		rect = Font::Default()->GetSize(t);
+		auto bitmap2 = new Bitmap(rect.width, rect.height, 1);
+		bitmap2->Clear();
+		bitmap2->Fill(Color(0, 0, 0, 128));
+		bitmap2->TextDraw(1, 0, m.hp < m.HP ? Color(255, 140, 140, 255) : Color(255, 255, 255, 255), t);
+		dst.Blit(s->GetX()-6, s->GetY() - 10, *bitmap2, rect, 255);
+
+	}
+
 	if (draw_fps) {
 		if (true || fps_dirty) {
 			Rect rect = Font::Default()->GetSize(text);
@@ -117,7 +148,7 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
 
 			fps_dirty = false;
-			dst.Blit(20, 220, *fps_bitmap, fps_rect, 255);
+			dst.Blit(300 - rect.width, 220, *fps_bitmap, fps_rect, 255);
 		}
 
 		if (true || fps_dirty) {
@@ -133,7 +164,7 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
 
 			fps_dirty = false;
-			dst.Blit(300 - rect.width, 10, *fps_bitmap, fps_rect, 255);
+			dst.Blit(20, 10, *fps_bitmap, fps_rect, 255);
 		}
 	}
 }
