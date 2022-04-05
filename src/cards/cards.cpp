@@ -1,6 +1,7 @@
 
 #include <lcf/reader_util.h>
 #include "cards.h"
+#include "cardsinfo_overlay.h"
 #include "../output.h"
 #include "../game_interpreter.h"
 #include "../game_map.h"
@@ -10,6 +11,8 @@
 #include "../game_variables.h"
 #include "../main_data.h"
 #include "../graphics.h"
+#include "../font.h"
+
 
 #define DO(n) for ( int ____n = n; ____n-->0; )
 
@@ -48,6 +51,9 @@ namespace Cards {
 	}
 
 	void monster::damaged(int d, int aid, int i) {
+
+		Graphics::GetCardsinfoOverlay().DrawFloatText(50, 50, Font::ColorDefault, std::to_string(std::abs(hp)));
+
 		hp -= d;
 		if (hp <= 0) {
 			if (aid == 142) aid += 1;

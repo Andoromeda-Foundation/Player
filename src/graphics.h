@@ -24,6 +24,7 @@
 #include "drawable.h"
 #include "drawable_list.h"
 #include "game_clock.h"
+#include "cards/cardsinfo_overlay.h"
 
 class MessageOverlay;
 class Scene;
@@ -62,6 +63,7 @@ namespace Graphics {
 	 *
 	 * @return message overlay
 	 */
+	CardsInfoOverlay& GetCardsinfoOverlay();
 	MessageOverlay& GetMessageOverlay();
 }
 

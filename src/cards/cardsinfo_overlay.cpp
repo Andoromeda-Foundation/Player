@@ -39,6 +39,28 @@ CardsInfoOverlay::CardsInfoOverlay() :
 	UpdateText();
 }
 
+void CardsInfoOverlay::DrawFloatText(int x, int y, int color, StringView text) {
+	Rect rect = Font::Default()->GetSize(text);
+
+	BitmapRef graphic = Bitmap::Create(rect.width, rect.height);
+	graphic->Clear();
+	graphic->TextDraw(-rect.x, -rect.y, color, text);
+
+	std::shared_ptr<Sprite> floating_text = std::make_shared<Sprite>();
+	floating_text->SetBitmap(graphic);
+	floating_text->SetOx(rect.width / 2);
+	floating_text->SetOy(rect.height + 5);
+	floating_text->SetX(x);
+	// Move 5 pixel down because the number "jumps" with the intended y as the peak
+	floating_text->SetY(y + 5);
+	floating_text->SetZ(Priority_Window + y);
+
+	FloatText float_text;
+	float_text.sprite = floating_text;
+
+	floating_texts.push_back(float_text);
+}
+
 void CardsInfoOverlay::UpdateText() {
 	// auto fps = Utils::RoundTo<int>(Game_Clock::GetFPS());
 
@@ -57,6 +79,25 @@ void CardsInfoOverlay::UpdateText() {
 }
 
 bool CardsInfoOverlay::Update() {
+
+	for (auto it = floating_texts.begin(); it != floating_texts.end();) {
+		int &time = it->remaining_time;
+
+		if (time % 2 == 0) {
+			int modifier = time <= 10 ? 1 :
+						   time < 20 ? 0 :
+						   -1;
+			it->sprite->SetY(it->sprite->GetY() + modifier);
+		}
+
+		--time;
+		if (time <= 0) {
+			it = floating_texts.erase(it);
+		} else {
+			++it;
+		}
+	}
+
 	UpdateText();
 	return true;
 }

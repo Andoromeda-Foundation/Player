@@ -20,10 +20,13 @@
 
 #include <deque>
 #include <string>
+#include <vector>
 #include "../drawable.h"
 #include "../memory_management.h"
 #include "../rect.h"
 #include "../game_clock.h"
+#include "../sprite.h"
+#include "../string_view.h"
 
 struct FloatText {
 	std::shared_ptr<Sprite> sprite;
@@ -60,6 +63,9 @@ public:
 	 * @param value true if we want to draw to screen
 	 */
 	void SetDrawFps(bool value);
+
+
+	void DrawFloatText(int x, int y, int color, StringView text);
 
 	std::vector<FloatText> floating_texts;
 

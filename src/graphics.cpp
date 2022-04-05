@@ -31,8 +31,6 @@
 #include "baseui.h"
 #include "game_clock.h"
 
-#include "./cards/cardsinfo_overlay.h"
-
 using namespace std::chrono_literals;
 
 namespace Graphics {
@@ -159,5 +157,9 @@ std::shared_ptr<Scene> Graphics::UpdateSceneCallback() {
 
 MessageOverlay& Graphics::GetMessageOverlay() {
 	return *message_overlay;
+}
+
+CardsInfoOverlay& Graphics::GetCardsinfoOverlay() {
+	return *cardsinfo_overlay;
 }
 
