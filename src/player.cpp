@@ -324,6 +324,9 @@ void Player::UpdateInput() {
 	if (Input::IsSystemTriggered(Input::TOGGLE_FPS)) {
 		DisplayUi->ToggleShowFps();
 	}
+	if (Input::IsSystemTriggered(Input::TOGGLE_CARDSINFO)) {
+		DisplayUi->ToggleShowCardsinfo();
+	}
 	if (Input::IsSystemTriggered(Input::TAKE_SCREENSHOT)) {
 		Output::TakeScreenshot();
 	}

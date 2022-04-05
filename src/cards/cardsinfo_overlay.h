@@ -58,12 +58,11 @@ public:
 	std::string GetFpsString() const;
 
 	/**
-	 * Set whether we will render the fps.
+	 * Set whether we will render the Cardsinfo.
 	 *
 	 * @param value true if we want to draw to screen
 	 */
-	void SetDrawFps(bool value);
-
+	void SetDrawCardsinfo(bool value);
 
 	void DrawFloatText(int x, int y, int color, StringView text);
 
@@ -85,14 +84,15 @@ private:
 	bool speedup_dirty = true;
 	bool fps_dirty = true;
 	bool draw_fps = false;
+	bool draw_cardsinfo = false;
 };
 
 inline std::string CardsInfoOverlay::GetFpsString() const {
 	return text;
 }
 
-inline void CardsInfoOverlay::SetDrawFps(bool value) {
-	draw_fps = value;
+inline void CardsInfoOverlay::SetDrawCardsinfo(bool value) {
+	draw_cardsinfo = value;
 }
 
 #endif

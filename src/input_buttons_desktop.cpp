@@ -99,6 +99,7 @@ Input::ButtonMappingArray Input::GetDefaultButtonMappings() {
 		{RESET, Keys::F12},
 		{FAST_FORWARD, Keys::F},
 		{FAST_FORWARD_PLUS, Keys::G},
+		{TOGGLE_CARDSINFO, Keys::P},
 
 #if defined(USE_MOUSE) && defined(SUPPORT_MOUSE)
 		{DECISION, Keys::MOUSE_LEFT},

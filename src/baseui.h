@@ -173,6 +173,10 @@ public:
 	 */
 	Game_Clock::duration GetFrameLimit() const;
 
+	bool RenderCardsinfo() const;
+
+	void ToggleShowCardsinfo();
+
 protected:
 	/**
 	 * Protected Constructor. Use CreateBaseUi instead.
@@ -232,6 +236,9 @@ protected:
 
 	/** If we will render fps on the screen even in windowed mode */
 	bool fps_render_window = false;
+
+	/** Whether we will show cardsinfo of the cardgame the screen */
+	bool show_cardsinfo = true;
 };
 
 /** Global DisplayUi variable. */
@@ -291,6 +298,14 @@ inline bool BaseUi::ShowFpsOnTitle() const {
 
 inline void BaseUi::ToggleShowFps() {
 	show_fps = !show_fps;
+}
+
+inline bool BaseUi::RenderCardsinfo() const	{
+	return show_cardsinfo;
+}
+
+inline void BaseUi::ToggleShowCardsinfo() {
+	show_cardsinfo = !show_cardsinfo;
 }
 
 inline Game_Clock::duration BaseUi::GetFrameLimit() const {

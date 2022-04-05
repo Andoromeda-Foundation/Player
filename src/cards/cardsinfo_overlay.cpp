@@ -106,7 +106,6 @@ bool CardsInfoOverlay::Update() {
 }
 
 void CardsInfoOverlay::Draw(Bitmap& dst) {
-
 	Cards::Instance& _ = Cards::instance();
 	Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
 
@@ -134,7 +133,7 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 
 	}
 
-	if (draw_fps) {
+	if (draw_cardsinfo) {
 		if (true || fps_dirty) {
 			Rect rect = Font::Default()->GetSize(text);
 

@@ -75,6 +75,7 @@ namespace Input {
 		FAST_FORWARD_PLUS,
 		TOGGLE_FULLSCREEN,
 		TOGGLE_ZOOM,
+		TOGGLE_CARDSINFO,
 		BUTTON_COUNT
 	};
 
@@ -118,7 +119,8 @@ namespace Input {
 		"FAST_FORWARD_PLUS",
 		"TOGGLE_FULLSCREEN",
 		"TOGGLE_ZOOM",
-		"BUTTON_COUNT");
+		"BUTTON_COUNT",
+		"TOGGLE_CARDSINFO");
 
 	constexpr auto kButtonHelp = lcf::makeEnumTags<InputButton>(
 		"Up Direction",
@@ -160,7 +162,8 @@ namespace Input {
 		"Fast forward plus key",
 		"Toggle Fullscreen mode",
 		"Toggle Window Zoom level",
-		"Total Button Count");
+		"Total Button Count",
+		"Toggle the info of the cards display");
 
 	/**
 	 * Return true if the given button is a system button.
@@ -175,6 +178,7 @@ namespace Input {
 			case TOGGLE_ZOOM:
 			case FAST_FORWARD:
 			case FAST_FORWARD_PLUS:
+			case TOGGLE_CARDSINFO:
 				return true;
 			default:
 				return false;

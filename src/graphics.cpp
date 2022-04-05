@@ -46,7 +46,7 @@ namespace Graphics {
 }
 
 void Graphics::setCardsInfo(bool value) {
-	cardsinfo_overlay->SetDrawFps(value);
+	cardsinfo_overlay->SetDrawCardsinfo(value);
 }
 
 void Graphics::Init() {
@@ -71,6 +71,7 @@ void Graphics::Quit() {
 
 void Graphics::Update() {
 	fps_overlay->SetDrawFps(DisplayUi->RenderFps());
+	cardsinfo_overlay->SetDrawCardsinfo(DisplayUi->RenderCardsinfo());
 	// cardsinfo_overlay->SetDrawFps(true);
 
 	//Update Graphics:
