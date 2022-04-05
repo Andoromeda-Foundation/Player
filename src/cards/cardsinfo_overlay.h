@@ -25,6 +25,11 @@
 #include "../rect.h"
 #include "../game_clock.h"
 
+struct FloatText {
+	std::shared_ptr<Sprite> sprite;
+	int remaining_time = 30;
+};
+
 /**
  * FpsOverlay class.
  * Shows current FPS and the speedup indicator.
@@ -55,6 +60,8 @@ public:
 	 * @param value true if we want to draw to screen
 	 */
 	void SetDrawFps(bool value);
+
+	std::vector<FloatText> floating_texts;
 
 private:
 	void UpdateText();

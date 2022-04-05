@@ -373,6 +373,45 @@ namespace Cards {
 						{"charset", "17708"},
 						{"offset", 1}
 					}
+				},
+				{
+					"farmer_john", {
+						{"name", "农夫约翰"},
+						{"cost", 1},
+						{"description", "抽取一张卡牌。"},
+						{"hp", 2},{"HP", 2},
+						{"mp", 0},{"MP", 10},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "c人狼役職"},
+						{"offset", 2}
+					}
+				},
+				{
+					"werewolf", {
+						{"name", "狼人"},
+						{"cost", 5},
+						{"description", ""},
+						{"hp", 11},{"HP", 11},
+						{"mp", 0},{"MP", 10},
+						{"AP", 6},
+						{"DP", 0},
+						{"charset", "c人狼役職"},
+						{"offset", 0}
+					}
+				},
+				{
+					"brown_bear", {
+						{"name", "棕熊"},
+						{"cost", 4},
+						{"description", ""},
+						{"hp", 9},{"HP", 9},
+						{"mp", 0},{"MP", 10},
+						{"AP", 5},
+						{"DP", 0},
+						{"charset", "tkool4vip9234"},
+						{"offset", 1}
+					}
 				}
 			};
 		};
