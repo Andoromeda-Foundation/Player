@@ -211,11 +211,11 @@ namespace Cards {
 				{
 					"succubus", {
 						{"name", "魅魔"},
-						{"cost", 5},
-						{"description", "魅惑一个非亡灵单位。"},
-						{"hp", 7},{"HP", 7},
-						{"mp", 0},{"MP", 10},
-						{"AP", 2},
+						{"cost", 6},
+						{"description", "10/10 获得一个敌方生物的控制权(10)"},
+						{"hp", 4},{"HP", 4},
+						{"mp", 10},{"MP", 10},
+						{"AP", 1},
 						{"DP", 0},
 						{"charset", "9890"},
 						{"offset", 0}
