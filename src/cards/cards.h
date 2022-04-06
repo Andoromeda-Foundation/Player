@@ -20,8 +20,9 @@
 
 #include <string>
 #include <vector>
-
+#include <map>
 #include "../configor/json.hpp"
+
 
 namespace Cards {
 
@@ -45,6 +46,7 @@ namespace Cards {
 		int AP, DP;
 
 		std::vector<magic*> battlecry, deathrattle;
+		std::map<std::string, int> quirks;
 
 		monster(){};
 		monster(configor::json json, std::string key);

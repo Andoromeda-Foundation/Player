@@ -565,10 +565,39 @@ void Game_Event::MyMoveTypeForward() {
 		if (target != -1) {
 			a.mp = 0;
 			_.battlefield[target].master = a.master;
+			Main_Data::game_screen->ShowBattleAnimation(60, _.battlefield[target].id, 0);
 			SetStopCount(0);
 			return;
 		}
-	}	
+	}
+
+	// 是否是死神并且满蓝
+	if (a.key == "grim_reaper" && a.mp == a.MP) {
+		int d = 3214567, target = -1;
+		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+			int x = the_event->GetX(), y = the_event->GetY();
+			if (a.master != _.battlefield[i].master) {
+				int dd = std::abs(x - GetX()) + std::abs(y - GetY());
+				if (dd < d) {
+					d = dd;
+					target = i;
+				}
+			}
+		}
+		if (target != -1) {
+			a.mp = 0;
+			Game_Event *x = Game_Map::GetEvent(a.id);
+			Game_Event *y = Game_Map::GetEvent(target);
+			// x->SetX(y->GetX()); x->SetY(y->GetY());
+			Main_Data::game_screen->ShowBattleAnimation(5, _.battlefield[target].id, 0);
+			_.battlefield[target].dead(target);
+			SetStopCount(0);
+			return;
+		}
+	}
+
+
 
 	// 是否有阵营不同的单位处在同一格子中
 	bool blocked = false;
