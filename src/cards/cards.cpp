@@ -42,6 +42,13 @@ namespace Cards {
 		if (key == "skull") {
 			deathrattle.push_back(new draw_specific("skull"));
 		}
+
+		if (name == "ghost") {
+			quirks["regeneration"] = 2;
+		}
+		if (name == "slime" || name == "giant_slime") {
+			quirks["regeneration"] = 1;
+		}
 	}
 
 	void monster::dead(int i) {

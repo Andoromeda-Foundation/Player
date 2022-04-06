@@ -622,9 +622,16 @@ void Game_Event::MyMoveTypeForward() {
 		Cards::atk();
 		SetStopCount(0);
 	}
+
+
+
 	SetMaxStopCountForStep();
 	if (GetStopCount() == 0) {
 		if (a.mp < a.MP) a.mp += 1;
+		/*if (a.quirks.find("regeneration") != a.quirks.end()) {
+			a.hp += a.quirks["regeneration"];
+			if (a.hp > a.HP) a.hp = a.HP;
+		} */
 	}
 }
 
