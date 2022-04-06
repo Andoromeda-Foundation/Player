@@ -61,6 +61,7 @@ namespace Cards {
 
 		std::vector<monster> ai_deck, ai_hand;
 		int ai_hp, ai_mp, ai_MP;
+		bool pause;
 
 		configor::json json;
 	};

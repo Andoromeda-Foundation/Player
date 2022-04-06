@@ -517,6 +517,7 @@ void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
 
 	auto& _ = Cards::instance();
+	if (_.pause) return;
 	_.current_map_event_id = GetId();
 	// Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
 

@@ -494,11 +494,24 @@ namespace Cards {
 		};
 	}
 
+	void over() {
+		_.pause = true;
+		if (_.ai_hp <= 0) {
+			Main_Data::game_system->BgmPlay(Main_Data::game_system->GetSystemBGM(Main_Data::game_system->BGM_Victory));
+		} else {
+			Main_Data::game_system->BgmPlay(Main_Data::game_system->GetSystemBGM(Main_Data::game_system->BGM_GameOver));
+		}
+	}
+
 	void init() {
 
-		_.deck.clear();
-		_.hand.clear();
+		_.pause = false;
+		_.deck.clear(); _.ai_deck.clear();
+		_.hand.clear(); _.ai_hand.clear();
 		_.battlefield.clear();
+
+		_.mp = _.MP = _.ai_mp = _.ai_MP = _.turn = 0;
+		_.hp = _.ai_hp = 20;
 
 		// Init Player Deck
 		std::vector<int> party_items;
@@ -524,7 +537,6 @@ namespace Cards {
 		}
 
 		DO(7) draw(); DO(7) ai_draw();
-		_.hp = _.ai_hp = 20;
 		Graphics::setCardsInfo(true);
 	}
 
@@ -585,9 +597,11 @@ namespace Cards {
 			if (this_card.master == 1) {
 				_.ai_hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+				if (_.ai_hp <= 0) over();
 			} else {
 				_.hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
+				if (_.hp <= 0) over();
 			}
 		} else {
 			// todo(minakokojima): add damage function.
@@ -621,6 +635,7 @@ namespace Cards {
 	}
 
 	void mainLoop() {
+		if (_.pause) return;
 		draw(); ai_draw();
 		_.turn += 1;
 		_.mp = _.MP = _.turn;
