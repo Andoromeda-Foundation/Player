@@ -528,7 +528,6 @@ void Game_Event::MyMoveTypeForward() {
 
 	// 是否是魔女并且满蓝
 	if (a.key == "witch" && a.mp == a.MP) {
-		Output::Debug("witch full power");
 		int d = 3214567, target = -1;
 		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
 			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
@@ -548,6 +547,28 @@ void Game_Event::MyMoveTypeForward() {
 			return;
 		}
 	}
+
+	// 是否是魅魔并且满蓝
+	if (a.key == "succubus" && a.mp == a.MP) {
+		int d = 3214567, target = -1;
+		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+			int x = the_event->GetX(), y = the_event->GetY();
+			if (a.master != _.battlefield[i].master) {
+				int dd = std::abs(x - GetX()) + std::abs(y - GetY());
+				if (dd < d) {
+					d = dd;
+					target = i;
+				}
+			}
+		}
+		if (target != -1) {
+			a.mp = 0;
+			_.battlefield[target].master = a.master;
+			SetStopCount(0);
+			return;
+		}
+	}	
 
 	// 是否有阵营不同的单位处在同一格子中
 	bool blocked = false;
