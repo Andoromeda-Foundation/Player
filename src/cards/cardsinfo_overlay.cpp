@@ -15,6 +15,7 @@
  * along with EasyRPG Player. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>
 #include <sstream>
 
 #include "cardsinfo_overlay.h"
@@ -27,6 +28,7 @@
 #include "../output.h"
 #include "../scene_map.h"
 #include "../sprite_character.h"
+#include "../cache.h"
 #include "cards.h"
 
 
@@ -106,18 +108,61 @@ bool CardsInfoOverlay::Update() {
 }
 
 void CardsInfoOverlay::Draw(Bitmap& dst) {
+
+	if (!draw_cardsinfo) return;
+
 	Cards::Instance& _ = Cards::instance();
 	Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
+	std::string t; Rect rect;
+
+	int x = 20, y = 180;
+	for (auto &m: _.hand) {
+		t = m.name.substr(0, std::min(6, int(m.name.size()))) + std::to_string(m.cost);
+		rect = Font::Default()->GetSize(t);
+		auto bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
+		bitmap->Clear();
+		bitmap->Fill(Color(0, 0, 0, 128));
+		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
+		dst.Blit(x, y, *bitmap, rect, 255);
+
+		t = std::to_string(m.AP);
+		rect = Font::Default()->GetSize(t);
+		bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
+		bitmap->Clear();
+		bitmap->Fill(Color(0, 0, 0, 128));
+		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
+		dst.Blit(x + 24, y + 10, *bitmap, rect, 255);
+
+		t = std::to_string(m.HP);
+		rect = Font::Default()->GetSize(t);
+		bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
+		bitmap->Clear();
+		bitmap->Fill(Color(0, 0, 0, 128));
+		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
+		dst.Blit(x + 24, y + 20, *bitmap, rect, 255);
+
+
+		auto character_name = _.json[m.key]["charset"];
+		int offset = _.json[m.key]["offset"];
+		bitmap = Cache::Charset(character_name);
+		rect = Sprite_Character::GetCharacterRect(character_name, offset, rect);
+		rect.x += 24;
+		rect.y += 64;
+		rect.width = 24; rect.height = 32;
+		dst.Blit(x, y, *bitmap, rect, 255);
+		x += 45;
+	}
 
 	for (auto &m: _.battlefield) {
-		std::string t; Rect rect;
+
 		t = std::to_string(m.AP);
 		rect = Font::Default()->GetSize(t);
 		// rect.width /= 2; rect.height /= 2;
 
 		auto s = scene->spriteset->FindCharacter(Game_Map::GetEvent(m.id));
 
-		auto bitmap = new Bitmap(rect.width, rect.height, 1);
+		auto bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
+		//new Bitmap(rect.width, rect.height, 1);
 		bitmap->Clear();
 		bitmap->Fill(Color(0, 0, 0, 128));
 		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
@@ -125,46 +170,43 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 
 		t = std::to_string(m.hp);
 		rect = Font::Default()->GetSize(t);
-		auto bitmap2 = new Bitmap(rect.width, rect.height, 1);
+		auto bitmap2 = Bitmap::Create(rect.width + 1, rect.height - 1, true);
 		bitmap2->Clear();
 		bitmap2->Fill(Color(0, 0, 0, 128));
 		bitmap2->TextDraw(1, 0, m.hp < m.HP ? Color(255, 140, 140, 255) : Color(255, 255, 255, 255), t);
 		dst.Blit(s->GetX()-6, s->GetY() - 10, *bitmap2, rect, 255);
-
 	}
 
-	if (draw_cardsinfo) {
-		if (true || fps_dirty) {
-			Rect rect = Font::Default()->GetSize(text);
+	if (true || fps_dirty) {
+		Rect rect = Font::Default()->GetSize(text);
 
-			if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
-				// Height never changes
-				fps_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
-			}
-			fps_bitmap->Clear();
-			fps_bitmap->Fill(Color(0, 0, 0, 128));
-			fps_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text);
-			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
-
-			fps_dirty = false;
-			dst.Blit(300 - rect.width, 220, *fps_bitmap, fps_rect, 255);
+		if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
+			// Height never changes
+			fps_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
 		}
+		fps_bitmap->Clear();
+		fps_bitmap->Fill(Color(0, 0, 0, 128));
+		fps_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text);
+		fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
 
-		if (true || fps_dirty) {
-			Rect rect = Font::Default()->GetSize(text2);
+		fps_dirty = false;
+		dst.Blit(300 - rect.width, 220, *fps_bitmap, fps_rect, 255);
+	}
 
-			if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
-				// Height never changes
-				fps_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
-			}
-			fps_bitmap->Clear();
-			fps_bitmap->Fill(Color(0, 0, 0, 128));
-			fps_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text2);
-			fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
+	if (true || fps_dirty) {
+		Rect rect = Font::Default()->GetSize(text2);
 
-			fps_dirty = false;
-			dst.Blit(20, 10, *fps_bitmap, fps_rect, 255);
+		if (!fps_bitmap || fps_bitmap->GetWidth() < rect.width + 1) {
+			// Height never changes
+			fps_bitmap = Bitmap::Create(rect.width + 1, rect.height - 1, true);
 		}
+		fps_bitmap->Clear();
+		fps_bitmap->Fill(Color(0, 0, 0, 128));
+		fps_bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), text2);
+		fps_rect = Rect(0, 0, rect.width + 1, rect.height - 1);
+
+		fps_dirty = false;
+		dst.Blit(20, 10, *fps_bitmap, fps_rect, 255);
 	}
 }
 

@@ -327,6 +327,12 @@ void Player::UpdateInput() {
 	if (Input::IsSystemTriggered(Input::TOGGLE_CARDSINFO)) {
 		DisplayUi->ToggleShowCardsinfo();
 	}
+	if (Input::IsSystemTriggered(Input::PREV_CARD)) {
+		Cards::prevCard();
+	}
+	if (Input::IsSystemTriggered(Input::SUCC_CARD)) {
+		Cards::succCard();
+	}
 	if (Input::IsSystemTriggered(Input::TAKE_SCREENSHOT)) {
 		Output::TakeScreenshot();
 	}

@@ -238,7 +238,7 @@ protected:
 	bool fps_render_window = false;
 
 	/** Whether we will show cardsinfo of the cardgame the screen */
-	bool show_cardsinfo = true;
+	bool show_cardsinfo = false;
 };
 
 /** Global DisplayUi variable. */

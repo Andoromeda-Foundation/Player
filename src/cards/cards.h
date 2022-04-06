@@ -74,6 +74,8 @@ namespace Cards {
 	void initJson();
 	void init();
 	void changeAvatar();
+	void prevCard();
+	void succCard();
 
 } // namespace Cards
 

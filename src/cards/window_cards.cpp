@@ -18,11 +18,11 @@
 // Headers
 #include <iomanip>
 #include <sstream>
+#include <lcf/reader_util.h>
 #include "../window_item.h"
 #include "../game_party.h"
 #include "../bitmap.h"
 #include "../font.h"
-#include <lcf/reader_util.h>
 #include "../game_battle.h"
 #include "../output.h"
 #include "cards.h"

@@ -1,7 +1,5 @@
 
 #include <lcf/reader_util.h>
-#include "cards.h"
-#include "cardsinfo_overlay.h"
 #include "../output.h"
 #include "../game_interpreter.h"
 #include "../game_map.h"
@@ -15,7 +13,9 @@
 #include "../font.h"
 #include "../scene_map.h"
 #include "../sprite_character.h"
-
+#include "../game_system.h"
+#include "cards.h"
+#include "cardsinfo_overlay.h"
 
 #define DO(n) for ( int ____n = n; ____n-->0; )
 
@@ -640,6 +640,25 @@ namespace Cards {
 		int idx = int(Main_Data::game_variables->Get(1));
 		actor->SetSprite(file, idx, 0);
 		Main_Data::game_player->ResetGraphic();
+	}
+
+	void prevCard() {
+		if (!_.hand.empty()) {
+			Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Cursor));
+			_.hand.insert(_.hand.begin(), _.hand.back());
+			_.hand.pop_back();
+		} else {
+			Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
+		}
+	}
+	void succCard() {
+		if (!_.hand.empty()) {
+			Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Cursor));
+			_.hand.push_back(_.hand[0]);
+			_.hand.erase(_.hand.begin());
+		} else {
+			Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
+		}
 	}
 
 	Instance& instance() {

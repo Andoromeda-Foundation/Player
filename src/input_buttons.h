@@ -76,6 +76,8 @@ namespace Input {
 		TOGGLE_FULLSCREEN,
 		TOGGLE_ZOOM,
 		TOGGLE_CARDSINFO,
+		PREV_CARD,
+		SUCC_CARD,
 		BUTTON_COUNT
 	};
 
@@ -119,8 +121,11 @@ namespace Input {
 		"FAST_FORWARD_PLUS",
 		"TOGGLE_FULLSCREEN",
 		"TOGGLE_ZOOM",
-		"BUTTON_COUNT",
-		"TOGGLE_CARDSINFO");
+		"TOGGLE_CARDSINFO",
+		"PREV_CARD",
+		"SUCC_CARD",
+		"BUTTON_COUNT"
+	);
 
 	constexpr auto kButtonHelp = lcf::makeEnumTags<InputButton>(
 		"Up Direction",
@@ -179,6 +184,8 @@ namespace Input {
 			case FAST_FORWARD:
 			case FAST_FORWARD_PLUS:
 			case TOGGLE_CARDSINFO:
+			case PREV_CARD:
+			case SUCC_CARD:
 				return true;
 			default:
 				return false;
