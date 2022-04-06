@@ -112,6 +112,8 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 	if (!draw_cardsinfo) return;
 
 	Cards::Instance& _ = Cards::instance();
+
+	if (_.pause) return;
 	Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
 	std::string t; Rect rect;
 
@@ -140,7 +142,6 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 		bitmap->Fill(Color(0, 0, 0, 128));
 		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
 		dst.Blit(x + 24, y + 20, *bitmap, rect, 255);
-
 
 		auto character_name = _.json[m.key]["charset"];
 		int offset = _.json[m.key]["offset"];

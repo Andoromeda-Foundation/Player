@@ -525,17 +525,6 @@ void Game_Event::MyMoveTypeForward() {
 
 	int id = Cards::getBattleFieldId(GetId());
 	auto& a = _.battlefield[id];
-	// 是否有阵营不同的单位处在同一格子中
-	bool blocked = false;
-
-	for (int i=0;i<_.battlefield.size();++i) if (i != id) {
-		Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
-		int x = the_event->GetX(), y = the_event->GetY();
-		if (GetX() == x && GetY() == y && a.master != _.battlefield[i].master) {
-			blocked = true;
-			break;
-		}
-	}
 
 	// 是否是魔女并且满蓝
 	if (a.key == "witch" && a.mp == a.MP) {
@@ -557,6 +546,18 @@ void Game_Event::MyMoveTypeForward() {
 			_.battlefield[target].damaged(1 + rand() % 6, 77, target);
 			SetStopCount(0);
 			return;
+		}
+	}
+
+	// 是否有阵营不同的单位处在同一格子中
+	bool blocked = false;
+
+	for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+		Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+		int x = the_event->GetX(), y = the_event->GetY();
+		if (GetX() == x && GetY() == y && a.master != _.battlefield[i].master) {
+			blocked = true;
+			break;
 		}
 	}
 

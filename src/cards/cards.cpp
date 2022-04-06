@@ -74,6 +74,10 @@ namespace Cards {
 		d -= DP; if (d > 0) damaged(d, aid, i);
 	}
 
+	void monster::atk(int t) {
+		_.battlefield[t].physicalDamaged(AP, 142, t);
+	}
+
 	std::string monster::info() {
 		std::string z;
 		z += name + " " +
@@ -568,19 +572,14 @@ namespace Cards {
 
 	void atk() {
 
-
 		int this_id = _.current_map_event_id, that_id = -1;
-
-		// Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
 
 		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
 		int x = this_event->GetX(), y = this_event->GetY();
 
 		this_id = getBattleFieldId(this_id);
 
-		// Output::Debug("this_id: {}/{}", this_id,_.battlefield.size());
 		auto& this_card = _.battlefield[this_id];
-
 
 		int i = 0;
 		for (i=0;i<_.battlefield.size();++i) {
@@ -604,8 +603,7 @@ namespace Cards {
 				if (_.hp <= 0) over();
 			}
 		} else {
-			// todo(minakokojima): add damage function.
-			_.battlefield[i].physicalDamaged(this_card.AP, 142, i);
+			this_card.atk(i);
 		}
 	}
 

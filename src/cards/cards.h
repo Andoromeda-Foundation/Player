@@ -51,6 +51,7 @@ namespace Cards {
 		void dead(int i);
 		void damaged(int d, int aid, int i);
 		void physicalDamaged(int d, int aid, int i);
+		void atk(int t);
 		std::string info();
 	};
 
@@ -68,6 +69,7 @@ namespace Cards {
 
 	int getBattleFieldId(int id);
 	void show();
+	void atk(int id);
 	void atk();
 	void ai_draw();
 	void draw();
