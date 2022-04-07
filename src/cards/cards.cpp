@@ -415,13 +415,26 @@ namespace Cards {
 					"pikeman", {
 						{"name", "枪兵"},
 						{"cost", 1},
-						{"description", "骑兵的冲锋无效。"},
+						{"description", ""},
 						{"hp", 3},{"HP", 3},
 						{"mp", 0},{"MP", 0},
 						{"AP", 2},
 						{"DP", 0},
 						{"charset", "heisic2"},
 						{"offset", 1}
+					}
+				},
+				{
+					"halberdier", {
+						{"name", "戟兵"},
+						{"cost", 2},
+						{"description", ""},
+						{"hp", 5},{"HP", 5},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "6733"},
+						{"offset", 5}
 					}
 				},
 				{
