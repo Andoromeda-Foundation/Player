@@ -588,8 +588,8 @@ void Game_Event::MyMoveTypeForward() {
 		if (target != -1) {
 			a.mp = 0;
 			Game_Event *x = Game_Map::GetEvent(a.id);
-			Game_Event *y = Game_Map::GetEvent(target);
-			// x->SetX(y->GetX()); x->SetY(y->GetY());
+			Game_Event *y = Game_Map::GetEvent(_.battlefield[target].id);
+			x->SetX(y->GetX()); x->SetY(y->GetY());
 			Main_Data::game_screen->ShowBattleAnimation(5, _.battlefield[target].id, 0);
 			_.battlefield[target].dead(target);
 			SetStopCount(0);
