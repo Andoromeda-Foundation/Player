@@ -620,6 +620,20 @@ void Game_Event::MyMoveTypeForward() {
 		}
 	}
 
+	// 这里应该用引用吗？不确定，请姐姐大人教教。。。
+	// 是否是史莱姆并且满蓝并且血够
+	if (a.key == "slime" && a.mp == a.MP && a.hp > 1) {
+		Cards::monster &child = Cards::monster(_.json["slime"], "slime");
+		a.AP = a.AP > 1 ? a.AP-1 : 0;
+		a.hp = a.hp > 2 ? a.hp-1 : 1;
+		child.mp = 0;
+		child.AP = a.AP;
+		child.hp = a.hp;
+		Game_Map::summon(Cards::monster(_.json["slime"], "slime"), a.master, GetX(), GetY());
+		a.mp = 0;
+		SetStopCount(0);
+		return;
+	}
 
 
 	// 是否有阵营不同的单位处在同一格子中
