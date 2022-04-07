@@ -166,7 +166,7 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 		//new Bitmap(rect.width, rect.height, 1);
 		bitmap->Clear();
 		bitmap->Fill(Color(0, 0, 0, 128));
-		bitmap->TextDraw(1, 0, Color(255, 255, 255, 255), t);
+		bitmap->TextDraw(1, 0, m.AP < (_.json[m.key])["AP"] ? Color(255, 140, 140, 255) : m.AP > (_.json[m.key])["AP"] ? Color(140, 255, 140, 255) : Color(255, 255, 255, 255), t);
 		dst.Blit(s->GetX()-6, s->GetY() - 26, *bitmap, rect, 255);
 
 		t = std::to_string(m.hp);
@@ -174,7 +174,7 @@ void CardsInfoOverlay::Draw(Bitmap& dst) {
 		auto bitmap2 = Bitmap::Create(rect.width + 1, rect.height - 1, true);
 		bitmap2->Clear();
 		bitmap2->Fill(Color(0, 0, 0, 128));
-		bitmap2->TextDraw(1, 0, m.hp < m.HP ? Color(255, 140, 140, 255) : Color(255, 255, 255, 255), t);
+		bitmap2->TextDraw(1, 0, m.hp < (_.json[m.key])["HP"] ? Color(255, 140, 140, 255) : m.hp > (_.json[m.key])["HP"] ? Color(140, 255, 140, 255) : Color(255, 255, 255, 255), t);
 		dst.Blit(s->GetX()-6, s->GetY() - 10, *bitmap2, rect, 255);
 	}
 
