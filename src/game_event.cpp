@@ -571,6 +571,28 @@ void Game_Event::MyMoveTypeForward() {
 		}
 	}
 
+	// 是否是祭司并且满蓝
+	if (a.key == "priest" && a.mp == a.MP) {
+		for (int i=0;i<_.battlefield.size();++i) {
+			if (a.master == _.battlefield[i].master) {
+				a.hp += 2; a.HP += 2;
+				a.AP += 1;
+			}
+		}
+		a.mp = 0;
+		SetStopCount(0);
+		return;
+	}
+
+
+	// 是否是死灵法师并且满蓝
+	if (a.key == "nec" && a.mp == a.MP) {
+		Game_Map::summon(Cards::monster(_.json["skull"], "skull"), a.master, GetX(), GetY());
+		a.mp = 0;
+		SetStopCount(0);
+		return;
+	}
+
 	// 是否是死神并且满蓝
 	if (a.key == "grim_reaper" && a.mp == a.MP) {
 		int d = 3214567, target = -1;

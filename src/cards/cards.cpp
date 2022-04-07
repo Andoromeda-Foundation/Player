@@ -372,6 +372,32 @@ namespace Cards {
 					}
 				},
 				{
+					"priest", {
+						{"name", "祭司"},
+						{"cost", 1},
+						{"description", "10/10 祈祷：全场友方使魔 +1/2（10）。"},
+						{"hp", 6},{"HP", 6},
+						{"mp", 10},{"MP", 10},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "1541"},
+						{"offset", 0}
+					}
+				},
+				{
+					"nec", {
+						{"name", "死灵法师"},
+						{"cost", 1},
+						{"description", "5/5 招魂术：在当前位置召唤一具骷髅（5）"},
+						{"hp", 6},{"HP", 6},
+						{"mp", 5},{"MP", 5},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "cゴスロリ子_黒"},
+						{"offset", 0}
+					}
+				},
+				{
 					"stone_gargoyle", {
 						{"name", "石像鬼"},
 						{"cost", 2},
