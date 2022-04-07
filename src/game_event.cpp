@@ -573,13 +573,14 @@ void Game_Event::MyMoveTypeForward() {
 
 	// 是否是祭司并且满蓝
 	if (a.key == "priest" && a.mp == a.MP) {
-		for (int i=0;i<_.battlefield.size();++i) {
-			if (a.master == _.battlefield[i].master) {
-				a.hp += 2; a.HP += 2;
-				a.AP += 1;
+		for (auto& b: _.battlefield) {
+			if (a.master == b.master) {
+				b.hp += 2; b.HP += 2;
+				b.AP += 1;
 			}
 		}
 		a.mp = 0;
+		Main_Data::game_screen->ShowBattleAnimation(64, a.id, 0);
 		SetStopCount(0);
 		return;
 	}

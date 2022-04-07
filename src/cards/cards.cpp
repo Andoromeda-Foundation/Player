@@ -57,6 +57,7 @@ namespace Cards {
 			deathrattle[i]->process();
 		}
 		deathrattle.clear();
+		_.grave.push_back(_.battlefield[i]);
 		_.battlefield.erase(_.battlefield.begin() + i);
 	}
 
@@ -627,10 +628,12 @@ namespace Cards {
 
 		if (i == _.battlefield.size()) {
 			if (this_card.master == 1) {
+				if (x != 8) return;
 				_.ai_hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
 				if (_.ai_hp <= 0) over();
 			} else {
+				if (x != 12) return;
 				_.hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
 				if (_.hp <= 0) over();
