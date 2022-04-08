@@ -135,12 +135,10 @@ void Window_Item::UpdateHelp() {
 	if (item_name.substr(0, 5) == ".card"){
 		item_name = item_name.substr(6);
 		auto item_monster = Cards::monster(item_name);
-		std::string info = item_monster.info();
-		help_window->SetText(info);
+		help_window->SetText(item_monster.info());
 	} else {
 		help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
 	}
-	//help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
 }
 
 void Window_Item::SetActor(Game_Actor * actor) {

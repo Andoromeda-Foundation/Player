@@ -208,6 +208,7 @@ namespace Cards {
 					if (q.first == "ranged") z += "【远程】";
 					else if (q.first == "cavalry") z += "【骑兵】";
 					else if (q.first == "flying") z += "【飞行】";
+					else if (q.first == "lifesteal") z += "【吸血】";
 				}
 				z += std::string(" ") + std::string(_.json[key]["description"]);
 		return z;
