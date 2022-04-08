@@ -309,7 +309,7 @@ namespace Cards {
 						{"AP", 3},
 						{"DP", 0},
 						{"charset", "22824"},
-						{"offset", 3},
+						{"offset", 6},
 						{
 							"quirks", {
 								{"flying", 1}
