@@ -65,6 +65,9 @@ namespace Cards {
 		void dead(int i);
 		void damaged(int d, int aid, int i);
 		void physicalDamaged(int d, int aid, int i);
+		bool checkmate();
+		void check();
+		int enemyInfront();
 		int enemyNearby();
 		int dist(const monster m);
 		void atk(int t);
@@ -92,6 +95,7 @@ namespace Cards {
 	void mainLoop();
 	void initJson();
 	void init();
+	void over();
 	void changeAvatar();
 	void prevCard();
 	void succCard();

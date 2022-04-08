@@ -663,12 +663,20 @@ void Game_Event::MyMoveTypeForward() {
 	if (target != -1) {
 		a.atk(target);
 	} else {
+
+		if (a.key == "priest") {
+			target = a.enemyInfront();
+			if (target != -1) a.atk(target);
+			else a.check();
+			return;
+		}
+
 		if (a.master == 2) {
 			move_dir = 2;
 		}
 		if (!blocked) Move(move_dir);
-		if (IsStopping()) {
-			Cards::atk();
+		if (IsStopping() && a.checkmate()) {
+			a.check();
 		}
 	}
 }

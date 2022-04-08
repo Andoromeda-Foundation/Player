@@ -86,6 +86,16 @@ namespace Cards {
 		}
 		return -1;
 	}
+	int monster::enemyInfront() {
+		int x = ev()->GetX(), y = ev()->GetY();
+		for (int i=0;i<_.battlefield.size();++i) {
+			if (_.battlefield[i].master != master) {
+				if (x == _.battlefield[i].ev()->GetX()) return i;
+				if (y == _.battlefield[i].ev()->GetY()) return i;
+			}
+		}
+		return -1;
+	}
 
 	void monster::dead(int i) {
 		auto map_event = Game_Map::GetEvent(id); map_event->SetActive(false);
@@ -119,17 +129,32 @@ namespace Cards {
 		d -= DP; if (d > 0) damaged(d, aid, i);
 	}
 
+	bool monster::checkmate() {
+		int y = ev()->GetY();
+		return master == 1 && y == 8 || master == 2 && y == 12;
+	}
+	void monster::check() {
+		if (master == 1) {
+			_.ai_hp -= AP; Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+			if (_.ai_hp <= 0) Cards::over();
+		} else {
+			_.hp -= AP;
+			Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
+			if (_.hp <= 0) Cards::over();
+		}
+	}
+
 	void monster::atk(int t) {
 		int x = ev()->GetX(), xx = _.battlefield[t].ev()->GetX();
 		int y = ev()->GetY(), yy = _.battlefield[t].ev()->GetY();
 
-		if (yy == y-1) {
+		if (yy < y) {
 			ev()->SetFacing(0);
-		} else if (yy == y+1) {
+		} else if (yy > y) {
 			ev()->SetFacing(2);
-		} else if (xx == x+1) {
+		} else if (xx > x) {
 			ev()->SetFacing(1);
-		} else if (xx == x-1) {
+		} else if (xx < x) {
 			ev()->SetFacing(3);
 		}
 
@@ -425,7 +450,7 @@ namespace Cards {
 				{
 					"priest", {
 						{"name", "祭司"},
-						{"cost", 5},
+						{"cost", 1},
 						{"description", "10/10 祈祷：全场其它友方使魔 +1/2（10）。"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
@@ -669,7 +694,7 @@ namespace Cards {
 
 	void atk() {
 
-		int this_id = _.current_map_event_id, that_id = -1;
+		/*int this_id = _.current_map_event_id, that_id = -1;
 
 		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
 		int x = this_event->GetX(), y = this_event->GetY();
@@ -695,7 +720,21 @@ namespace Cards {
 		} else {
 			this_card.atk(i);
 		}
+
+		if (this_card.master == 1) {
+			if (y != 8) return;
+			_.ai_hp -= _.battlefield[this_id].AP;
+			Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
+			if (_.ai_hp <= 0) over();
+		} else {
+			if (y != 12) return;
+			_.hp -= _.battlefield[this_id].AP;
+			Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
+			if (_.hp <= 0) over();
+		}
+		*/
 	}
+
 
 	void ai_draw() {
 		if (_.ai_deck.empty()) return;
