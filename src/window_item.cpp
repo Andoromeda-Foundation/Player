@@ -130,14 +130,19 @@ void Window_Item::DrawItem(int index) {
 }
 
 void Window_Item::UpdateHelp() {
-	std::string item_name = std::string(GetItem()->name);
-	
-	if (item_name.substr(0, 5) == ".card"){
-		item_name = item_name.substr(6);
-		auto item_monster = Cards::monster(item_name);
-		help_window->SetText(item_monster.info());
+	if(GetItem() == nullptr){
+		help_window->SetText("");
 	} else {
-		help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
+		const lcf::rpg::Item* item = lcf::ReaderUtil::GetElement(lcf::Data::items, data[index]);
+		std::string item_name = ToString(item->name);
+		
+		if (item_name.substr(0, 5) == ".card"){
+			item_name = item_name.substr(6);
+			auto item_monster = Cards::monster(item_name);
+			help_window->SetText(item_monster.info());
+		} else {
+			help_window->SetText(ToString(GetItem()->description));
+		}
 	}
 }
 
