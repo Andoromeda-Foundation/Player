@@ -287,6 +287,122 @@ namespace Cards {
 					}
 				},
 				{
+					"elf_dragon", {
+						{"name", "精灵龙"},
+						{"cost", 3},
+						{"description", ""},
+						{"hp", 6},{"HP", 6},
+						{"mp", 0},{"MP", 0},
+						{"AP", 2},
+						{"DP", 0},
+						{"charset", "tkool4vip12311"},
+						{"offset", 3}
+					}
+				},
+				{
+					"griffin", {
+						{"name", "狮鹫"},
+						{"cost", 3},
+						{"description", ""},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "22824"},
+						{"offset", 3},
+						{
+							"quirks", {
+								{"flying", 1}
+							}
+						}
+					}
+				},
+				{
+					"harpy_r", {
+						{"name", "鹰身女妖 R"},
+						{"cost", 2},
+						{"description", ""},
+						{"hp", 5},{"HP", 5},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "tkool4vip7992"},
+						{"offset", 0},
+						{
+							"quirks", {
+								{"flying", 1}
+							}
+						}
+					}
+				},
+				{
+					"harpy_g", {
+						{"name", "鹰身女妖 G"},
+						{"cost", 2},
+						{"description", ""},
+						{"hp", 5},{"HP", 5},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "tkool4vip7992"},
+						{"offset", 2},
+						{
+							"quirks", {
+								{"flying", 1}
+							}
+						}
+					}
+				},
+				{
+					"harpy_b", {
+						{"name", "鹰身女妖 B"},
+						{"cost", 2},
+						{"description", ""},
+						{"hp", 5},{"HP", 5},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "tkool4vip7992"},
+						{"offset", 4},
+						{
+							"quirks", {
+								{"flying", 1}
+							}
+						}
+					}
+				},
+				{
+					"hydra", {
+						{"name", "九头怪"},
+						{"cost", 7},
+						{"description", ""},
+						{"hp", 18},{"HP", 18},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "22825"},
+						{"offset", 2},
+						{
+							"quirks", {
+								{"aoe", 1}
+							}
+						}
+					}
+				},
+				{
+					"angry_chicken", {
+						{"name", "愤怒的小鸡"},
+						{"cost", 0},
+						{"description", "受伤时 AP + 5"},
+						{"hp", 1},{"HP", 1},
+						{"mp", 0},{"MP", 0},
+						{"AP", 1},
+						{"DP", 0},
+						{"charset", "22824"},
+						{"offset", 3}
+					}
+				},
+				{
 					"grim_reaper", {
 						{"name", "死神"},
 						{"cost", 1},
@@ -295,8 +411,8 @@ namespace Cards {
 						{"mp", 10},{"MP", 10},
 						{"AP", 2},
 						{"DP", 0},
-						{"charset", "18277"},
-						{"offset", 2}
+						{"charset", "冥界_ヘルb"},
+						{"offset", 3}
 					}
 				},
 				{
