@@ -39,6 +39,7 @@ namespace Cards {
 		cost = json["cost"]; name = std::string(json["name"]);
 		hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
 		AP = json["AP"]; DP = json["DP"];
+		offset = json["offset"];
 		if (key == "skull") {
 			deathrattle.push_back(new draw_specific("skull"));
 		}
@@ -49,6 +50,22 @@ namespace Cards {
 		if (name == "slime" || name == "giant_slime") {
 			quirks["regeneration"] = 1;
 		}
+	}
+
+	Game_Event* monster::ev() {
+		return Game_Map::GetEvent(id);
+	}
+
+	int monster::enemyNearby() {
+		int x = ev()->GetX(), y = ev()->GetY();
+		for (int i=0;i<_.battlefield.size();++i) {
+			if (_.battlefield[i].master != master) {
+				auto that_event = _.battlefield[i].ev();
+				int xx = that_event->GetX(), yy = that_event->GetY();
+				if (abs(xx-x) + abs(yy-y) == 1) return i;
+			}
+		}
+		return -1;
 	}
 
 	void monster::dead(int i) {
@@ -83,6 +100,7 @@ namespace Cards {
 	}
 
 	void monster::atk(int t) {
+		//todo(minakokojima): 修复朝向
 		_.battlefield[t].physicalDamaged(AP, 142, t);
 	}
 
@@ -118,10 +136,10 @@ namespace Cards {
 						{"cost", 1},
 						{"description", "滑溜溜的魔法生物，可以从地上弹起，黏住敌人，分泌酸液。虽然初始威胁不大，但任由她增殖的话也会带来意想不到的麻烦。"},
 						{"hp", 2},{"HP", 2},
-						{"mp", 0},{"MP", 5},
+						{"mp", 0},{"MP", 3},
 						{"AP", 1},
 						{"DP", 0},
-						{"charset", "Monster1"},
+						{"charset", "char_m_sl_g"},
 						{"offset", 0}
 					}
 				},
@@ -130,8 +148,8 @@ namespace Cards {
 						{"name", "巨型史莱姆"},
 						{"cost", 5},
 						{"description", "在魔法事故中诞生的巨型史莱姆。"},
-						{"hp", 10},{"HP", 10},
-						{"mp", 2},{"MP", 20},
+						{"hp", 6},{"HP", 6},
+						{"mp", 0},{"MP", 3},
 						{"AP", 3},
 						{"DP", 0},
 						{"charset", "char_m_sl_g"},
@@ -375,8 +393,8 @@ namespace Cards {
 				{
 					"priest", {
 						{"name", "祭司"},
-						{"cost", 1},
-						{"description", "10/10 祈祷：全场友方使魔 +1/2（10）。"},
+						{"cost", 5},
+						{"description", "10/10 祈祷：全场其它友方使魔 +1/2（10）。"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
 						{"AP", 2},
@@ -388,7 +406,7 @@ namespace Cards {
 				{
 					"nec", {
 						{"name", "死灵法师"},
-						{"cost", 1},
+						{"cost", 5},
 						{"description", "5/5 招魂术：在当前位置召唤一具骷髅（5）"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 5},{"MP", 5},
@@ -628,25 +646,16 @@ namespace Cards {
 
 		auto& this_card = _.battlefield[this_id];
 
-		int i = 0;
-		for (i=0;i<_.battlefield.size();++i) {
-			if (_.battlefield[i].master != this_card.master) {
-				that_event = Game_Map::GetEvent(_.battlefield[i].id);
-				int xx = that_event->GetX(), yy = that_event->GetY();
-				if (xx == x && yy == y || xx == x && yy == y-1 && this_card.master == 1 || xx == x && yy == y+1 && this_card.master == 2) {
-					break;
-				}
-			}
-		}
+		int i = this_card.enemyNearby();
 
-		if (i == _.battlefield.size()) {
+		if (i == -1) {
 			if (this_card.master == 1) {
-				if (x != 8) return;
+				if (y != 8) return;
 				_.ai_hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
 				if (_.ai_hp <= 0) over();
 			} else {
-				if (x != 12) return;
+				if (y != 12) return;
 				_.hp -= _.battlefield[this_id].AP;
 				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
 				if (_.hp <= 0) over();

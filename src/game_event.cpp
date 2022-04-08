@@ -516,6 +516,8 @@ void Game_Event::MoveTypeRandom() {
 void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
 
+
+
 	auto& _ = Cards::instance();
 	if (_.pause) return;
 	_.current_map_event_id = GetId();
@@ -525,6 +527,9 @@ void Game_Event::MyMoveTypeForward() {
 
 	int id = Cards::getBattleFieldId(GetId());
 	auto& a = _.battlefield[id];
+
+	if (a.mp < a.MP) a.mp += 1;
+	Output::Debug("current turn: {} {} {}", a.name, a.AP, a.hp);
 
 	// 是否是魔女并且满蓝
 	if (a.key == "witch" && a.mp == a.MP) {
@@ -574,7 +579,7 @@ void Game_Event::MyMoveTypeForward() {
 	// 是否是祭司并且满蓝
 	if (a.key == "priest" && a.mp == a.MP) {
 		for (auto& b: _.battlefield) {
-			if (a.master == b.master) {
+			if (a.master == b.master && a.id != b.id) {
 				b.hp += 2; b.HP += 2;
 				b.AP += 1;
 			}
@@ -584,7 +589,6 @@ void Game_Event::MyMoveTypeForward() {
 		SetStopCount(0);
 		return;
 	}
-
 
 	// 是否是死灵法师并且满蓝
 	if (a.key == "nec" && a.mp == a.MP) {
@@ -620,21 +624,28 @@ void Game_Event::MyMoveTypeForward() {
 		}
 	}
 
-	// 这里应该用引用吗？不确定，请姐姐大人教教。。。
 	// 是否是史莱姆并且满蓝并且血够
-	if (a.key == "slime" && a.mp == a.MP && a.hp > 1) {
-		Cards::monster &child = Cards::monster(_.json["slime"], "slime");
-		a.AP = a.AP > 1 ? a.AP-1 : 0;
-		a.hp = a.hp > 2 ? a.hp-1 : 1;
-		child.mp = 0;
-		child.AP = a.AP;
-		child.hp = a.hp;
-		Game_Map::summon(Cards::monster(_.json["slime"], "slime"), a.master, GetX(), GetY());
-		a.mp = 0;
-		SetStopCount(0);
-		return;
-	}
+	if (a.key == "slime" || a.key == "gaint_slime") {
+		move_dir = rand() % 4;
+		if (a.mp == a.MP && a.hp > 1) {
+			// a.AP = a.AP > 1 ? a.AP-1 : 0;
+			a.hp = a.hp-1;
 
+			if (a.hp == 1) {
+				a.offset = 1;
+			} else if (a.hp < 4) {
+				a.offset = 0;
+			} else {
+				a.offset = 2;
+			}
+			a.ev()->SetSpriteGraphic(_.json[a.key]["charset"], a.offset); //?
+			Cards::monster child = a;
+			Game_Map::summon(child, a.master, GetX(), GetY());
+			a.mp = 0;
+			SetStopCount(0);
+			return;
+		}
+	}
 
 	// 是否有阵营不同的单位处在同一格子中
 	bool blocked = false;
@@ -648,23 +659,24 @@ void Game_Event::MyMoveTypeForward() {
 		}
 	}
 
-	if (a.master == 2) {
-		move_dir = 2;
-	}
 
-	if (!blocked) Move(move_dir);
-
-	if (IsStopping() && GetStopCount() >= GetMaxStopCount() + 20) {
-		//Move(ReverseDir(move_dir));
-		Cards::atk();
+	int target = a.enemyNearby();
+	if (target != -1) {
+		a.atk(target);
+		SetStopCount(0);
+	} else {
+		if (a.master == 2) {
+			move_dir = 2;
+		}
+		if (!blocked) Move(move_dir);
+		if (IsStopping() && GetStopCount() >= GetMaxStopCount() + 20) {
+			Cards::atk();
+		}
 		SetStopCount(0);
 	}
 
-
-
-	SetMaxStopCountForStep();
+	//SetMaxStopCountForStep();
 	if (GetStopCount() == 0) {
-		if (a.mp < a.MP) a.mp += 1;
 		/*if (a.quirks.find("regeneration") != a.quirks.end()) {
 			a.hp += a.quirks["regeneration"];
 			if (a.hp > a.HP) a.hp = a.HP;

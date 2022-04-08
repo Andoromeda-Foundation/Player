@@ -21,6 +21,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "../game_event.h"
 #include "../configor/json.hpp"
 
 
@@ -44,15 +45,18 @@ namespace Cards {
 		std::string key; std::string name; int cost; int master, id;
 		int hp, HP, mp, MP;
 		int AP, DP;
+		int offset;
 
 		std::vector<magic*> battlecry, deathrattle;
 		std::map<std::string, int> quirks;
 
 		monster(){};
 		monster(configor::json json, std::string key);
+		Game_Event* ev();
 		void dead(int i);
 		void damaged(int d, int aid, int i);
 		void physicalDamaged(int d, int aid, int i);
+		int enemyNearby();
 		void atk(int t);
 		std::string info();
 	};
