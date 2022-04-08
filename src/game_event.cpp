@@ -515,14 +515,14 @@ void Game_Event::MoveTypeRandom() {
 
 void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
-	SetStopCount(0);
+
 
 	auto& _ = Cards::instance();
 	if (_.pause) return;
+	SetStopCount(0);
+
 	_.current_map_event_id = GetId();
-
-
-	Output::Debug("stopcount maxstopcount: {} {}",GetStopCount(), GetMaxStopCount());
+	// Output::Debug("stopcount maxstopcount: {} {}",GetStopCount(), GetMaxStopCount());
 
 	int move_dir = 0;
 
@@ -553,7 +553,6 @@ void Game_Event::MyMoveTypeForward() {
 		if (target != -1) {
 			a.mp = 0;
 			_.battlefield[target].damaged(1 + rand() % 6, 77, target);
-			SetStopCount(0);
 			return;
 		}
 	}
@@ -576,7 +575,6 @@ void Game_Event::MyMoveTypeForward() {
 			a.mp = 0;
 			_.battlefield[target].master = a.master;
 			Main_Data::game_screen->ShowBattleAnimation(60, _.battlefield[target].id, 0);
-			SetStopCount(0);
 			return;
 		}
 	}
@@ -591,7 +589,6 @@ void Game_Event::MyMoveTypeForward() {
 		}
 		a.mp = 0;
 		Main_Data::game_screen->ShowBattleAnimation(64, a.id, 0);
-		SetStopCount(0);
 		return;
 	}
 
@@ -599,7 +596,6 @@ void Game_Event::MyMoveTypeForward() {
 	if (a.key == "nec" && a.mp == a.MP) {
 		Game_Map::summon(Cards::monster(_.json["skull"], "skull"), a.master, GetX(), GetY());
 		a.mp = 0;
-		SetStopCount(0);
 		return;
 	}
 
@@ -624,7 +620,6 @@ void Game_Event::MyMoveTypeForward() {
 			x->SetX(y->GetX()); x->SetY(y->GetY());
 			Main_Data::game_screen->ShowBattleAnimation(5, _.battlefield[target].id, 0);
 			_.battlefield[target].dead(target);
-			SetStopCount(0);
 			return;
 		}
 	}
@@ -647,7 +642,6 @@ void Game_Event::MyMoveTypeForward() {
 			Cards::monster child = a;
 			Game_Map::summon(child, a.master, GetX(), GetY());
 			a.mp = 0;
-			SetStopCount(0);
 			return;
 		}
 	}
@@ -668,16 +662,14 @@ void Game_Event::MyMoveTypeForward() {
 	int target = a.enemyNearby();
 	if (target != -1) {
 		a.atk(target);
-		SetStopCount(0);
 	} else {
 		if (a.master == 2) {
 			move_dir = 2;
 		}
 		if (!blocked) Move(move_dir);
-		if (IsStopping() && GetStopCount() >= GetMaxStopCount() + 20) {
+		if (IsStopping()) {
 			Cards::atk();
 		}
-		SetStopCount(0);
 	}
 }
 
