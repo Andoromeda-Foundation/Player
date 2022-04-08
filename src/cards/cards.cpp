@@ -186,7 +186,7 @@ namespace Cards {
 					"wisp", {
 						{"name", "小精灵"},
 						{"cost", 0},
-						{"description", "零费小精灵，旅法第一卡。你说她不行，你行你上啊。"},
+						{"description", ""},
 						{"hp", 1},{"HP", 1},
 						{"mp", 0},{"MP", 3},
 						{"AP", 1},
@@ -199,7 +199,7 @@ namespace Cards {
 					"slime", {
 						{"name", "史莱姆"},
 						{"cost", 1},
-						{"description", "滑溜溜的魔法生物，可以从地上弹起，黏住敌人，分泌酸液。虽然初始威胁不大，但任由她增殖的话也会带来意想不到的麻烦。"},
+						{"description", "再生 1，随机游动，分裂"},
 						{"hp", 2},{"HP", 2},
 						{"mp", 0},{"MP", 3},
 						{"AP", 1},
@@ -603,7 +603,7 @@ namespace Cards {
 					"witch", {
 						{"name", "魔女"},
 						{"cost", 1},
-						{"description", "对最近距离的敌方单位使用火球术，造成 1d6 点伤害。"},
+						{"description", "5/5: 造成 1d6 伤害（5）"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
 						{"AP", 1},
@@ -621,7 +621,7 @@ namespace Cards {
 					"priest", {
 						{"name", "祭司"},
 						{"cost", 1},
-						{"description", "10/10 祈祷：全场其它友方使魔 +1/2（10）。"},
+						{"description", "10/10 祈祷：全场其它友方使魔 +1/2（10）"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
 						{"AP", 2},
