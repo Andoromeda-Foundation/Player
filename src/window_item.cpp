@@ -130,27 +130,15 @@ void Window_Item::DrawItem(int index) {
 }
 
 void Window_Item::UpdateHelp() {
-	//std::string item_name = std::string(GetItem()->name);
-	/*
+	std::string item_name = std::string(GetItem()->name);
+	
 	if (item_name.substr(0, 5) == ".card"){
-		auto json = Cards::instance().json;
-		std::string info;
-		info += std::string(json[item_name.substr(6)]["cost"]) + "费 ";
-		info += std::string(json[item_name.substr(6)]["AP"]) + "/";
-		info += std::string(json[item_name.substr(6)]["DP"]) + "/";
-		info += std::string(json[item_name.substr(6)]["HP"]) + " ";
-		std::map<std::string, int> quirks = json[item_name.substr(6)]["quirks"];
-		for (auto& q: quirks) {
-			if (q.first == "ranged") info += "远程 ";
-			else if (q.first == "cavalry") info += "骑兵 ";
-			else if (q.first == "flying") info += "飞行 ";
-		}
-		info += std::string(json[item_name.substr(6)]["description"]);
-		//help_window->SetText(info);
+		item_name = item_name.substr(6);
+		auto item_monster = Cards::monster(item_name);
+		help_window->SetText(item_monster.info());
 	} else {
 		help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
-	} */
-	help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
+	}
 }
 
 void Window_Item::SetActor(Game_Actor * actor) {
