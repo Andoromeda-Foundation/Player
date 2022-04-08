@@ -72,7 +72,7 @@ namespace Cards {
 		Game_Event* ev() const;
 		void dead(int i);
 		void damaged(int d, int aid, int i);
-		void physicalDamaged(int d, int aid, int i);
+		int physicalDamaged(int d, int aid, int i);
 		bool checkmate();
 		void check();
 		bool hasQuirk(std::string quirk);

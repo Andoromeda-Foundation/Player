@@ -150,8 +150,10 @@ namespace Cards {
 		}
 	}
 
-	void monster::physicalDamaged(int d, int aid, int i) {
-		d -= DP; if (d > 0) damaged(d, aid, i);
+	int monster::physicalDamaged(int d, int aid, int i) {
+		d -= DP; if (d > hp) d = hp;
+		if (d > 0) damaged(d, aid, i);
+		return d;
 	}
 
 	bool monster::checkmate() {
@@ -187,8 +189,13 @@ namespace Cards {
 		} else if (xx < x) {
 			ev()->SetFacing(3);
 		}
-
-		_.battlefield[t].physicalDamaged(AP, 142, t);
+		
+		if (hasQuirk(std::string("lifesteal"))) {
+			int delta = _.battlefield[t].physicalDamaged(AP, 142, t);
+			hp += delta; if (hp > HP) hp = HP;
+		} else {
+			_.battlefield[t].physicalDamaged(AP, 142, t);
+		}
 	}
 
 	std::string monster::info() {
@@ -776,12 +783,36 @@ namespace Cards {
 						{"name", "蝙蝠"},
 						{"cost", 2},
 						{"description", ""},
-						{"hp", 3},{"HP", 3},
+						{"hp", 4},{"HP", 4},
 						{"mp", 0},{"MP", 0},
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "17708"},
-						{"offset", 1}
+						{"offset", 1},
+						{
+							"quirks", {
+								{"flying", 1},
+								{"lifesteal", 1}
+							}
+						}
+					}
+				},
+				{
+					"vampire", {
+						{"name", "吸血鬼"},
+						{"cost", 4},
+						{"description", ""},
+						{"hp", 7},{"HP", 7},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "viptmp2278"},
+						{"offset", 0},
+						{
+							"quirks", {
+								{"lifesteal", 1}
+							}
+						}
 					}
 				},
 				{

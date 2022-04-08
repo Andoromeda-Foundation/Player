@@ -599,6 +599,38 @@ void Game_Event::MyMoveTypeForward() {
 		return;
 	}
 
+	// 是否是红龙并且满蓝
+	if (a.key == "red_dragon" && a.mp == a.MP) {
+		for(int i=0;i<_.battlefield.size();++i) if(i != id) {
+			_.battlefield[i].damaged(3, 78, i);
+		}
+		a.mp = 0;
+		return;
+	}
+
+	// 是否是黑龙并且满蓝
+	if (a.key == "black_dragon" && a.mp == a.MP) {
+		int d = 3214567, target = -1;
+		for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+			Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+			int x = the_event->GetX(), y = the_event->GetY();
+			if (a.master != _.battlefield[i].master && _.battlefield[i].cost <= 4) {
+				int dd = std::abs(x - GetX()) + std::abs(y - GetY());
+				if (dd < d) {
+					d = dd;
+					target = i;
+				}
+			}
+		}
+		if (target != -1) {
+			a.mp = 0;
+			a.hp += _.battlefield[target].hp; a.HP += _.battlefield[target].hp;
+			a.AP += _.battlefield[target].AP;
+			_.battlefield[target].dead(target);
+			return;
+		}
+	}
+ 
 	// 是否是死神并且满蓝
 	if (a.key == "grim_reaper" && a.mp == a.MP) {
 		int d = 3214567, target = -1;
