@@ -515,18 +515,23 @@ void Game_Event::MoveTypeRandom() {
 
 void Game_Event::MyMoveTypeForward() {
 	if (GetStopCount() < GetMaxStopCount()) return;
-
-
+	SetStopCount(0);
 
 	auto& _ = Cards::instance();
 	if (_.pause) return;
 	_.current_map_event_id = GetId();
-	// Output::Debug("Move Forward: {} {} {}", GetId(), GetX(), GetY());
+
+
+	Output::Debug("stopcount maxstopcount: {} {}",GetStopCount(), GetMaxStopCount());
 
 	int move_dir = 0;
 
 	int id = Cards::getBattleFieldId(GetId());
 	auto& a = _.battlefield[id];
+
+	if (a.key == "centaur" || a.key == "cavalier" || a.key == "death_knight") {
+		SetMaxStopCount(64);
+	}
 
 	if (a.mp < a.MP) a.mp += 1;
 	Output::Debug("current turn: {} {} {}", a.name, a.AP, a.hp);
@@ -673,14 +678,6 @@ void Game_Event::MyMoveTypeForward() {
 			Cards::atk();
 		}
 		SetStopCount(0);
-	}
-
-	//SetMaxStopCountForStep();
-	if (GetStopCount() == 0) {
-		/*if (a.quirks.find("regeneration") != a.quirks.end()) {
-			a.hp += a.quirks["regeneration"];
-			if (a.hp > a.HP) a.hp = a.HP;
-		} */
 	}
 }
 

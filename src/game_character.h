@@ -1126,6 +1126,7 @@ inline int Game_Character::GetMaxStopCount() const {
 }
 
 inline void Game_Character::SetMaxStopCount(int sc) {
+	// Output::Debug("SetMaxStopCount: {}", sc);
 	data()->max_stop_count = sc;
 }
 

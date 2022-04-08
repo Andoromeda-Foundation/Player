@@ -388,10 +388,10 @@ namespace Cards {
 						{"name", "死亡骑士"},
 						{"cost", 6},
 						{"description", ""},
-						{"hp", 13},{"HP", 13},
-						{"mp", 0},{"MP", 2},
-						{"AP", 7},
-						{"DP", 0},
+						{"hp", 9},{"HP", 9},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 1},
 						{"charset", "viptmp2278"},
 						{"offset", 1}
 					}
@@ -531,9 +531,9 @@ namespace Cards {
 						{"name", "骑兵"},
 						{"cost", 6},
 						{"description", "杀伤力随移动距离增大。"},
-						{"hp", 13},{"HP", 13},
+						{"hp", 12},{"HP", 12},
 						{"mp", 0},{"MP", 0},
-						{"AP", 8},
+						{"AP", 3},
 						{"DP", 0},
 						{"charset", "heisic5"},
 						{"offset", 0}
