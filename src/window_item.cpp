@@ -25,6 +25,7 @@
 #include <lcf/reader_util.h>
 #include "game_battle.h"
 #include "output.h"
+#include "cards/cards.h"
 
 Window_Item::Window_Item(int ix, int iy, int iwidth, int iheight) :
 	Window_Selectable(ix, iy, iwidth, iheight) {
@@ -129,7 +130,13 @@ void Window_Item::DrawItem(int index) {
 }
 
 void Window_Item::UpdateHelp() {
-	help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
+	std::string item_name = std::string(GetItem()->name);
+	if(item_name.substr(0, 5) == ".card"){
+		auto json = Cards::instance().json;
+		help_window->SetText(std::string(json[item_name.substr(6)]["description"]));
+	} else {
+		help_window->SetText(GetItem() == nullptr ? "" : ToString(GetItem()->description));
+	}
 }
 
 void Window_Item::SetActor(Game_Actor * actor) {

@@ -26,6 +26,7 @@
 #include "font.h"
 #include "output.h"
 #include <lcf/reader_util.h>
+#include "cards/cards.h"
 
 Window_ShopBuy::Window_ShopBuy(const std::vector<int>& goods,
 		int ix, int iy, int iwidth, int iheight)
@@ -85,7 +86,13 @@ void Window_ShopBuy::UpdateHelp() {
 	if (!data.empty()) {
 		const lcf::rpg::Item* item = lcf::ReaderUtil::GetElement(lcf::Data::items, data[index]);
 		if (item) {
-			help_text = ToString(item->description);
+			std::string item_name = std::string(item->name);
+			if(item_name.substr(0, 5) == ".card"){
+				auto json = Cards::instance().json;
+				help_text = std::string(json[item_name.substr(6)]["description"]);
+			} else {
+				help_text = ToString(item->description);
+			}
 		} else {
 			help_text = "??? BAD ITEM ???";
 		}
