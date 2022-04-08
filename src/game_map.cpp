@@ -1434,10 +1434,6 @@ void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 			events.pop_back();
 		} else {
 			auto& t = events.back();
-
-			std::string name;
-
-			// auto c = Cards::monster(json, id);
 			configor::json json = cards.json[c.key];
 			c.id = t.data()->ID = events.size();
 			c.master = p_id;

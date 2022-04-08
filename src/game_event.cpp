@@ -594,7 +594,7 @@ void Game_Event::MyMoveTypeForward() {
 
 	// 是否是死灵法师并且满蓝
 	if (a.key == "nec" && a.mp == a.MP) {
-		Game_Map::summon(Cards::monster(_.json["skull"], "skull"), a.master, GetX(), GetY());
+		Game_Map::summon(Cards::monster(std::string("skull")), a.master, GetX(), GetY());
 		a.mp = 0;
 		return;
 	}

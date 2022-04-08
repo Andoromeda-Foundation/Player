@@ -60,7 +60,7 @@ namespace Cards {
 		std::map<std::string, int> quirks;
 
 		monster(){};
-		monster(configor::json json, std::string key);
+		monster(std::string key);
 		Game_Event* ev() const;
 		void dead(int i);
 		void damaged(int d, int aid, int i);

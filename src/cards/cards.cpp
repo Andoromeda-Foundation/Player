@@ -49,7 +49,8 @@ namespace Cards {
 		}
 	}
 
-	monster::monster(configor::json json, std::string key): key(key) {
+	monster::monster(std::string key): key(key) {
+		auto json = _.json[key];
 		cost = json["cost"]; name = std::string(json["name"]);
 		hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
 		AP = json["AP"]; DP = json["DP"];
@@ -834,7 +835,7 @@ namespace Cards {
 			if (s.substr(0, 5) != ".card") continue;
 			s = s.substr(6);
 			int cnt = Main_Data::game_party->GetItemCount(party_items[i]);
-			DO(cnt) _.deck.push_back(monster(_.json[s], s));
+			DO(cnt) _.deck.push_back(monster(s));
 		}
 
 		// Init Enemy Deck
@@ -844,7 +845,7 @@ namespace Cards {
 			std::string s = std::string(item.name);
 			if (s.substr(0, 5) != ".card") continue;
 			s = s.substr(6);
-			_.ai_deck.push_back(monster(_.json[s], s));
+			_.ai_deck.push_back(monster(s));
 		}
 
 		DO(7) draw(); DO(7) ai_draw();
