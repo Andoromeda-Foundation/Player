@@ -101,6 +101,19 @@ namespace Cards {
 
 	void monster::atk(int t) {
 		//todo(minakokojima): 修复朝向
+		int x = ev()->GetX(), xx = _.battlefield[t].ev()->GetX();
+		int y = ev()->GetY(), yy = _.battlefield[t].ev()->GetY();
+
+		if (yy == y-1) {
+			ev()->SetFacing(0);
+		} else if (yy == y+1) {
+			ev()->SetFacing(2);
+		} else if (xx == x+1) {
+			ev()->SetFacing(1);
+		} else if (xx == x-1) {
+			ev()->SetFacing(3);
+		}
+
 		_.battlefield[t].physicalDamaged(AP, 142, t);
 	}
 
