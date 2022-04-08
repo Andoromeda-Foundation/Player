@@ -200,11 +200,16 @@ namespace Cards {
 
 	std::string monster::info() {
 		std::string z;
-		z += name + " " +
-			std::to_string(cost) + "费 " +
-			"HP " + std::to_string(hp) + "/" + std::to_string(HP) + " "
-			"MP " + std::to_string(mp) + "/" + std::to_string(MP) + " "
-			"AP " + std::to_string(AP);
+		z += std::to_string(cost) + "费 ";
+				z += std::to_string(AP) + "/";
+				z += std::to_string(DP) + "/";
+				z += std::to_string(HP);
+				for (auto& q: quirks) {
+					if (q.first == "ranged") z += "【远程】";
+					else if (q.first == "cavalry") z += "【骑兵】";
+					else if (q.first == "flying") z += "【飞行】";
+				}
+				z += std::string(" ") + std::string(_.json[key]["description"]);
 		return z;
 	}
 

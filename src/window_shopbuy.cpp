@@ -89,21 +89,8 @@ void Window_ShopBuy::UpdateHelp() {
 			std::string item_name = std::string(item->name);
 			if(item_name.substr(0, 5) == ".card") {
 				item_name = item_name.substr(6);
-				auto json = Cards::instance().json;
-				std::string info;
-				info += std::to_string(int(json[item_name]["cost"])) + "费 ";
-				info += std::to_string(int(json[item_name]["AP"])) + "/";
-				info += std::to_string(int(json[item_name]["DP"])) + "/";
-				info += std::to_string(int(json[item_name]["HP"]));
-
-				std::map<std::string, int> quirks = json[item_name]["quirks"];
-				for (auto& q: quirks) {
-					if (q.first == "ranged") info += "【远程】";
-					else if (q.first == "cavalry") info += "【骑兵】";
-					else if (q.first == "flying") info += "【飞行】";
-				}
-				info += std::string(" ") + std::string(json[item_name]["description"]);
-				help_text = info;
+				auto item_monster = Cards::monster(item_name);
+				help_text = item_monster.info();
 			} else {
 				help_text = ToString(item->description);
 			}
