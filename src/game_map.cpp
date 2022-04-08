@@ -1422,6 +1422,12 @@ int Game_Map::GetHighestEventId() {
 void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 	auto& cards = Cards::instance();
 
+	if (c.key == "skull") {
+		lcf::rpg::Sound sound;
+		sound.name = ToString("大破");
+		Main_Data::game_system->SePlay(sound, true);
+	}
+
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
 		if (events.back().GetName() != "MonsterTemplate") {

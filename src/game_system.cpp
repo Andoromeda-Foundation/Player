@@ -135,6 +135,9 @@ void Game_System::BgmFade(int duration, bool clear_current_music) {
 }
 
 void Game_System::SePlay(const lcf::rpg::Sound& se, bool stop_sounds) {
+
+	Output::Debug("sound name: {}", se.name);
+
 	if (se.name.empty()) {
 		return;
 	} else if (se.name == "(OFF)") {

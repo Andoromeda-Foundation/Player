@@ -405,7 +405,7 @@ namespace Cards {
 				{
 					"grim_reaper", {
 						{"name", "死神"},
-						{"cost", 1},
+						{"cost", 6},
 						{"description", "随机消灭对手战场上的一个使魔，如果战场上没有地方卡牌，则随机丢弃对手一张手牌。"},
 						{"hp", 4},{"HP", 4},
 						{"mp", 10},{"MP", 10},
