@@ -1428,6 +1428,8 @@ void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 		Main_Data::game_system->SePlay(sound, true);
 	}
 
+	for (auto &b: c.battlecry) b->process();
+
 	for (const auto& ev : map->events) {
 		events.emplace_back(GetMapId(), &ev);
 		if (events.back().GetName() != "MonsterTemplate") {

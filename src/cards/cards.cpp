@@ -49,6 +49,23 @@ namespace Cards {
 		}
 	}
 
+	void happy_lady_battlecry::process() {
+		for (auto& m: _.battlefield) {
+			if (m.key == "harpy_r" || m.key == "harpy_g" || m.key == "harpy_b") {
+				m.AP += 1;
+				m.DP += 1;
+			}
+		}
+	}
+	void happy_lady_deathrattle::process() {
+		for (auto& m: _.battlefield) {
+			if (m.key == "harpy_r" || m.key == "harpy_g" || m.key == "harpy_b") {
+				m.AP -= 1;
+				m.DP -= 1;
+			}
+		}
+	}
+
 	monster::monster(std::string key): key(key) {
 		auto json = _.json[key];
 		cost = json["cost"]; name = std::string(json["name"]);
@@ -63,6 +80,10 @@ namespace Cards {
 		}
 		if (key == "mummy") {
 			deathrattle.push_back(new curse(1));
+		}
+		if (key == "harpy_r" || key == "harpy_g" || key == "harpy_b") {
+			battlecry.push_back(new happy_lady_battlecry());
+			deathrattle.push_back(new happy_lady_deathrattle());
 		}
 
 		if (name == "ghost") {

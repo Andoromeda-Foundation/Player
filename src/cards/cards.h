@@ -50,6 +50,14 @@ namespace Cards {
 		void process();
 	};
 
+	struct happy_lady_battlecry : magic {
+		void process();
+	};
+
+	struct happy_lady_deathrattle : magic {
+		void process();
+	};
+
 	struct monster {
 		std::string key; std::string name; int cost; int master, id;
 		int hp, HP, mp, MP;
