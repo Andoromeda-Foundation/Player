@@ -529,8 +529,7 @@ void Game_Event::MyMoveTypeForward() {
 	int id = Cards::getBattleFieldId(GetId());
 	auto& a = _.battlefield[id];
 
-	// if (a.key == "centaur" || a.key == "cavalier" || a.key == "death_knight") {
-	if (a.hasQuirk("cavalry")) {
+	if (a.hasQuirk("cavalry") || a.hasQuirk("flying")) {
 		SetMaxStopCount(64);
 	}
 
