@@ -67,6 +67,7 @@ namespace Cards {
 		void physicalDamaged(int d, int aid, int i);
 		bool checkmate();
 		void check();
+		bool hasQuirk(std::string quirk);
 		int enemyInfront();
 		int enemyNearby();
 		int dist(const monster m);

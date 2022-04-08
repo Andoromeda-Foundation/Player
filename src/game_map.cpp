@@ -1435,9 +1435,11 @@ void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 			configor::json json = cards.json[c.key];
 			c.id = t.data()->ID = events.size();
 			c.master = p_id;
-			t.SetSpriteGraphic(json["charset"], json["offset"]);
-			cards.battlefield.push_back(c);
+			t.SetSpriteGraphic(json["charset"], c.offset);
+			cards.battlefield.emplace_back(c); //!!!
+			// cards.basic_infos.push_back();
 			t.SetX(x); t.SetY(y);
+
 			// Main_Data::game_screen->ShowBattleAnimation(2, t.GetId(), 0);
 			Scene_Map* scene = (Scene_Map*)Scene::Find(Scene::Map).get();
 			scene->spriteset->CreateSprite(&t, LoopHorizontal(), LoopVertical());
@@ -1449,13 +1451,25 @@ void Game_Map::summon(Cards::monster c, int p_id, int x, int y) {
 void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 
 	auto& cards = Cards::instance();
+	auto& _ = Cards::instance();
 	if (cards.selected_id == -1 || cards.selected_id >= cards.hand.size()) {
 		Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
 		return;
 	}
 
 	auto c = cards.hand[cards.selected_id];
-	if (c.cost > cards.mp) {
+	int bone = 0;
+	// 是否是骨龙
+	if (c.key == "bone_dragon") {
+		bone += 1;
+		for (auto g: _.grave) {
+			if (g.master == p_id) {
+				bone += 1;
+			}
+		}
+	}
+
+	if (c.cost > cards.mp + bone) {
 		Main_Data::game_system->SePlay(Main_Data::game_system->GetSystemSE(Main_Data::game_system->SFX_Buzzer));
 		return;
 	}
@@ -1468,8 +1482,18 @@ void Game_Map::newMapEvent(std::string title, int p_id, int x, int y) {
 		}
 	}
 
+	bone = min(c.cost, bone);
+	cards.mp -= c.cost; _.mp += bone;
+	for (auto it=_.grave.begin();it!=_.grave.end();){
+		if (bone == 0) break;
+		if (it->master == p_id) {
+			bone -= 1;
+			it = _.grave.erase(it);
+		} else {
+			++it;
+		}
+	}
 
-	cards.mp -= c.cost;
 	cards.hand.erase(cards.hand.begin() + cards.selected_id);
 	cards.selected_id = 0;
 

@@ -529,7 +529,8 @@ void Game_Event::MyMoveTypeForward() {
 	int id = Cards::getBattleFieldId(GetId());
 	auto& a = _.battlefield[id];
 
-	if (a.key == "centaur" || a.key == "cavalier" || a.key == "death_knight") {
+	// if (a.key == "centaur" || a.key == "cavalier" || a.key == "death_knight") {
+	if (a.hasQuirk("cavalry")) {
 		SetMaxStopCount(64);
 	}
 
@@ -664,10 +665,12 @@ void Game_Event::MyMoveTypeForward() {
 		a.atk(target);
 	} else {
 
-		if (a.key == "priest") {
+		if (a.hasQuirk("ranged")) {
 			target = a.enemyInfront();
 			if (target != -1) a.atk(target);
-			else a.check();
+			else if (a.checkmate()) {
+			 	a.check();
+			}
 			return;
 		}
 

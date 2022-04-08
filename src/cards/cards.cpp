@@ -54,6 +54,9 @@ namespace Cards {
 		hp = json["hp"]; HP = json["HP"]; mp = json["mp"]; MP = json["MP"];
 		AP = json["AP"]; DP = json["DP"];
 		offset = json["offset"];
+
+		quirks = json["quirks"];
+
 		if (key == "skull") {
 			deathrattle.push_back(new draw_specific("skull"));
 		}
@@ -130,6 +133,7 @@ namespace Cards {
 	}
 
 	bool monster::checkmate() {
+		if (hasQuirk("ranged")) return true;
 		int y = ev()->GetY();
 		return master == 1 && y == 8 || master == 2 && y == 12;
 	}
@@ -142,6 +146,10 @@ namespace Cards {
 			Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
 			if (_.hp <= 0) Cards::over();
 		}
+	}
+
+	bool monster::hasQuirk(std::string quirk) {
+		return quirks.find(quirk) != quirks.end();
 	}
 
 	void monster::atk(int t) {
@@ -418,7 +426,12 @@ namespace Cards {
 						{"AP", 3},
 						{"DP", 1},
 						{"charset", "viptmp2278"},
-						{"offset", 1}
+						{"offset", 1},
+						{
+							"quirks", {
+								{"cavalry", 1}
+							}
+						}
 					}
 				},
 				{
@@ -431,20 +444,61 @@ namespace Cards {
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "monster-g04"},
+						{"offset", 0},
+						{
+							"quirks", {
+								{"cavalry", 1}
+							}
+						}
+					}
+				},
+				{
+					"unicorn", {
+						{"name", "独角兽骑士"},
+						{"cost", 6},
+						{"description", ""},
+						{"hp", 10},{"HP", 10},
+						{"mp", 0},{"MP", 0},
+						{"AP", 3},
+						{"DP", 0},
+						{"charset", "セイントⅢペガサスフォーム"},
+						{"offset", 0},
+						{
+							"quirks", {
+								{"cavalry", 1}
+							}
+						}
+					}
+				},
+				{
+					"valkyrie", {
+						{"name", "女武神"},
+						{"cost", 7},
+						{"description", ""},
+						{"hp", 15},{"HP", 15},
+						{"mp", 0},{"MP", 0},
+						{"AP", 8},
+						{"DP", 0},
+						{"charset", "16429"},
 						{"offset", 0}
 					}
 				},
 				{
 					"witch", {
 						{"name", "魔女"},
-						{"cost", 4},
+						{"cost", 1},
 						{"description", "对最近距离的敌方单位使用火球术，造成 1d6 点伤害。"},
 						{"hp", 6},{"HP", 6},
 						{"mp", 10},{"MP", 10},
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "monster-g04"},
-						{"offset", 5}
+						{"offset", 5},
+						{
+							"quirks", {
+								{"ranged", 1}
+							}
+						}
 					}
 				},
 				{
@@ -457,7 +511,12 @@ namespace Cards {
 						{"AP", 2},
 						{"DP", 0},
 						{"charset", "1541"},
-						{"offset", 0}
+						{"offset", 0},
+						{
+							"quirks", {
+								{"ranged", 1}
+							}
+						}
 					}
 				},
 				{
@@ -470,7 +529,12 @@ namespace Cards {
 						{"AP", 2},
 						{"DP", 0},
 						{"charset", "cゴスロリ子_黒"},
-						{"offset", 0}
+						{"offset", 0},
+						{
+							"quirks", {
+								{"ranged", 1}
+							}
+						}
 					}
 				},
 				{
@@ -561,7 +625,12 @@ namespace Cards {
 						{"AP", 3},
 						{"DP", 0},
 						{"charset", "heisic5"},
-						{"offset", 0}
+						{"offset", 0},
+						{
+							"quirks", {
+								{"cavalry", 1}
+							}
+						}
 					}
 				},
 				{
