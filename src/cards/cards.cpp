@@ -21,16 +21,30 @@
 
 namespace Cards {
 
+	int caster;
 	Instance _;
 
 
 	void draw_specific::process() {
-		Output::Debug("draw skull");
 		for (int i=0;i<_.deck.size();++i) {
 			if (_.deck[i].key == key) {
 				_.hand.push_back(_.deck[i]);
 				_.deck.erase(_.deck.begin() + i);
 				return;
+			}
+		}
+	}
+
+	void curse::process() {
+
+		Main_Data::game_screen->ShowBattleAnimation(56, _.battlefield[caster].id, 0);
+
+		for (auto& m: _.battlefield) {
+			if (_.battlefield[caster].master != m.master) {
+				if (_.battlefield[caster].dist(m) <= 1) {
+					m.AP -= lv;
+					if (m.AP < 0) m.AP = 0;
+				}
 			}
 		}
 	}
@@ -43,6 +57,9 @@ namespace Cards {
 		if (key == "skull") {
 			deathrattle.push_back(new draw_specific("skull"));
 		}
+		if (key == "mummy") {
+			deathrattle.push_back(new curse(1));
+		}
 
 		if (name == "ghost") {
 			quirks["regeneration"] = 2;
@@ -52,17 +69,19 @@ namespace Cards {
 		}
 	}
 
-	Game_Event* monster::ev() {
+	Game_Event* monster::ev() const {
 		return Game_Map::GetEvent(id);
 	}
 
-	int monster::enemyNearby() {
+	int monster::dist(const monster m) {
 		int x = ev()->GetX(), y = ev()->GetY();
+		int xx = m.ev()->GetX(), yy = m.ev()->GetY();
+		return abs(x-xx)+abs(y-yy);
+	}
+	int monster::enemyNearby() {
 		for (int i=0;i<_.battlefield.size();++i) {
 			if (_.battlefield[i].master != master) {
-				auto that_event = _.battlefield[i].ev();
-				int xx = that_event->GetX(), yy = that_event->GetY();
-				if (abs(xx-x) + abs(yy-y) == 1) return i;
+				if (dist(_.battlefield[i]) <= 1) return i;
 			}
 		}
 		return -1;
@@ -70,6 +89,7 @@ namespace Cards {
 
 	void monster::dead(int i) {
 		auto map_event = Game_Map::GetEvent(id); map_event->SetActive(false);
+		caster = i;
 		for (int i=0;i<deathrattle.size();++i) {
 			deathrattle[i]->process();
 		}
@@ -100,7 +120,6 @@ namespace Cards {
 	}
 
 	void monster::atk(int t) {
-		//todo(minakokojima): 修复朝向
 		int x = ev()->GetX(), xx = _.battlefield[t].ev()->GetX();
 		int y = ev()->GetY(), yy = _.battlefield[t].ev()->GetY();
 
@@ -224,9 +243,9 @@ namespace Cards {
 				{
 					"mummy", {
 						{"name", "木乃伊"},
-						{"cost", 3},
+						{"cost", 2},
 						{"description", "."},
-						{"hp", 5},{"HP", 5},
+						{"hp", 6},{"HP", 6},
 						{"mp", 0},{"MP", 0},
 						{"AP", 2},
 						{"DP", 0},

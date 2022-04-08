@@ -28,6 +28,9 @@
 namespace Cards {
 
 	struct Instance;
+	struct monster;
+	struct magic;
+
 	Instance& instance();
 
 	struct magic {
@@ -38,6 +41,12 @@ namespace Cards {
 	struct draw_specific : magic {
 		std::string key;
 		draw_specific(std::string key):key(key){};
+		void process();
+	};
+
+	struct curse : magic {
+		int lv;
+		curse(int lv):lv(lv){};
 		void process();
 	};
 
@@ -52,11 +61,12 @@ namespace Cards {
 
 		monster(){};
 		monster(configor::json json, std::string key);
-		Game_Event* ev();
+		Game_Event* ev() const;
 		void dead(int i);
 		void damaged(int d, int aid, int i);
 		void physicalDamaged(int d, int aid, int i);
 		int enemyNearby();
+		int dist(const monster m);
 		void atk(int t);
 		std::string info();
 	};
