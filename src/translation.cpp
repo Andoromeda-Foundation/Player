@@ -830,7 +830,8 @@ void Dictionary::FromPo(Dictionary& res, std::istream& in) {
 		e.translation = extract_string(6);
 
 		while (Utils::ReadLine(in, line)) {
-			line_view = Utils::TrimWhitespace(line);
+			//line_view = Utils::TrimWhitespace(line);
+			line_view = line;
 			++line_number;
 			if (line_view.empty() || line_view.starts_with("#")) {
 				break;
@@ -848,7 +849,8 @@ void Dictionary::FromPo(Dictionary& res, std::istream& in) {
 		e.original = extract_string(5);
 
 		while (Utils::ReadLine(in, line)) {
-			line_view = Utils::TrimWhitespace(line);
+			//line_view = Utils::TrimWhitespace(line);
+			line_view = line;
 			++line_number;
 			if (line_view.empty() || line_view.starts_with("msgstr")) {
 				read_msgstr();
@@ -859,7 +861,8 @@ void Dictionary::FromPo(Dictionary& res, std::istream& in) {
 	};
 
 	while (Utils::ReadLine(in, line)) {
-		line_view = Utils::TrimWhitespace(line);
+		//line_view = Utils::TrimWhitespace(line);
+		line_view = line;
 		++line_number;
 		if (!found_header) {
 			if (line_view.starts_with("msgstr")) {

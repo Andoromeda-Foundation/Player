@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GAME_NAME 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: YOUR NAME <mail@your.address>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-CreatedBy: LcfTrans\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. ID 1, Page 1, Line 1, Pos (6,14)
+#. Choice (4 options)
+#. ID 3, Page 1, Line 1, Pos (14,6)
+#. Choice (4 options)
+msgid ""
+"查看牌组\n"
+"查看手牌\n"
+"查看战场\n"
+"查看墓地"
+msgstr ""
+"View decks\n"
+"View the hand\n"
+"View the battlefield\n"
+"View the cemetery"
+
+#. ID 1, Page 1, Line 3, Pos (6,14)
+#. ID 3, Page 1, Line 3, Pos (14,6)
+msgid ".showDeck"
+msgstr ""
+
+#. ID 1, Page 1, Line 6, Pos (6,14)
+#. ID 3, Page 1, Line 6, Pos (14,6)
+msgid ".showHand"
+msgstr ""
+
+#. ID 1, Page 1, Line 9, Pos (6,14)
+#. ID 3, Page 1, Line 9, Pos (14,6)
+msgid ".showBattlefield\n"
+msgstr ""
+
+#. ID 1, Page 1, Line 13, Pos (6,14)
+#. ID 3, Page 1, Line 13, Pos (14,6)
+msgid ".showGrave\n"
+msgstr ""
+
+#. ID 2, Page 1, Line 1, Pos (1,0)
+msgid ".showSpiritsStatus"
+msgstr ""
+
+#. ID 4, Page 1, Line 1, Pos (2,17)
+#. Choice (4 options)
+msgid ""
+"播放动画\n"
+"前进\n"
+"攻击使魔\n"
+"去牌店"
+msgstr ""
+
+#. ID 5, Page 1, Line 1, Pos (8,14)
+msgid ".summon 1 8 12"
+msgstr ""
+
+#. ID 7, Page 1, Line 1, Pos (9,14)
+msgid ".summon 1 9 12"
+msgstr ""
+
+#. ID 8, Page 1, Line 1, Pos (10,14)
+msgid ".summon 1 10 12"
+msgstr ""
+
+#. ID 9, Page 1, Line 1, Pos (11,14)
+msgid ".summon 1 11 12"
+msgstr ""
+
+#. ID 10, Page 1, Line 1, Pos (12,14)
+msgid ".summon 1 12 12"
+msgstr ""
+
+#. ID 11, Page 1, Line 1, Pos (12,6)
+msgid ".summon 2 12 8"
+msgstr ""
+
+#. ID 12, Page 1, Line 1, Pos (11,6)
+msgid ".summon 2 11 8"
+msgstr ""
+
+#. ID 13, Page 1, Line 1, Pos (10,6)
+msgid ".summon 2 10 8"
+msgstr ""
+
+#. ID 14, Page 1, Line 1, Pos (9,6)
+msgid ".summon 2 9 8"
+msgstr ""
+
+#. ID 15, Page 1, Line 1, Pos (8,6)
+msgid ".summon 2 8 8"
+msgstr ""
+
+#. ID 16, Page 1, Line 3, Pos (0,0)
+msgid ".dualInit"
+msgstr ""
+
+#. ID 17, Page 1, Line 2, Pos (0,1)
+msgid ".mainLoop"
+msgstr ""

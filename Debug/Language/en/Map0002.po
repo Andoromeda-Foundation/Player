@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GAME_NAME 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: YOUR NAME <mail@your.address>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-CreatedBy: LcfTrans\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. ID 3, Page 1, Line 1, Pos (17,17)
+msgid ""
+"每个使魔都有自己独立的法术，\n"
+"学会运用它们，往往可以出奇制胜。"
+msgstr ""
+"Each minion has its own spells,\n"
+"Using them wisely."
+
+#. ID 4, Page 1, Line 1, Pos (24,16)
+msgid "想要更换自己的 avatar 吗？"
+msgstr "Want to change your avatar?"
+
+#. ID 4, Page 1, Line 4, Pos (24,16)
+msgid ".changeAvatar"
+msgstr ""
+
+#. ID 6, Page 1, Line 1, Pos (20,15)
+msgid "欢迎来到牌店，请问？"
+msgstr ""
+
+#. ID 8, Page 1, Line 1, Pos (23,22)
+msgid ""
+"年轻人，我看你骨骼惊奇，天赋异禀，\n"
+"日后定是旅法牌大使，你这还有点预设卡组。\n"
+"只要 100G 就给你！来选一个吧。。。"
+msgstr ""
+
+#. ID 8, Page 1, Line 4, Pos (23,22)
+#. Choice (4 options)
+msgid ""
+"城堡初始卡组\n"
+"壁垒初始卡组\n"
+"墓园初始卡组\n"
+"不用了"
+msgstr ""
