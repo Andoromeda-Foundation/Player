@@ -536,6 +536,15 @@ void Game_Event::MyMoveTypeForward() {
 	if (a.mp < a.MP) a.mp += 1;
 	Output::Debug("current turn: {} {} {}", a.name, a.AP, a.hp);
 
+	if (a.hasQuirk("jump_cost") && a.mp == a.MP) {
+		a.jump_cost();
+		return;
+	}
+	if (a.hasQuirk("draw") && a.mp == a.MP) {
+		a.draw();
+		return;
+	}
+
 	// 是否是魔女并且满蓝
 	if (a.key == "witch" && a.mp == a.MP) {
 		int d = 3214567, target = -1;
@@ -630,7 +639,7 @@ void Game_Event::MyMoveTypeForward() {
 			return;
 		}
 	}
- 
+
 	// 是否是死神并且满蓝
 	if (a.key == "grim_reaper" && a.mp == a.MP) {
 		int d = 3214567, target = -1;
@@ -690,10 +699,19 @@ void Game_Event::MyMoveTypeForward() {
 		}
 	}
 
-
 	int target = a.enemyNearby();
 	if (target != -1) {
-		a.atk(target);
+		if (a.hasQuirk("aoe")) {
+			for (int i=0;i<_.battlefield.size();++i) if (i != id) {
+				Game_Event *the_event = Game_Map::GetEvent(_.battlefield[i].id);
+				int x = the_event->GetX(), y = the_event->GetY();
+				if (_.battlefield[i].dist(_.battlefield[id]) <= 1 && a.master != _.battlefield[i].master) {
+					a.atk(i);
+				}
+			}
+		} else {
+			a.atk(target);
+		}
 	} else {
 
 		if (a.hasQuirk("ranged")) {

@@ -171,6 +171,24 @@ namespace Cards {
 			if (_.hp <= 0) Cards::over();
 		}
 	}
+	void monster::draw() {
+		int d = quirks["draw"];
+		if (master == 1) {
+			DO(d) draw();
+		} else {
+			DO(d) ai_draw();
+		}
+		mp = 0;
+	}
+	void monster::jump_cost() {
+		int d = quirks["jump_cost"];
+		if (master == 1) {
+			_.mp += d;
+		} else {
+			_.ai_mp += d;
+		}
+		mp = 0;
+	}
 
 	bool monster::hasQuirk(std::string quirk) {
 		return quirks.find(quirk) != quirks.end();
@@ -189,7 +207,7 @@ namespace Cards {
 		} else if (xx < x) {
 			ev()->SetFacing(3);
 		}
-		
+
 		if (hasQuirk(std::string("lifesteal"))) {
 			int delta = _.battlefield[t].physicalDamaged(AP, 142, t);
 			hp += delta; if (hp > HP) hp = HP;
@@ -223,11 +241,16 @@ namespace Cards {
 						{"cost", 0},
 						{"description", ""},
 						{"hp", 1},{"HP", 1},
-						{"mp", 0},{"MP", 3},
+						{"mp", 0},{"MP", 5},
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "monster-e02"},
-						{"offset", 4}
+						{"offset", 4},
+						{
+							"quirks", {
+								{"jump_cost", 1}
+							}
+						}
 					}
 				},
 				{
@@ -827,11 +850,16 @@ namespace Cards {
 						{"cost", 1},
 						{"description", "抽取一张卡牌。"},
 						{"hp", 2},{"HP", 2},
-						{"mp", 0},{"MP", 10},
+						{"mp", 5},{"MP", 10},
 						{"AP", 1},
 						{"DP", 0},
 						{"charset", "c人狼役職"},
-						{"offset", 2}
+						{"offset", 2},
+						{
+							"quirks", {
+								{"draw", 1}
+							}
+						}
 					}
 				},
 				{
@@ -935,50 +963,6 @@ namespace Cards {
 		}
 		return -1;
 	}
-
-	void atk() {
-
-		/*int this_id = _.current_map_event_id, that_id = -1;
-
-		Game_Event *this_event = Game_Map::GetEvent(this_id), *that_event;
-		int x = this_event->GetX(), y = this_event->GetY();
-
-		this_id = getBattleFieldId(this_id);
-
-		auto& this_card = _.battlefield[this_id];
-
-		int i = this_card.enemyNearby();
-
-		if (i == -1) {
-			if (this_card.master == 1) {
-				if (y != 8) return;
-				_.ai_hp -= _.battlefield[this_id].AP;
-				Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
-				if (_.ai_hp <= 0) over();
-			} else {
-				if (y != 12) return;
-				_.hp -= _.battlefield[this_id].AP;
-				Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
-				if (_.hp <= 0) over();
-			}
-		} else {
-			this_card.atk(i);
-		}
-
-		if (this_card.master == 1) {
-			if (y != 8) return;
-			_.ai_hp -= _.battlefield[this_id].AP;
-			Main_Data::game_screen->ShowBattleAnimation(142, 6, 0);
-			if (_.ai_hp <= 0) over();
-		} else {
-			if (y != 12) return;
-			_.hp -= _.battlefield[this_id].AP;
-			Main_Data::game_screen->ShowBattleAnimation(142, 10001, 0);
-			if (_.hp <= 0) over();
-		}
-		*/
-	}
-
 
 	void ai_draw() {
 		if (_.ai_deck.empty()) return;
